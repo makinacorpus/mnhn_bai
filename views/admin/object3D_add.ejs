@@ -1,6 +1,5 @@
 <% layout('../base') -%>
 
-
 <h1><%= __('Add object') %></h1>
 <form action="/admin/add_object" method="post">
     <input type='hidden' name='_csrf' value='<%= _csrf %>'>
@@ -11,12 +10,12 @@
 
     <div class="block_form">
         <label for="short_desc" class="form_label"><%= __('Short description') %> : </label>
-        <input name="short_desc" type="textarea"/>
+        <input name="short_desc" type="textarea" rows="5" cols="40" />
     </div>
 
     <div class="block_form">
         <label for="complete_desc" class="form_label"><%= __('Complete description') %> : </label>
-        <input name="complete_desc" type="textarea"/>
+        <input name="complete_desc" type="textarea" rows="5" cols="40" />
     </div>
 
     <div class="block_form">
@@ -44,7 +43,11 @@
         <input name="preview" type="text"/>
     </div>
 
-    
+    <div class="block_form">
+        <label for="published" class="form_label"><%= __('Published') %> : </label>
+        <input name="published" type="text"/>
+    </div>
+        
   <div class="block_form_button">
     <input type="submit"/>
   </div>

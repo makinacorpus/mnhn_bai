@@ -1,51 +1,56 @@
 <% layout('../base') -%>
 
-<h1><%= __('Edit object') %></h1>
-<form action="/admin/edit_object/<%= obj.getId() %>" method="post">
+<% if(obj) {%>
+    <h1><%= __('Edit object') %></h1>
+    <form action="/admin/edit_object/<%= obj.getId() %>" method="post">
+<% } else { %>
+    <h1><%= __('Add object') %></h1>
+    <form action="/admin/add_object" method="post">
+<% } %>
     <input type='hidden' name='_csrf' value='<%= _csrf %>'>
     <div class="block_form">
         <label for="title" class="form_label"><%= __('Choose a title') %> : </label>
-        <input name="title" type="text" value="<%= obj.getTitle() %>" />
+        <input name="title" type="text" <% if(obj) {%> value="<%= obj.getTitle() %><% } %>" />
     </div>
 
     <div class="block_form">
         <label for="short_desc" class="form_label"><%= __('Short description') %> : </label>
-        <input name="short_desc" type="textarea" value="<%= obj.getShortDesc() %>"/>
+        <input name="short_desc" type="textarea" rows="5" cols="40" <% if(obj) {%> value="<%= obj.getShortDesc() %><% } %>"/>
     </div>
 
     <div class="block_form">
         <label for="complete_desc" class="form_label"><%= __('Complete description') %> : </label>
-        <input name="complete_desc" type="textarea" value="<%= obj.getCompleteDesc() %>"/>
+        <input name="complete_desc" type="textarea" rows="5" cols="40" <% if(obj) {%> value="<%= obj.getCompleteDesc() %><% } %>"/>
     </div>
 
     <div class="block_form">
         <label for="gallery" class="form_label"><%= __('Gallery') %> : </label>
-        <input name="gallery" type="text" value="<%= obj.getGallery() %>"/>
+        <input name="gallery" type="text" <% if(obj) {%> value="<%= obj.getGallery() %><% } %>"/>
     </div>
     
     <div class="block_form">
         <label for="category" class="form_label"><%= __('Category') %> : </label>
-        <input name="category" type="text" value="<%= obj.getCategory() %>"/>
+        <input name="category" type="text" <% if(obj) {%> value="<%= obj.getCategory() %><% } %>"/>
     </div>
     
     <div class="block_form">
         <label for="filename_3D" class="form_label"><%= __('3D image path') %> : </label>
-        <input name="filename_3D" type="text" value="<%= obj.getFileName3D() %>"/>
+        <input name="filename_3D" type="text" <% if(obj) {%> value="<%= obj.getFileName3D() %><% } %>"/>
     </div>
 
     <div class="block_form">
         <label for="filename_flat" class="form_label"><%= __('Flat image path') %> : </label>
-        <input name="filename_flat" type="text" value="<%= obj.getFileNameFlat() %>"/>
+        <input name="filename_flat" type="text" <% if(obj) {%> value="<%= obj.getFileNameFlat() %><% } %>"/>
     </div>
 
     <div class="block_form">
         <label for="preview" class="form_label"><%= __('Object preview') %> : </label>
-        <input name="preview" type="text" value="<%= obj.getPreview() %>"/>
+        <input name="preview" type="text"<% if(obj) {%>  value="<%= obj.getPreview() %><% } %>"/>
     </div>
 
     <div class="block_form">
         <label for="published" class="form_label"><%= __('Published') %> : </label>
-        <input name="published" type="text" value="<%= obj.getPublished() %>"/>
+        <input name="published" type="text" <% if(obj) {%> value="<%= obj.getPublished() %><% } %>"/>
     </div>
     
   <div class="block_form_button">

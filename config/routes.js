@@ -36,7 +36,7 @@ module.exports.routes = {
          action: 'index'
     },
 
-    'get /admin/add_object': { view: 'admin/object3D_add' }, // create new object
+    'get /admin/add_object': 'Object3DController.add', // create new object
     'post /admin/add_object': 'Object3DController.create', // save new object
 
     'get /admin/edit_object/:id': 'Object3DController.edit', // edit existing object
