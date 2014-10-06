@@ -20,13 +20,14 @@ After getting the sources, run :
     sudo npm install
 
 
-You will need a postgres database too.
+You need to create postgres database too, called 'bai'.
+
 Configure your setting by editing config/env/production.js
 
 
 Launch the server
 -----------------
 
-    sails lift
+    sails lift --prod
 
 
