@@ -20,7 +20,7 @@ function setup3dhop() {
     presenter = new Presenter("draw-canvas");
     presenter.setScene({
         meshes: {
-            "Axis" : { url: "/data/pied_.ply" }
+            "Axis" : { url: "/data/<%= obj.getFileName3D() %>" }
         },
         modelInstances : {
             "Model1" : { mesh : "Axis" }
