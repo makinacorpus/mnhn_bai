@@ -35,7 +35,15 @@
     
     <div class="block_form">
         <label for="filename_3D" class="form_label"><%= __('3D image path') %> : </label>
-        <input name="filename_3D" type="text" <% if(obj) {%> value="<%= obj.getFileName3D() %>"<% } %>/>
+        <input name="filename_3D" id="filename_3D" type="hidden" <% if(obj) {%> value="<%= obj.getFileName3D() %>"<% } %>/>
+        <div class="select_list">
+            <ul class="ply_list">
+            <% ply.forEach(function(file, index) {%>
+                <li onclick="selectFile(this,'<%= file %>')" <% if(obj.getFileName3D() == file) { %> class = "selected" <% } %>><%= file %></li>
+            <% }); %>
+            </ul>
+        </div>
+
     </div>
 
     <div class="block_form">
@@ -64,3 +72,18 @@
     <input type="submit"/>
   </div>
 </form>
+
+<script type="text/javascript">
+    function selectFile(li, file) {
+        // unselect all
+        $('.ply_list').each(function(){
+            $(this).find('li').each(function(){
+                var current = $(this);
+                current.removeClass("selected");
+            });
+        });
+        
+        $(li).addClass("selected");
+        $("input#filename_3D").val(file);
+    }
+</script>

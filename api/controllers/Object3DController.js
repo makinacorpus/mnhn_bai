@@ -31,12 +31,13 @@ module.exports = {
     * `3DObjectController.edit()`
     */
     edit: function (req, res) {
-        var id = req.param('id')
+        var id = req.param('id');
+        ply_files = Utils.get_available_ply();
         Object3D.findOne({ id: id }, function(err, obj3D) {
                 if(err)
                     return res.error();
                 
-                res.view('admin/object3D_edit', {obj: obj3D});
+                res.view('admin/object3D_edit', {obj: obj3D, ply: ply_files});
             }
         );
     },
@@ -104,5 +105,6 @@ module.exports = {
             }
         );
     }
+
 };
 

@@ -171,7 +171,8 @@ img.flat {
 // Forms
 input[type=text],
 input[type=password],
-textarea {
+textarea,
+.select_list {
     border: 1px solid @inputColor;
     border-radius: @radiusInput;
     margin-left: @spaceLabelInputForm;
@@ -209,8 +210,36 @@ label.form_label {
     font-weight: 400;
 }
 
+.select_list {
+    height: 200px;
+    overflow: auto;
+    width: 300px;
+    float: left;
+    margin-bottom: 10px;
+}
+
+.select_list ul {
+    list-style: none outside none;
+    padding-left: 5px;
+}
+
+.select_list ul li {
+    -webkit-transition_duration: @transitionTime;
+    transition-duration: @transitionTime;
+    cursor: default;
+}
+
+.select_list ul li:hover {
+    background: @inputBgColor;
+}
+
+.select_list ul li.selected {
+    background: @highlightColor;
+}
+
 .block_form {
     margin-bottom: 10px;
+    clear: both;
 }
 
 .block_form_button {
