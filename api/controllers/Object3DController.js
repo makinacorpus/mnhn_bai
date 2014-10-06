@@ -23,7 +23,7 @@ module.exports = {
     * `3DObjectController.add()`
     */
     add: function (req, res) {
-        ply_files = Utils.get_available_ply();
+        ply_files = Utils.get_available_files('.ply');
         res.view('admin/object3D_edit', {obj: undefined, ply: ply_files});
     },
     
@@ -33,7 +33,7 @@ module.exports = {
     */
     edit: function (req, res) {
         var id = req.param('id');
-        ply_files = Utils.get_available_ply();
+        ply_files = Utils.get_available_files('.ply');
         Object3D.findOne({ id: id }, function(err, obj3D) {
                 if(err)
                     return res.error();
