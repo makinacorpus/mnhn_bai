@@ -47,3 +47,9 @@ module.exports.connections = {
     database: 'bai'
   }
 };
+
+
+module.exports.data = {
+    __pathData: '/absolute/path/to/data_dir/'
+};
+

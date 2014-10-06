@@ -23,6 +23,8 @@ After getting the sources, run :
 You need to create postgres database too, called 'bai'.
 
 Configure your setting by editing config/env/production.js
+    module.exports.data {...}
+    module.exports.connections {...}
 
 
 Launch the server
