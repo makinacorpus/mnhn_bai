@@ -10,47 +10,54 @@
     <input type='hidden' name='_csrf' value='<%= _csrf %>'>
     <div class="block_form">
         <label for="title" class="form_label"><%= __('Choose a title') %> : </label>
-        <input name="title" type="text" <% if(obj) {%> value="<%= obj.getTitle() %><% } %>" />
+        <input name="title" type="text" <% if(obj) {%> value="<%= obj.getTitle() %>"<% } %> />
     </div>
 
     <div class="block_form">
         <label for="short_desc" class="form_label"><%= __('Short description') %> : </label>
-        <input name="short_desc" type="textarea" rows="5" cols="40" <% if(obj) {%> value="<%= obj.getShortDesc() %><% } %>"/>
+        <textarea name="short_desc" rows="5" cols="40"><% if(obj) {%><%= obj.getShortDesc() %><% } %></textarea>
     </div>
 
     <div class="block_form">
         <label for="complete_desc" class="form_label"><%= __('Complete description') %> : </label>
-        <input name="complete_desc" type="textarea" rows="5" cols="40" <% if(obj) {%> value="<%= obj.getCompleteDesc() %><% } %>"/>
+        <textarea name="complete_desc" rows="5" cols="40"><% if(obj) {%><%= obj.getCompleteDesc() %><% } %></textarea>
     </div>
 
     <div class="block_form">
         <label for="gallery" class="form_label"><%= __('Gallery') %> : </label>
-        <input name="gallery" type="text" <% if(obj) {%> value="<%= obj.getGallery() %><% } %>"/>
+        <input name="gallery" type="text" <% if(obj) {%> value="<%= obj.getGallery() %>"<% } %>/>
     </div>
     
     <div class="block_form">
         <label for="category" class="form_label"><%= __('Category') %> : </label>
-        <input name="category" type="text" <% if(obj) {%> value="<%= obj.getCategory() %><% } %>"/>
+        <input name="category" type="text" <% if(obj) {%> value="<%= obj.getCategory() %>"<% } %>/>
     </div>
     
     <div class="block_form">
         <label for="filename_3D" class="form_label"><%= __('3D image path') %> : </label>
-        <input name="filename_3D" type="text" <% if(obj) {%> value="<%= obj.getFileName3D() %><% } %>"/>
+        <input name="filename_3D" type="text" <% if(obj) {%> value="<%= obj.getFileName3D() %>"<% } %>/>
     </div>
 
     <div class="block_form">
         <label for="filename_flat" class="form_label"><%= __('Flat image path') %> : </label>
-        <input name="filename_flat" type="text" <% if(obj) {%> value="<%= obj.getFileNameFlat() %><% } %>"/>
+        <input name="filename_flat" type="text" <% if(obj) {%> value="<%= obj.getFileNameFlat() %>"<% } %>/>
     </div>
 
     <div class="block_form">
         <label for="preview" class="form_label"><%= __('Object preview') %> : </label>
-        <input name="preview" type="text"<% if(obj) {%>  value="<%= obj.getPreview() %><% } %>"/>
+        <input name="preview" type="text"<% if(obj) {%>  value="<%= obj.getPreview() %>"<% } %>/>
     </div>
 
     <div class="block_form">
         <label for="published" class="form_label"><%= __('Published') %> : </label>
-        <input name="published" type="text" <% if(obj) {%> value="<%= obj.getPublished() %><% } %>"/>
+        <input type="checkbox" name="published" value="published"
+        <% if(obj) {%>
+            <% if(obj.getPublished()) {%>
+                checked
+            <% } %>        
+        <% } %>
+        >
+        
     </div>
     
   <div class="block_form_button">

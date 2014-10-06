@@ -58,7 +58,13 @@ module.exports = {
                 obj3D.filename_flat = req.param('filename_flat');
                 obj3D.preview = req.param('preview');
                 obj3D.gallery = req.param('gallery');
-                obj3D.published = req.param('published');
+                console.log(req.param('published'));
+                
+                published = req.param('published');
+                obj3D.published = false;
+                if(published == 'published') {
+                    obj3D.published = true;
+                }
                 obj3D.save();
                 res.view('detail', {obj: obj3D, isAdmin: true});
         });
