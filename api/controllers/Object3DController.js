@@ -73,7 +73,7 @@ module.exports = {
         Object3D.findOne({ id: id }, function(err, obj3D) {
                 if(err)
                     return res.error();
-                obj3D.delete();
+                obj3D.destroy();
                 res.redirect('/gallery');
         });
     },

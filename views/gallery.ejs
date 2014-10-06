@@ -38,7 +38,10 @@
             <%= obj.getTitle() %><br/>
             <span class="text_desc"><%= obj.getShortDesc() %></span>
             <% if (isAdmin) {%>
-                <br/><span class="edit_link"><a href="/admin/edit_object/<%= obj.getId() %>"><%= __('Edit') %></a></span>
+                <div class="actions">
+                    <span class="edit_link"><a href="/admin/edit_object/<%= obj.getId() %>"><%= __('Edit') %></a></span>
+                    <span class="del_link"><a href="#" onclick="javascript:delete_obj(<%= obj.getId() %>);"><%= __('Delete') %></a></span>
+                </div>
             <% }%>
         </div>
     </div>
@@ -50,6 +53,12 @@
         // TODO
         // 1 - send param to controller
         // 2 - relaunch filter with the other filters (saved in session ?)
+    }
+    
+    function delete_obj(objId) {
+        if (confirm("<%= __('Are you sure you want to delete this object ?') %>")) { 
+            window.location.replace("/admin/delete_object/"+objId);
+        }
     }
 
 </script>

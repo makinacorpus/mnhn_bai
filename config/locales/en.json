@@ -25,5 +25,7 @@
 	"Detail": "Detail",
 	"Page does not exists or You are not allowed to view this page.": "Page does not exists or You are not allowed to view this page.",
 	"Edit": "Edit",
-	"Published": "Published"
+	"Published": "Published",
+	"Delete": "Delete",
+	"Are you sure you want to delete this object ?": "Are you sure you want to delete this object ?"
 }

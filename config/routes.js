@@ -41,4 +41,6 @@ module.exports.routes = {
 
     'get /admin/edit_object/:id': 'Object3DController.edit', // edit existing object
     'post /admin/edit_object/:id': 'Object3DController.save', // save existing object
+    
+    'get /admin/delete_object/:id': 'Object3DController.delete', // delete object
 };
