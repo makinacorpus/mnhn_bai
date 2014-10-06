@@ -39,7 +39,7 @@
         <div class="select_list">
             <ul class="ply_list">
             <% ply.forEach(function(file, index) {%>
-                <li onclick="selectFile(this,'<%= file %>')" <% if(obj.getFileName3D() == file) { %> class = "selected" <% } %>><%= file %></li>
+                <li onclick="selectFile(this,'<%= file %>')" <% if(obj) {%><% if(obj.getFileName3D() == file) { %> class = "selected" <% } %><% } %>><%= file %></li>
             <% }); %>
             </ul>
         </div>

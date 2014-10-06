@@ -23,7 +23,8 @@ module.exports = {
     * `3DObjectController.add()`
     */
     add: function (req, res) {
-        res.view('admin/object3D_edit', {obj: undefined});
+        ply_files = Utils.get_available_ply();
+        res.view('admin/object3D_edit', {obj: undefined, ply: ply_files});
     },
     
 
