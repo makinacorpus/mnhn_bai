@@ -1,0 +1,12 @@
+<nav class="i18n">
+    <ul>
+        <% sails.config.i18n.locales.forEach(function(locale) { %>
+            <li><a href="/<%=locale%>/"><%=locale%></a></li>
+        <% }); %>
+        <!-- 
+        <li><a href="/?lang=fr">fr</a></li>
+        <li><a href="/?lang=en">en</a></li>
+        -->
+    </ul>
+</nav>    
+

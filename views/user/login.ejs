@@ -1,0 +1,19 @@
+<% layout('../base') -%>
+
+<h1><%= __('Login') %></h1>
+<form action="/login" method="post">
+  <input type='hidden' name='_csrf' value='<%= _csrf %>'>
+  <div class="block_form">
+    <label for="username" class="form_label"><%= __('Username') %> : </label>
+    <input name="username" type="text"/>
+  </div>
+
+  <div class="block_form">
+    <label for="password" class="form_label"><%= __('Password') %> : </label>
+    <input name="password" type="password"/>
+  </div>
+
+  <div class="block_form_button">
+    <input type="submit"/>
+  </div>
+</form>

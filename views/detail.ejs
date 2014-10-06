@@ -1,0 +1,30 @@
+<% layout('base') -%>
+
+  
+<h1><%= __('Detail') %> ( <%= obj.getTitle() %> )</h1>
+<% if (isAdmin) {%>
+    <a href="/admin/edit_object/<%= obj.getId() %>"><%= __('Edit object') %></a>
+<% }%>
+
+
+<div class="row">
+    <div class="col-md-12" id="main-description">
+        <%= obj.getShortDesc() %>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-6" id="view-3D">
+        <% include 3dhop.ejs %>
+    </div>
+    <div class="col-md-6" id="view-flat">
+        Flat view
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-12" id="details">
+        <%= obj.getCompleteDesc() %>
+    </div>
+</div>
+
+
+

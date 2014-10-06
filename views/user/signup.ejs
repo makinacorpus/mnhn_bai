@@ -1,0 +1,19 @@
+<% layout('../base') -%>
+
+<h1><%= __('Signup') %></h1>
+<form action="/signup" method="post">
+
+    <div class="block_form">
+        <label for="username" class="form_label"><%= __('Choose a Username') %> : </label>
+        <input name="username" type="text"/>
+    </div>
+
+    <div class="block_form">
+        <label for="password" class="form_label"><%= __('Choose a Password') %> : </label>
+        <input name="password" type="password"/>
+    </div>
+
+  <div class="block_form_button">
+    <input type="submit"/>
+  </div>
+</form>

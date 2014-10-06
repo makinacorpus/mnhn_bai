@@ -1,0 +1,55 @@
+<% layout('base') -%>
+
+  
+<h1><%= __('Gallery') %></h1>
+
+<div class="filter_bar">
+    <form action="/gallery" method="post">
+        <input type='hidden' name='_csrf' value='<%= _csrf %>'>
+        <%= __('Search by category') %><input type="text" name="category">
+        <%= __('Free search') %><input type="text" name="freesearch">
+        
+        <input type="submit" name="<%= __('Search') %>">
+    </form>
+</div>
+<div class="filter_list">
+    <ul>
+        <% if(listFilters['category']) {%>
+            <li><%= __('Category') %> : <strong><%= listFilters['category'] %></strong><div class="remove_filter" onclick="remove_filter('category')"></div></li>
+        <% } %>
+        <% if(listFilters['freesearch']) {%>
+            <li><%= __('Free search') %> : <strong><%= listFilters['freesearch'] %></strong><div class="remove_filter" onclick="remove_filter('freesearch')"></div></li>
+        <% } %>
+    </ul>
+</div>
+
+<div class="detail_list">
+<% listObj.forEach(function(obj, index) {%>
+
+    <div class="detail">
+        <a href="/detail/<%= obj.getId() %>">
+            <img src="/models/pied__thumb.png" alt="pied__" />
+        </a>
+        <% if(!obj.getPublished()) { %>
+            <div class="not_publish"></div>
+            <!--  TODO: finish: css: icon            -->
+        <% } %>
+        <div class="gallery_desc">
+            <%= obj.getTitle() %><br/>
+            <span class="text_desc"><%= obj.getShortDesc() %></span>
+            <% if (isAdmin) {%>
+                <br/><span class="edit_link"><a href="/admin/edit_object/<%= obj.getId() %>"><%= __('Edit') %></a></span>
+            <% }%>
+        </div>
+    </div>
+<% }); %>
+</div>
+
+<script type="text/javascript">
+    function remove_filter(filter) {
+        // TODO
+        // 1 - send param to controller
+        // 2 - relaunch filter with the other filters (saved in session ?)
+    }
+
+</script>

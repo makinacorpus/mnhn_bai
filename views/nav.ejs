@@ -1,0 +1,16 @@
+<nav class="main">
+    <ul>
+        <% if (req.user) { %>
+            <li><%= __('Welcome') %> <%= req.user.getUserName() %> | <a href="/logout">Logout</a><li>
+        <% } else { %>
+            <li><a href="/login">Login</a></li>
+            <li><a href="/signup"><%= __('Signup') %></a></li>
+        <% } %>
+        <% if (req.user && req.user.isAdmin()) { %>
+            <li><a href="/admin/add_object"><%= __('Add object') %></a><li>
+        <% } %>
+        <li><a href="/gallery"><%= __('Gallery') %></a></li>
+        <li><a href="/atlasmaker"><%= __('Atlasmaker') %></a></li>
+        
+    </ul>
+</nav>    

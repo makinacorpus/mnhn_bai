@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Boite à images</title>
+
+    <!-- Viewport mobile tag for sensible mobile support -->
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+    <%-scripts%>
+    <%-stylesheets%>
+
+    <!--TEMPLATES-->
+    
+    <!--TEMPLATES END-->    
+    
+    <!--STYLES-->
+    <link rel="stylesheet" href="/styles/bootstrap-theme.min.css">
+    <link rel="stylesheet" href="/styles/bootstrap.min.css">
+    <link rel="stylesheet" href="/styles/importer.css">
+    <!--STYLES END-->
+    
+    <link type="text/css" rel="stylesheet" href="/js/dependencies/3DHOP_2.0/stylesheet/3dhop.css"/>  
+
+    <!--SCRIPTS-->
+    <script src="/js/dependencies/sails.io.js"></script>
+    <script src="/js/dependencies/3DHOP_2.0/js/spidergl.js"></script>
+    <script src="/js/dependencies/3DHOP_2.0/js/jquery.js"></script>
+    <script src="/js/dependencies/3DHOP_2.0/js/presenter.js"></script>
+    <script src="/js/dependencies/3DHOP_2.0/js/nexus.js"></script>
+    <script src="/js/dependencies/3DHOP_2.0/js/ply.js"></script>
+    <script src="/js/dependencies/3DHOP_2.0/js/trackball_sphere.js"></script>
+    <script src="/js/dependencies/3DHOP_2.0/js/trackball_turntable.js"></script>
+    <script src="/js/dependencies/3DHOP_2.0/js/trackball_pantilt.js"></script>
+    <script src="/js/dependencies/3DHOP_2.0/js/trackball_turntable_pan.js"></script>
+    <script src="/js/dependencies/3DHOP_2.0/js/init.js"></script>
+    <script src="/js/dependencies/bootstrap.min.js"></script>
+    <!--SCRIPTS END-->
+  </head>
+
+  <body>
+    <header>
+        <% include header.ejs %>
+    </header>
+    
+    <section>
+    
+    
+        <div class="container">
+            <div class="row">
+<!--                 <div class="col-md-2" id="navigation">Widgets</div> -->
+                <div class="col-md-12" id="main-content">
+                    <%-body -%>
+                </div>
+<!--                <div class="col-md-2" id="news">
+                <ul>
+                    <li>News 1</li>
+                    <li>News 2</li>
+                    <li>News 3</li>
+                </ul>
+                </div>-->
+            </div>
+        </div>
+    
+    
+    </section>
+    
+    <footer>
+        <% include footer.ejs %>
+    </footer>
+
+
+    
+    
+
+
+    
+  </body>
+</html>
+
+
