@@ -3,7 +3,7 @@
   
 <h1><%= __('Detail') %> ( <%= obj.getTitle() %> )</h1>
 <% if (isAdmin) {%>
-    <a href="/admin/edit_object/<%= obj.getId() %>"><%= __('Edit object') %></a>
+    <div class="edit"><a href="/admin/edit_object/<%= obj.getId() %>"><%= __('Edit object') %></a></div>
 <% }%>
 
 
