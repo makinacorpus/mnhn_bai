@@ -63,9 +63,7 @@
 
 <script type="text/javascript">
     function remove_filter(filter) {
-        // TODO
-        // 1 - send param to controller
-        // 2 - relaunch filter with the other filters (saved in session ?)
+        window.location.replace("/gallery?remove_filter="+filter);
     }
     
     function delete_obj(objId) {

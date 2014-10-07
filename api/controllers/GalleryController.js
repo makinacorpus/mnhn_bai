@@ -80,6 +80,17 @@ module.exports = {
 
         // TODO: gallery (setting for default gallery ?)
             
+        // Remove filter    
+        remove_filter = req.param('remove_filter');
+        if(remove_filter) {
+            if(remove_filter == 'freesearch') 
+                delete filters['or'];
+            else
+                delete filters[remove_filter];
+            delete filter_criteria[remove_filter];
+            console.log(filters);
+        }
+            
         // save filters
         req.session.filters = filter_criteria;
 
