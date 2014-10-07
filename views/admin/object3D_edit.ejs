@@ -49,11 +49,13 @@
     <div class="block_form">
         <label for="filename_flat" class="form_label"><%= __('Flat image path') %> : </label>
         <input name="filename_flat" type="text" <% if(obj) {%> value="<%= obj.getFileNameFlat() %>"<% } %>/>
+        <!--    TODO : file selector     -->
     </div>
 
     <div class="block_form">
         <label for="preview" class="form_label"><%= __('Object preview') %> : </label>
         <input name="preview" type="text"<% if(obj) {%>  value="<%= obj.getPreview() %>"<% } %>/>
+        <!--    TODO : file selector     -->
     </div>
 
     <div class="block_form">

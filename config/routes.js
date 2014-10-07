@@ -24,6 +24,9 @@ module.exports.routes = {
     'post /signup': 'UserController.signup',
     '/logout': 'UserController.logout',
     
+//     'get /gallery': 'GalleryController.filter_objects',
+//     'post /gallery': 'GalleryController.filter_objects',
+    'get /gallery/:page_num': 'GalleryController.filter_objects',
     'get /gallery': 'GalleryController.filter_objects',
     'post /gallery': 'GalleryController.filter_objects',
     

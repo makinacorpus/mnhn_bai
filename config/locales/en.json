@@ -27,5 +27,8 @@
 	"Edit": "Edit",
 	"Published": "Published",
 	"Delete": "Delete",
-	"Are you sure you want to delete this object ?": "Are you sure you want to delete this object ?"
+	"Are you sure you want to delete this object ?": "Are you sure you want to delete this object ?",
+	"Page": "Page",
+	"Items par page": "Items par page",
+	"Items per page": "Items per page"
 }
