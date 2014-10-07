@@ -88,7 +88,6 @@ module.exports = {
             else
                 delete filters[remove_filter];
             delete filter_criteria[remove_filter];
-            console.log(filters);
         }
             
         // save filters

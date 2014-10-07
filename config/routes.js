@@ -1,7 +1,7 @@
 module.exports.routes = {
 
      '/*': function(req, res, next) {
-         res.setLocale(req.param('lang') || req.session.lang);
+         res.setLocale(req.session.lang);
          return next();
      },
     
@@ -24,8 +24,6 @@ module.exports.routes = {
     'post /signup': 'UserController.signup',
     '/logout': 'UserController.logout',
     
-//     'get /gallery': 'GalleryController.filter_objects',
-//     'post /gallery': 'GalleryController.filter_objects',
     'get /gallery/:page_num': 'GalleryController.filter_objects',
     'get /gallery': 'GalleryController.filter_objects',
     'post /gallery': 'GalleryController.filter_objects',
