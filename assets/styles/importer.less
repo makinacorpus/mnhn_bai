@@ -338,16 +338,19 @@ label.form_label {
 
 .detail .gallery_desc .actions {
     background: @detailDescBGColorHover;
-    padding-left: 3px;
-    padding-right: 3px;
+    border-radius: 5px 0px 0px 5px;
+    bottom: 3px;
+    padding: 3px;
     position: absolute;
-    bottom: 0;
-    right: 0;
+    right: 0;    
 }
 
 .detail .gallery_desc .actions .edit_link {
-    padding-right: 5px;
-    border-right: 1px solid @borderColor;
+    padding-right: 0px;
+}
+
+.detail .gallery_desc .actions .del_link {
+    padding-right: 0px;
 }
 
 .detail:hover {

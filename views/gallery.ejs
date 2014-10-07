@@ -43,8 +43,8 @@
             <span class="text_desc"><%= obj.getShortDesc() %></span>
             <% if (isAdmin) {%>
                 <div class="actions">
-                    <span class="edit_link"><a href="/admin/edit_object/<%= obj.getId() %>"><%= __('Edit') %></a></span>
-                    <span class="del_link"><a href="#" onclick="javascript:delete_obj(<%= obj.getId() %>);"><%= __('Delete') %></a></span>
+                    <span class="edit_link"><a href="/admin/edit_object/<%= obj.getId() %>"><img src="/img/icon_edit.png" alt="<%= __('Edit') %>" /></a></span>
+                    <span class="del_link"><a href="#" onclick="javascript:delete_obj(<%= obj.getId() %>);"><img src="/img/icon_delete.png" alt="<%= __('Delete') %>" /></a></span>
                 </div>
             <% }%>
         </div>
