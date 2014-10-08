@@ -39,7 +39,7 @@
         <div class="select_list">
             <ul class="ply_list">
             <% ply.forEach(function(file, index) {%>
-                <li onclick="selectFile(this,'<%= file %>')" <% if(obj) {%><% if(obj.getFileName3D() == file) { %> class = "selected" <% } %><% } %>><%= file %></li>
+                <li onclick="selectFile(this,'<%= file %>','.ply_list','filename_3D')" <% if(obj) {%><% if(obj.getFileName3D() == file) { %> class = "selected" <% } %><% } %>><%= file %></li>
             <% }); %>
             </ul>
         </div>
@@ -48,8 +48,15 @@
 
     <div class="block_form">
         <label for="filename_flat" class="form_label"><%= __('Flat image path') %> : </label>
-        <input name="filename_flat" type="text" <% if(obj) {%> value="<%= obj.getFileNameFlat() %>"<% } %>/>
-        <!--    TODO : file selector     -->
+        <input name="filename_flat" id="filename_flat" type="hidden" <% if(obj) {%> value="<%= obj.getFileNameFlat() %>"<% } %>/>
+        <div class="select_list">
+            <ul class="nii_list">
+            <% nii.forEach(function(file, index) {%>
+                <li onclick="selectFile(this,'<%= file %>','.nii_list','filename_flat')" <% if(obj) {%><% if(obj.getFileNameFlat() == file) { %> class = "selected" <% } %><% } %>><%= file %></li>
+            <% }); %>
+            </ul>
+        </div>
+        
     </div>
 
     <div class="block_form">
@@ -76,16 +83,20 @@
 </form>
 
 <script type="text/javascript">
-    function selectFile(li, file) {
-        // unselect all
-        $('.ply_list').each(function(){
+    function selectFile(li, file, selector, hidden) {
+        // Unselect all
+        $(selector).each(function(){
             $(this).find('li').each(function(){
                 var current = $(this);
                 current.removeClass("selected");
             });
         });
         
+        // Add selected to the selected one
         $(li).addClass("selected");
-        $("input#filename_3D").val(file);
+        
+        // Store chosen file in hidden field
+        //$("input#filename_3D").val(file);
+        $('input#'+hidden).val(file);
     }
 </script>

@@ -1,30 +1,46 @@
 <% layout('base') -%>
 
   
-<h1><%= __('Detail') %> ( <%= obj.getTitle() %> )</h1>
+
+<div class="bloc_img_detail">
+    <div class="bloc_title"><%= obj.getTitle() %></div>
+    <!-- TODO: carousel with all images associated to the object -->
+    <img src="<%= obj.getMainImg() %>" alt="<%= obj.getTitle() %>" />
+</div>
+
 <% if (isAdmin) {%>
     <div class="edit"><a href="/admin/edit_object/<%= obj.getId() %>"><%= __('Edit object') %></a></div>
 <% }%>
 
 
-<div class="row">
-    <div class="col-md-12" id="main-description">
-        <%= obj.getShortDesc() %>
-    </div>
-</div>
-<div class="row">
-    <div class="col-md-6 view-3D">
-        <% include 3dhop.ejs %>
-    </div>
-    <div class="col-md-6 view-flat">
-        Flat view
-    </div>
-</div>
-<div class="row">
-    <div class="col-md-12 details">
-        <%= obj.getCompleteDesc() %>
-    </div>
+<div class="col-lg-12 main-description bloc_desc">
+    <%= obj.getShortDesc() %>
 </div>
 
+<div class="col-lg-6 view-3D">
+    <h4><%= __('3D view') %></h4>
+    <% include 3dhop.ejs %>
+</div>
+<div class="col-lg-6 view-flat">
+    <h4><%= __('Flat view') %></h4>
+    <% include flat.ejs %>
+</div>
+
+
+<div class="col-lg-6">
+    <h4><%= __('Description') %></h4>
+    <p><%= obj.getCompleteDesc() %></p>
+</div>
+<div class="col-lg-6">
+    <h4><%= __('Medias associated') %></h4>
+    <p>TODO</p>
+
+</div>
+
+
+<div class="col-lg-12 main-description bloc_desc">
+    <h4><%= __('Associated objects') %></h4>
+    <p>TODO</p>
+</div>
 
 

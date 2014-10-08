@@ -52,7 +52,11 @@ module.exports = {
     },
     getPublished: function() {
         return this.published;
-    }    
+    },
+    getMainImg: function() {
+        // TODO
+        return "/img/default_detail.png";
+    }
     
   }
 };
