@@ -11,7 +11,7 @@ module.exports = {
         var fs = require('fs');
         files = fs.readdirSync(sails.config.data.__pathData);
         files.forEach( function (file) {
-            if(file.substr(-4) === ext) {
+            if(file.substr(-ext.length) === ext) {
                 required_files.push(file);
             }
         });

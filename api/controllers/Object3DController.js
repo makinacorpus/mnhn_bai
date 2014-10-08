@@ -25,7 +25,7 @@ module.exports = {
     add: function (req, res) {
         // List available .ply and .nii file on the server
         ply_files = Utils.get_available_files('.ply');
-        nii_files = Utils.get_available_files('.nii');
+        nii_files = Utils.get_available_files('.gz');
         res.view('admin/object3D_edit', {obj: undefined, ply: ply_files, nii: nii_files});
     },
     
@@ -38,7 +38,7 @@ module.exports = {
         
         // List available .ply and .nii file on the server
         ply_files = Utils.get_available_files('.ply');
-        nii_files = Utils.get_available_files('.nii');
+        nii_files = Utils.get_available_files('.gz');
         
         // Edit object
         Object3D.findOne({ id: id }, function(err, obj3D) {

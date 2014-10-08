@@ -8,8 +8,8 @@
 </div>
 
 <script type="text/javascript">
-    $("#slider").slider({slide: changeSlice, min:0, max:100, value:50});
+    $("#slider").slider({slide: stereotaxic.changeSlice, min:0, max:100, value:50});
     $("#change_view").buttonset();
-    $('#change_view input[type=radio]').change(function(){changeView($(this).attr('id'))})
-    init_stereotaxic("<%= obj.getFileNameFlat() %>", $("span.MRI"));
+    $('#change_view input[type=radio]').change(function(){ stereotaxic.changeView($(this).attr('id')) })
+    stereotaxic.init("<%= obj.getFileNameFlat() %>", $("span.MRI"));
 </script>
