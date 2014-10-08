@@ -45,7 +45,7 @@
 @detailDescBGColor: rgba(100, 100, 100, 0.5);
 @detailDescBGColorHover: rgba(10, 10, 10, 0.7);
 @highlightColor: #bff3a4;
-
+@invertedBgTitleColor: rgba(60, 63, 64, 0.9);
 
 @transitionTime: 1s;
 @sectionWidth: 80%;
@@ -75,7 +75,6 @@ a {
 h1, h2, h3, h4, h5 {
     color: @baiBlue;
 }
-
 
 header {
     background: @baiBlue;
@@ -374,6 +373,55 @@ label.form_label {
 
 // 3Dhop
 .view-3D {
-    border: 1px solid @imgBorderColor;
-    padding: 2px;
+}
+
+.view-3D .tdhop {
+//     border: 1px solid @imgBorderColor;
+}
+
+.view-3D .tdhop .tdhop_canvas {
+//     background-image: url(/js/dependencies/3DHOP_2.0/skins/backgrounds/light.jpg);
+    background: rgba(255, 255, 255, 0.8);
+}
+
+// flat view
+.view-flat,
+.view-3D {
+    min-height: 450px;
+}
+
+.flat_canvas {
+    width: 100%;
+}
+
+.flat_change_view {
+    text-align: center;
+    margin-top: 10px;
+}
+
+// detail
+.bloc_desc {
+    padding-top: 20px;
+    padding-bottom: 20px;
+}
+
+.bloc_title {
+    background: @invertedBgTitleColor;
+    color: @invertedTextColor;
+    padding: 5px;
+    position: absolute;
+    top: 0;
+    left: 40px;
+    padding-left: 10px;
+    padding-right: 10px;
+    font-size: 24px;
+    border-radius: 0 0 5px 5px;
+}
+
+.bloc_img_detail {
+    max-height: 300px;
+    overflow: hidden;
+    background: #fff;
+    text-align: center;
+    position: relative;
 }
