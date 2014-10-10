@@ -14,7 +14,12 @@ module.exports = {
         Object3D.create(req.params.all()).exec(function (err, obj3D) {
             if (err)
                 return res.negotiate(err);        
-            res.view('detail', {obj: obj3D, isAdmin: true});
+            
+            // Download files attached
+            sails.controllers.file.upload(req, res, obj3D, sails.controllers.object3d.saveMedias);
+            
+            //res.view('detail', {obj: obj3D, isAdmin: true});
+            res.redirect('/detail/'+obj3D.getId());
         });
     },
 
@@ -75,11 +80,38 @@ module.exports = {
                 if(published == 'published') {
                     obj3D.published = true;
                 }
+                
+                // Download files attached
+                sails.controllers.file.upload(req, res, obj3D, sails.controllers.object3d.saveMedias);
+                
                 obj3D.save();
                 
                 //Redirect to detail view
-                res.view('detail', {obj: obj3D, isAdmin: true});
+                //res.view('detail', {obj: obj3D, isAdmin: true});
+                res.redirect('/detail/'+obj3D.getId());
         });
+    },
+
+    
+    /**
+    * `3DObjectController.saveMedias()`
+    */
+    saveMedias: function (files, obj3D) {
+        // TODO: create Media object, and attached them to obj3D
+        for(i = 0; i < files.length; i++) {
+            params = {};
+            params['title'] = files[i].filename; // title
+            params['path'] = files[i].fd // path
+            params['object3d'] = obj3D.getId();
+            params['type'] = files[i].type;
+            params['filename'] = files[i].fd.replace(/^.*[\\\/]/, '');
+
+            Media.create(params).exec(function (err, media) {
+                if (err)
+                    return res.negotiate(err);        
+            });
+            
+        }
     },
 
 
@@ -115,24 +147,24 @@ module.exports = {
                     //return res.error();
                     return err;
                 }
-
-                // Read .nii
-                // TODO
-                /*
-                var nifti = require('nifti-js');
-                var fs = require('fs');
-                var path = require('path');
-                var ndarray = require('ndarray');
-                var file = nifti.parse(fs.readFileSync(sails.config.data.__pathData+obj3D.getFileNameFlat()));
-                file.buffer = file.buffer.byteLength + " bytes";
-                file.data = file.data.length + " items";
-                console.log(file);
                 
-                var nii_data = ndarray(file.data, file.sizes.slice().reverse());
-                console.log(nii_data);
-                */
-                // Launch detail view
-                res.view('detail', {obj: obj3D, isAdmin: isAdmin});
+                // Get medias
+                
+                Media.find().where({object3d: obj3D.getId()}).exec(function (err, medias) {
+                    if(err) {
+                        return res.error();
+                    }
+                    
+                    medias_pictures = [];
+                    medias.forEach(function(media, index) {
+                        if(media.isImage()) {
+                            medias_pictures.push(media);
+                        }
+                    });
+                    console.log(medias_pictures);
+                    // Launch detail view
+                    res.view('detail', {obj: obj3D, medias: medias, medias_pictures: medias_pictures, isAdmin: isAdmin});
+                });
             }
         );
     }

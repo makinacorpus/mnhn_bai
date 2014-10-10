@@ -2,10 +2,10 @@
 
 <% if(obj) {%>
     <h1><%= __('Edit object') %></h1>
-    <form action="/admin/edit_object/<%= obj.getId() %>" method="post">
+    <form action="/admin/edit_object/<%= obj.getId() %>" method="post" enctype="multipart/form-data">
 <% } else { %>
     <h1><%= __('Add object') %></h1>
-    <form action="/admin/add_object" method="post">
+    <form action="/admin/add_object" method="post" enctype="multipart/form-data">
 <% } %>
     <input type='hidden' name='_csrf' value='<%= _csrf %>'>
     <div class="block_form">
@@ -76,6 +76,14 @@
         >
         
     </div>
+    
+    
+    <div class="block_form">
+        <label for="media_files" class="form_label"><%= __('Medias') %> : </label>
+        <input type="file" id="media_files" name="media_files" multiple />
+<!--    TODO: display already attached medias with option to delete them      -->
+    </div>
+    
     
   <div class="block_form_button">
     <input type="submit"/>

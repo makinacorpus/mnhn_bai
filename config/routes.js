@@ -29,6 +29,8 @@ module.exports.routes = {
     'post /gallery': 'GalleryController.filter_objects',
     
     'get /detail/:id': 'Object3DController.detail',
+
+    'get /download' : 'FileController.download',
     
     '/atlasmaker': { view: 'atlasmaker' },
     
