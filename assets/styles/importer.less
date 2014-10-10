@@ -103,6 +103,7 @@ header a {
 header .logo {
     position : absolute;
     top: -10px;
+    z-index: 9;
 }
 
 footer {
@@ -136,6 +137,7 @@ nav.social {
     position: absolute;
     top: 70px;
     right: 130px;
+    z-index: 9;
 }
 
 nav.social ul li {
@@ -441,9 +443,20 @@ label.form_label {
 }
 
 .bloc_img_detail {
-    max-height: 300px;
-    overflow: hidden;
+//     max-height: 300px;
+//     overflow: hidden;
+//     background: #fff;
+//     text-align: center;
+//     position: relative;
     background: #fff;
-    text-align: center;
-    position: relative;
+    height: 300px;
+    left: 0;
+    overflow: hidden;
+    position: absolute;
+    top: 105px;
+    width: 100%;
+}
+
+.main-description {
+    margin-top: 300px;
 }
