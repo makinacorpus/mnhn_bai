@@ -37,7 +37,13 @@ var jsFilesToInject = [
   'js/dependencies/3DHOP_2.0/js/trackball_pantilt.js',
   'js/dependencies/3DHOP_2.0/js/trackball_turntable_pan.js',
   'js/dependencies/3DHOP_2.0/js/init.js',
-   
+  
+  // jquery & stereotaxic
+  '/js/dependencies/bootstrap.min.js',
+  '/js/dependencies/gunzip.js',
+  '/js/dependencies/jquery-ui-1.10.4.custom.min.js',
+  '/js/dependencies/stereotaxic.js',
+  
   // Dependencies like jQuery, or Angular are brought in here
   'js/dependencies/**/*.js',
 
