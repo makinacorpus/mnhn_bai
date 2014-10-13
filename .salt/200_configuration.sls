@@ -7,7 +7,7 @@ include:
 
 {{cfg.name}}-config:
   file.managed:
-    - name: {{cfg.project_root}}/config/env/production.json
+    - name: {{cfg.project_root}}/config/env/production.js
     - source: salt://makina-projects/{{cfg.name}}/files/config.json.in
     - user: {{cfg.user}}
     - group: {{cfg.user}}
