@@ -161,7 +161,6 @@ module.exports = {
                             medias_pictures.push(media);
                         }
                     });
-                    console.log(medias_pictures);
                     // Launch detail view
                     res.view('detail', {obj: obj3D, medias: medias, medias_pictures: medias_pictures, isAdmin: isAdmin});
                 });

@@ -30,16 +30,23 @@
 <div class="detail_list">
 <% listObj.forEach(function(obj, index) {%>
 
-    <div class="detail">
-        <a href="/detail/<%= obj.getId() %>">
-            <img src="/data/pied__thumb.png" alt="pied__" />
-        </a>
-        <% if(!obj.getPublished()) { %>
-            <div class="not_publish"></div>
-            <!--  TODO: finish: css: icon            -->
-        <% } %>
+    <div class="detail flip">
+        <div class="card"> 
+            <div class="face front">
+                <a href="/detail/<%= obj.getId() %>">
+                    <img src="/data/pied__thumb.png" alt="pied__" />
+                </a>
+                <% if(!obj.getPublished()) { %>
+                    <div class="not_publish"></div>
+                <% } %>
+            </div>
+            <div class="face back">
+                <!-- TODO: gif animation             -->
+                <img class="animated" src="/img/bone.gif" alt="<%= obj.getTitle() %>" />
+            </div> 
+        </div>
         <div class="gallery_desc">
-            <%= obj.getTitle() %><br/>
+            <a href="/detail/<%= obj.getId() %>"><%= obj.getTitle() %></a><br/>
             <span class="text_desc"><%= obj.getShortDesc() %></span>
             <% if (isAdmin) {%>
                 <div class="actions">
@@ -48,6 +55,7 @@
                 </div>
             <% }%>
         </div>
+        
     </div>
 <% }); %>
 </div>
@@ -71,5 +79,10 @@
             window.location.replace("/admin/delete_object/"+objId);
         }
     }
+    
+    $(".flip").hover(function(){
+        $(this).find(".card").toggleClass("flipped");
+        return false;
+    });    
 
 </script>

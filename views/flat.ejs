@@ -9,8 +9,10 @@
 </div>
 
 <script type="text/javascript">
-    $("#slider").slider({slide: stereotaxic.changeSlice, min:0, max:100, value:50});
-    $("#change_view").buttonset();
-    $('#change_view input[type=radio]').change(function(){ stereotaxic.changeView($(this).attr('id')) })
-    stereotaxic.init("<%= obj.getFileNameFlat() %>", $("span.MRI"));
+    $(function() {
+        $("#slider").slider({slide: stereotaxic.changeSlice, min:0, max:100, value:50});
+        $("#change_view").buttonset();
+        $('#change_view input[type=radio]').change(function(){ stereotaxic.changeView($(this).attr('id')) })
+        stereotaxic.init("<%= obj.getFileNameFlat() %>", $("span.MRI"));
+    });
 </script>
