@@ -1,6 +1,11 @@
 <% layout('../base') -%>
 
 <h1><%= __('Login') %></h1>
+
+<% if(typeof error != 'undefined') {%>
+    <div class="error"><%= error %></div>
+<% } %>
+
 <form action="/login" method="post">
   <input type='hidden' name='_csrf' value='<%= _csrf %>'>
   <div class="block_form">

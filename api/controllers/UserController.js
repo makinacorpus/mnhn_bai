@@ -39,15 +39,13 @@ module.exports = {
                         });
                     } else {
                         // invalid password
-                        // TODO: add proper view
                         if (req.session.user)
-                            req.session.user = null;                        
-                        return res.json({ error: 'Invalid password' }, 400);
+                            req.session.user = null;                     
+                        res.view('user/login', {error: 'Invalid password'});
                     }
                 });
             } else {
-                // TODO: add proper view
-                return res.json({ error: 'User not found' }, 404);
+                res.view('user/login', {error: 'Invalid username'});
             }
         });
     },
@@ -68,6 +66,16 @@ module.exports = {
     */
     signup: function (req, res) {
       
+        User.findOne().where({username: req.param('username')}).exec(function (err, user) {
+            if (err)
+                res.json({ error: 'DB error' }, 500);
+
+            if (user) {
+                res.view('user/signup', {error: 'This username is already used, please choose another one'});
+            }
+        });
+        
+        
         User.create(req.params.all()).exec(function (err, user) {
             if (err)
                 return res.negotiate(err);
