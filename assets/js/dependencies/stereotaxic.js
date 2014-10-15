@@ -109,7 +109,7 @@ function Stereotaxic() {
                 var W = parseFloat($('#resizable').css('width'));
                 var w = this.width;
                 var h = this.height;
-                console.log("W:",W,"w:",w,"h:",h);
+                console.log("W:", W, "w:", w, "h:", h);
                 $('#resizable').css('height', h*W/w );
                 this.canvas.width = W;
                 this.canvas.height = h*W/w;
@@ -129,24 +129,24 @@ function Stereotaxic() {
         ys = Math.floor(this.flatObj_dim[0]/*LR*/*this.slice/100);
         yc = Math.floor(this.flatObj_dim[1]/*PA*/*this.slice/100);
         ya = Math.floor(this.flatObj_dim[2]/*IS*/*this.slice/100);
-        for(y = 0; y < this.flatObj_H; y++)
-        for(x = 0; x < this.flatObj_W; x++)
-        {
-            switch(this.view)
+        for(y = 0; y < this.flatObj_H; y++) {
+            for(x = 0; x < this.flatObj_W; x++)
             {
-                case 'sag': i = y*this.flatObj_dim[1]/*PA*/*this.flatObj_dim[0]/*LR*/+ x*this.flatObj_dim[0]/*LR*/+ys; break;
-                case 'cor': i = y*this.flatObj_dim[1]/*PA*/*this.flatObj_dim[0]/*LR*/+yc*this.flatObj_dim[0]/*LR*/+x; break;
-                case 'axi': i =ya*this.flatObj_dim[1]/*PA*/*this.flatObj_dim[0]/*LR*/+ y*this.flatObj_dim[0]/*LR*/+x; break;
+                switch(this.view)
+                {
+                    case 'sag': i = y*this.flatObj_dim[1]/*PA*/*this.flatObj_dim[0]/*LR*/+ x*this.flatObj_dim[0]/*LR*/+ys; break;
+                    case 'cor': i = y*this.flatObj_dim[1]/*PA*/*this.flatObj_dim[0]/*LR*/+yc*this.flatObj_dim[0]/*LR*/+x; break;
+                    case 'axi': i =ya*this.flatObj_dim[1]/*PA*/*this.flatObj_dim[0]/*LR*/+ y*this.flatObj_dim[0]/*LR*/+x; break;
+                }
+                val = 255*(this.flatObj[i]-this.flatObj_min)/(this.flatObj_max-this.flatObj_min);
+                i = (y*this.obj_offcn.width+x)*4;
+                this.flatObj_px.data[ i ] = val;
+                this.flatObj_px.data[ i+1 ] = val;
+                this.flatObj_px.data[ i+2 ] = val;
+                this.flatObj_px.data[ i+3 ] = 255;
             }
-            val = 255*(this.flatObj[i]-this.flatObj_min)/(this.flatObj_max-this.flatObj_min);
-            i = (y*this.obj_offcn.width+x)*4;
-            this.flatObj_px.data[ i ] = val;
-            this.flatObj_px.data[ i+1 ] = val;
-            this.flatObj_px.data[ i+2 ] = val;
-            this.flatObj_px.data[ i+3 ] = 255;
         }
         this.obj_offtx.putImageData(this.flatObj_px, 0, 0);
-
         this.context.drawImage(this.obj_offcn,0,0,this.flatObj_W,this.flatObj_H);
     };
 
@@ -186,7 +186,7 @@ function Stereotaxic() {
         //oReq.open("GET", "data/"+name+"/MRI-n4.nii.gz", true);
         oReq.open("GET", "/data/"+this.name, true);
         oReq.addEventListener("progress", function(e){ 
-                                    progress.html("Loading MRI ("+parseInt(100*e.loaded/e.total)+"%)") 
+                                    progress.html("Loading MRI ("+parseInt(100*e.loaded/e.total)+"%)");
                                 }, false);
         oReq.responseType = "arraybuffer";
         oReq.onload = function(oEvent)
@@ -219,7 +219,7 @@ function Stereotaxic() {
                         break;
                     case 32:
                         stereotaxic.flatObj = new Float32Array(data, vox_offset);
-                        stereotaxic;
+                        break;
                 }
         
                 var s, ss, std, tmpmin, tmpmax;
@@ -227,12 +227,12 @@ function Stereotaxic() {
                 stereotaxic.flatObj_min = stereotaxic.flatObj_max = stereotaxic.flatObj[0];
                 for(i = 0; i < stereotaxic.flatObj.length; i++)
                 {
-                        if(stereotaxic.flatObj[i] < stereotaxic.flatObj_min)
-                                stereotaxic.flatObj_min = stereotaxic.flatObj[i];
-                        if(stereotaxic.flatObj[i] > stereotaxic.flatObj_max)
-                                stereotaxic.flatObj_max = stereotaxic.flatObj[i];
-                        s += stereotaxic.flatObj[i];
-                        ss += stereotaxic.flatObj[i]*stereotaxic.flatObj[i];
+                    if(stereotaxic.flatObj[i] < stereotaxic.flatObj_min)
+                        stereotaxic.flatObj_min = stereotaxic.flatObj[i];
+                    if(stereotaxic.flatObj[i] > stereotaxic.flatObj_max)
+                        stereotaxic.flatObj_max = stereotaxic.flatObj[i];
+                    s += stereotaxic.flatObj[i];
+                    ss += stereotaxic.flatObj[i]*stereotaxic.flatObj[i];
                 }
                 s = s/stereotaxic.flatObj.length;
                 std = Math.sqrt(ss/stereotaxic.flatObj.length-s*s);
