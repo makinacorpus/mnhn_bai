@@ -56,6 +56,8 @@
 @spaceLabelInputForm: 10px;
 @radiusInput: 3px;
 
+@detailImgHeight: 300px;
+
 html, body {
     margin: 0;
     padding: 0;
@@ -390,8 +392,13 @@ label.form_label {
 }
 
 .carousel {
-    height: 300px;
+    height: @detailImgHeight;
     position: relative;
+}
+
+.carousel-inner > .item > img {
+    height: auto;
+    
 }
 
 // 3Dhop
@@ -461,7 +468,7 @@ label.form_label {
 //     text-align: center;
 //     position: relative;
     background: #fff;
-    height: 300px;
+    height: @detailImgHeight;
     left: 0;
     overflow: hidden;
     position: absolute;
@@ -470,7 +477,7 @@ label.form_label {
 }
 
 .main-description {
-    margin-top: 300px;
+    margin-top: @detailImgHeight;
 }
 
 
