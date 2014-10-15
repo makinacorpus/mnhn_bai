@@ -2,7 +2,7 @@
 
 <h1><%= __('Signup') %></h1>
 <form action="/signup" method="post">
-
+    <input type='hidden' name='_csrf' value='<%= _csrf %>'>
     <div class="block_form">
         <label for="username" class="form_label"><%= __('Choose a Username') %> : </label>
         <input name="username" type="text"/>
