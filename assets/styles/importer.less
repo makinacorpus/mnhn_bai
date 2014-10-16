@@ -58,6 +58,9 @@
 
 @detailImgHeight: 300px;
 
+@screen-sm : 565px;
+
+
 html, body {
     margin: 0;
     padding: 0;
@@ -103,9 +106,12 @@ header a {
 }
 
 header .logo {
+    background: url(/img/logo_bai.png) no-repeat left top;
     position : absolute;
     top: -10px;
     z-index: 9;
+    height: 134px;
+    width: 271px;    
 }
 
 footer {
@@ -126,11 +132,28 @@ footer ul.menu a {
     color: @invertedLinkColor;
 }
 
-nav.main {
-    text-align: right;
-    position: absolute;
-    top: 5px;
-    right: 10px;    
+// nav.main {
+//     text-align: right;
+//     position: absolute;
+//     top: 5px;
+//     right: 10px;    
+// }
+
+nav.navbar {
+    background: @baiBlue;
+    border: none;
+    box-shadow: none;
+    z-index: 8;
+}
+
+
+.navbar-default .navbar-nav > li > a {
+    text-shadow: none;
+    color: @invertedLinkColor;
+}
+
+.navbar-default .navbar-nav > li > a:hover {
+    color: @invertedLinkColor;
 }
 
 nav.main ul,
@@ -149,7 +172,7 @@ nav.social {
     position: absolute;
     top: 70px;
     right: 130px;
-    z-index: 9;
+    z-index: 7;
 }
 
 nav.social ul li {
@@ -551,3 +574,30 @@ label.form_label {
     -webkit-transform:rotatey(-180deg); /* Safari and Chrome */
     -o-transform:rotatey(-180deg); /* Opera */
 }
+
+
+
+// Smartphone exceptions
+@media (max-width: @screen-sm) {
+
+    header .logo {
+        background: url(/img/logo_bai_small.png) no-repeat left top;        
+        top: 10px;
+        height: 53px;
+        width: 102px;           
+    }
+    
+    nav.social {
+        right: 50px;
+    }  
+    
+    nav.social ul {
+        padding: 0px;
+    } 
+    
+    nav.social ul li {
+        margin-right: 10px;
+    } 
+    
+}
+
