@@ -47,4 +47,11 @@ module.exports.routes = {
     'post /admin/edit_object/:id': 'Object3DController.save', // save existing object
     
     'get /admin/delete_object/:id': 'Object3DController.delete', // delete object
+
+    // footer menu
+    'get /about': { view: 'statics/about' },
+    'get /contact': { view: 'statics/contact' },
+    'get /charter': { view: 'statics/charter' },
+    'get /credits': { view: 'statics/credits' },
+    'get /legals': { view: 'statics/legals' },
 };

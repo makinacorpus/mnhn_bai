@@ -46,5 +46,11 @@
 	"Invalid username": "Utilisateur invalide",
 	"This username is already used, please choose another one": "Ce nom d'utilisateur est déjà utilisé, merci d'en choisir un autre",
 	"Unable to initialize WebGL. Your browser may not support it.": "Impossible d'initialiser le WebGL. Il est possible que votre navigateur ne supporte pas cette fonctionnalité.",
-	"Your browser seems not to support the <code>&lt;canvas&gt;</code> element.": "Votre navigateur ne semble pas supporter l'élément HTML5 <code>&lt;canvas&gt;</code>."
+	"Your browser seems not to support the <code>&lt;canvas&gt;</code> element.": "Votre navigateur ne semble pas supporter l'élément HTML5 <code>&lt;canvas&gt;</code>.",
+	"About": "A propos",
+	"Contact us": "Nous contacter",
+	"Charter use": "Charte d'utilisation",
+	"Credits": "Crédits",
+	"Legals": "Mentions légales",
+	"Contact": "Contact"
 }
