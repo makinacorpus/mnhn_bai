@@ -29,6 +29,7 @@ module.exports.routes = {
     'post /gallery': 'GalleryController.filter_objects',
     
     'get /detail/:id': 'Object3DController.detail',
+    'get /detail/:id/embed': 'Object3DController.embed',
 
     'get /download' : 'FileController.download',
     

@@ -129,11 +129,10 @@ module.exports = {
         });
     },
 
-
     /**
-    * `3DObjectController.detail()`
+    * `3DObjectController.getDetail()`
     */
-    detail: function (req, res) {
+    getDetail: function (req, res, template_view) {
         
         // Check if user is admin
         var isAdmin = false;
@@ -162,10 +161,25 @@ module.exports = {
                         }
                     });
                     // Launch detail view
-                    res.view('detail', {obj: obj3D, medias: medias, medias_pictures: medias_pictures, isAdmin: isAdmin});
+                    res.view(template_view, {obj: obj3D, medias: medias, medias_pictures: medias_pictures, isAdmin: isAdmin});
                 });
             }
         );
+    },
+    
+
+    /**
+    * `3DObjectController.detail()`
+    */
+    detail: function (req, res) {        
+        sails.controllers.object3d.getDetail(req, res, 'detail');
+    },
+    
+    /**
+    * `3DObjectController.embed()`
+    */
+    embed: function (req, res) {
+        sails.controllers.object3d.getDetail(req, res, 'embed');
     }
 
 };
