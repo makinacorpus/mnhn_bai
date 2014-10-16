@@ -21,12 +21,12 @@ module.exports = {
 
         User.findOne().where({username: req.param('username')}).exec(function (err, user) {
             if (err)
-                res.json({ error: 'DB error' }, 500);
+                res.json({ error: req.__('DB error') }, 500);
 
             if (user) {
                 bcrypt.compare(req.param('password'), user.password, function (err, match) {
                     if (err)
-                        res.json({ error: 'Server error' }, 500);
+                        res.json({ error: req.__('Server error') }, 500);
 
                     if (match) {
                         // password match
@@ -41,11 +41,11 @@ module.exports = {
                         // invalid password
                         if (req.session.user)
                             req.session.user = null;                     
-                        res.view('user/login', {error: 'Invalid password'});
+                        res.view('user/login', {error: req.__('Invalid password')});
                     }
                 });
             } else {
-                res.view('user/login', {error: 'Invalid username'});
+                res.view('user/login', {error: req.__('Invalid username')});
             }
         });
     },
@@ -71,10 +71,9 @@ module.exports = {
                 res.json({ error: 'DB error' }, 500);
 
             if (user) {
-                res.view('user/signup', {error: 'This username is already used, please choose another one'});
+                res.view('user/signup', {error: req.__('This username is already used, please choose another one')});
             }
         });
-        
         
         User.create(req.params.all()).exec(function (err, user) {
             if (err)

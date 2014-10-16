@@ -40,7 +40,9 @@
 	"Flat view": "Vue par coupes",
 	"Associated objects": "Objets associés",
 	"Medias": "Medias",
-	"Welcome! You have signed up successfully!": "Welcome! You have signed up successfully!",
-	"Back to home page": "Back to home page",
-	"Log out": "Log out"
+	"Welcome! You have signed up successfully!": "Bienvenue!",
+	"Back to home page": "Retour à l'accueil",
+	"Log out": "Se déconnecter",
+	"Invalid username": "Utilisateur invalide",
+	"This username is already used, please choose another one": "Ce nom d'utilisateur est déjà utilisé, merci d'en choisir un autre"
 }
