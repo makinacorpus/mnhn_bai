@@ -18,6 +18,7 @@ module.exports = {
     filename_3D: 'string',
     filename_flat: 'string',
     preview: 'string',
+    preview_animated: 'string',
     published: 'boolean',
     gallery: {
         model: 'Gallery'
@@ -45,7 +46,14 @@ module.exports = {
         return this.filename_flat;
     },
     getPreview: function() {
-        return this.preview;
+        if(!this.preview || this.preview == '')
+            return '/img/default_preview.png';
+        return '/uploads/' + this.preview;
+    },
+    getPreviewAnimated: function() {
+        if(!this.preview_animated || this.preview_animated == '')
+            return '/img/default_preview.png';
+        return '/uploads/' + this.preview_animated;
     },
     getGallery: function() {
         return this.gallery;

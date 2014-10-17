@@ -61,10 +61,17 @@
 
     <div class="block_form">
         <label for="preview" class="form_label"><%= __('Object preview') %> : </label>
-        <input name="preview" type="text"<% if(obj) {%>  value="<%= obj.getPreview() %>"<% } %>/>
-        <!--    TODO : file selector     -->
+<!--         <input name="preview" type="text"<% if(obj) {%>  value="<%= obj.getPreview() %>"<% } %>/> -->
+<!-- TODO preview of the img -->
+        <input type="file" id="preview" name="preview" />
     </div>
 
+    <div class="block_form">
+    <!-- TODO preview of the img -->
+        <label for="preview_animated" class="form_label"><%= __('Object preview animated') %> : </label>
+        <input type="file" id="preview_animated" name="preview_animated" />
+    </div>
+    
     <div class="block_form">
         <label for="published" class="form_label"><%= __('Published') %> : </label>
         <input type="checkbox" name="published" value="published"
@@ -104,7 +111,6 @@
         $(li).addClass("selected");
         
         // Store chosen file in hidden field
-        //$("input#filename_3D").val(file);
         $('input#'+hidden).val(file);
     }
 </script>

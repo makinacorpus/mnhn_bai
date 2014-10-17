@@ -72,7 +72,7 @@ module.exports = {
                 obj3D.category = req.param('category');
                 obj3D.filename_3D = req.param('filename_3D');
                 obj3D.filename_flat = req.param('filename_flat');
-                obj3D.preview = req.param('preview');
+                //obj3D.preview = req.param('preview');
                 obj3D.gallery = req.param('gallery');
                 
                 published = req.param('published');
@@ -81,8 +81,14 @@ module.exports = {
                     obj3D.published = true;
                 }
                 
+                // Download preview file
+                sails.controllers.file.upload(req, res, obj3D, sails.controllers.object3d.savePreview, 'preview');
+
+                // Download preview animated file
+                sails.controllers.file.upload(req, res, obj3D, sails.controllers.object3d.savePreviewAnimated, 'preview_animated');
+
                 // Download files attached
-                sails.controllers.file.upload(req, res, obj3D, sails.controllers.object3d.saveMedias);
+                sails.controllers.file.upload(req, res, obj3D, sails.controllers.object3d.saveMedias, 'media_files');
                 
                 obj3D.save();
                 
@@ -97,7 +103,7 @@ module.exports = {
     * `3DObjectController.saveMedias()`
     */
     saveMedias: function (files, obj3D) {
-        // TODO: create Media object, and attached them to obj3D
+        // create Media object, and attached them to obj3D
         for(i = 0; i < files.length; i++) {
             params = {};
             params['title'] = files[i].filename; // title
@@ -115,6 +121,30 @@ module.exports = {
     },
 
 
+    /**
+    * `3DObjectController.savePreview()`
+    */
+    savePreview: function (files, obj3D) {
+        // Files will always contain one only file
+        if(files.length > 0) {
+            obj3D.preview = files[0].fd.replace(/^.*[\\\/]/, '');
+            obj3D.save();
+        }
+    },
+
+    
+    /**
+    * `3DObjectController.savePreviewAnimated()`
+    */
+    savePreviewAnimated: function (files, obj3D) {
+        // Files will always contain one only file
+        if(files.length > 0) {
+            obj3D.preview_animated = files[0].fd.replace(/^.*[\\\/]/, '');
+            obj3D.save();
+        }
+    },
+
+    
     /**
     * `3DObjectController.delete()`
     */

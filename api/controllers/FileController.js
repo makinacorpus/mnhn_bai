@@ -13,7 +13,7 @@ module.exports = {
      * Upload file(s) to the server's disk.
     */
     //upload: function (req, res) {
-    upload: function (req, res, obj, callback) {
+    upload: function (req, res, obj, callback, input_name) {
 
         // e.g.
         // 0 => infinite
@@ -23,7 +23,7 @@ module.exports = {
         // Node defaults to 2 minutes.
         res.setTimeout(0);
 
-        req.file('media_files').upload({
+        req.file(input_name).upload({
             // You can apply a file upload limit (in bytes)
             maxBytes: 5000000,
         }, function whenDone(err, uploadedFiles) {
