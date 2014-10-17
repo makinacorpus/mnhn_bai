@@ -86,14 +86,29 @@
     
     <div class="block_form">
         <label for="media_files" class="form_label"><%= __('Medias') %> : </label>
-        <input type="file" id="media_files" name="media_files" multiple />
-<!--    TODO: display already attached medias with option to delete them      -->
+        <div class="edit_medias">
+            <input type="file" id="media_files" name="media_files" multiple />
+    <!--    TODO: display already attached medias with option to delete them      -->
 
-        <% if(medias_pictures) { %>
-            <% medias_pictures.forEach(function(media, index) {%>
-                <div class='current_preview'><img src="<%= media.getUrl() %>" alt="<%= media.getTitle() %>"></div>
-            <% }); %>
-        <% } %>            
+            <% if(medias) { %>
+                <ul>
+                <% medias.forEach(function(media, index) {%>
+                    <li>
+                        <div class='current_preview'>
+                        <% if(media.isImage()) { %>
+                            <img src="<%= media.getUrl() %>" alt="<%= media.getTitle() %>">
+                        <% } else { %>
+                            <div class="media_not_img"><a target="_blank" href="<%= media.getUrl() %>"><%= media.getTitle() %></a></div>
+                        <% } %>
+                            <label for="<%= media.getId() %>_delete" class=""><%= __('Delete ?') %> : </label>
+                            <input type="checkbox" name="<%= media.getId() %>_delete" id="<%= media.getId() %>_delete">
+                        </div>
+                    </li>
+                <% }); %>
+                </ul>
+            <% } %>            
+        </div>
+        
     </div>
     
     

@@ -56,14 +56,8 @@ module.exports = {
                         return res.error();
                     }
                     
-                    medias_pictures = [];
-                    medias.forEach(function(media, index) {
-                        if(media.isImage()) {
-                            medias_pictures.push(media);
-                        }
-                    });
                     // Launch edit view
-                    res.view('admin/object3D_edit', {obj: obj3D, ply: ply_files, nii: nii_files, medias: medias, medias_pictures: medias_pictures});
+                    res.view('admin/object3D_edit', {obj: obj3D, ply: ply_files, nii: nii_files, medias: medias});
                 });
                 
                 
