@@ -94,21 +94,23 @@
                 <ul>
                 <% medias.forEach(function(media, index) {%>
                     <li>
-                        <div class='current_preview'>
-                        <% if(media.isImage()) { %>
-                            <img src="<%= media.getUrl() %>" alt="<%= media.getTitle() %>">
-                        <% } else { %>
-                            <div class="media_not_img"><a target="_blank" href="<%= media.getUrl() %>"><%= media.getTitle() %></a></div>
-                        <% } %>
-                            <label for="<%= media.getId() %>_delete" class=""><%= __('Delete ?') %> : </label>
-                            <input type="checkbox" name="<%= media.getId() %>_delete" id="<%= media.getId() %>_delete">
+                        <div id="<%= media.getId() %>" class="current_preview">
+                            <div class="media_any">
+                            <% if(media.isImage()) { %>
+                                <img src="<%= media.getUrl() %>" alt="<%= media.getTitle() %>">
+                            <% } else { %>
+                                <a target="_blank" href="<%= media.getUrl() %>"><%= media.getTitle() %></a>
+                            <% } %>
+                                <div class="delete" id="<%= media.getId() %>_delete"></div>
+                            </div>
+                            
                         </div>
                     </li>
                 <% }); %>
                 </ul>
             <% } %>            
         </div>
-        
+        <input type="hidden" name="delete_medias" id="delete_medias">
     </div>
     
     
@@ -133,4 +135,15 @@
         // Store chosen file in hidden field
         $('input#'+hidden).val(file);
     }
+   
+    // Manage media delete
+    $( ".delete" ).click(function() {
+        if (confirm("<%= __('Are you sure you want to delete this object ?') %>")) { 
+            // tag the hidden field associated to the media, for delete process
+            delete_media = $("#delete_medias").val();
+            $("#delete_medias").val(delete_media + "," + this.id.replace("_delete",""));
+            // Hide the media
+            $("#"+this.id.replace("_delete","")).hide();
+        }
+    });    
 </script>

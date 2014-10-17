@@ -101,6 +101,16 @@ module.exports = {
                 // Download files attached
                 sails.controllers.file.upload(req, res, obj3D, sails.controllers.object3d.saveMedias, 'media_files');
                 
+                // manage media deletion
+                del_medias = req.param('delete_medias').split(",");
+                for(i = 0; i < del_medias.length; i++) {
+                    Media.findOne({ id: del_medias[i] }, function(err, media) {
+                        if(err)
+                            return err;
+                        media.destroy();
+                    });
+                }
+                
                 obj3D.save();
                 
                 //Redirect to detail view
