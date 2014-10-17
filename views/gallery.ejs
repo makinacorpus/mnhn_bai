@@ -34,15 +34,14 @@
         <div class="card"> 
             <div class="face front">
                 <a href="/detail/<%= obj.getId() %>">
-                    <img src="/data/pied__thumb.png" alt="pied__" />
+                    <img src="<%= obj.getPreview() %>" alt="<%= obj.getTitle() %>" />
                 </a>
                 <% if(!obj.getPublished()) { %>
                     <div class="not_publish"></div>
                 <% } %>
             </div>
             <div class="face back">
-                <!-- TODO: gif animation             -->
-                <img class="animated" src="/img/bone.gif" alt="<%= obj.getTitle() %>" />
+                <img class="animated" src="<%= obj.getPreviewAnimated() %>" alt="<%= obj.getTitle() %>" />
             </div> 
         </div>
         <div class="gallery_desc">

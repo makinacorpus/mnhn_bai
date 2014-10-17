@@ -61,15 +61,14 @@
 
     <div class="block_form">
         <label for="preview" class="form_label"><%= __('Object preview') %> : </label>
-<!--         <input name="preview" type="text"<% if(obj) {%>  value="<%= obj.getPreview() %>"<% } %>/> -->
-<!-- TODO preview of the img -->
         <input type="file" id="preview" name="preview" />
+        <div class='current_preview'><img src="<%= obj.getPreview() %>" alt="<%= obj.getTitle() %>" /></div>
     </div>
 
     <div class="block_form">
-    <!-- TODO preview of the img -->
         <label for="preview_animated" class="form_label"><%= __('Object preview animated') %> : </label>
         <input type="file" id="preview_animated" name="preview_animated" />
+        <div class='current_preview'><img src="<%= obj.getPreviewAnimated() %>" alt="<%= obj.getTitle() %>" /></div>
     </div>
     
     <div class="block_form">
@@ -89,6 +88,12 @@
         <label for="media_files" class="form_label"><%= __('Medias') %> : </label>
         <input type="file" id="media_files" name="media_files" multiple />
 <!--    TODO: display already attached medias with option to delete them      -->
+
+        <% if(medias_pictures) { %>
+            <% medias_pictures.forEach(function(media, index) {%>
+                <div class='current_preview'><img src="<%= media.getUrl() %>" alt="<%= media.getTitle() %>"></div>
+            <% }); %>
+        <% } %>            
     </div>
     
     
