@@ -31,12 +31,11 @@ module.exports = {
                     if (match) {
                         // password match
                         req.session.user = user.id;
-                        res.json(user);
-                        //res.redirect('/welcome');
+                        //res.json(user);
                         req.login(user, function (err) {
                             if (err) return res.negotiate(err);
                             return res.redirect('/welcome');
-                        });
+                         });
                     } else {
                         // invalid password
                         if (req.session.user)
