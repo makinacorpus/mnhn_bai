@@ -18,25 +18,30 @@ var presenter = null;
 
 function setup3dhop() { 
     presenter = new Presenter("draw-canvas");
-    presenter.setScene({
-        meshes: {
-            "Axis" : { url: "/data/<%= obj.getFileName3D() %>" }
-        },
-        modelInstances : {
-            "Model1" : { mesh : "Axis" }
-        },
-        trackball: { 
-            type: SphereTrackball
-        },
-        space: {
-            centerMode: "explicit",
-            radiusMode: "explicit",
-            explicitCenter: [0.0, 0.0, 0.0],
-            explicitRadius: 200.0
-        }
-    });
-    
-    
+    res = presenter.supportsWebGL();
+    if(res) {
+        presenter.setScene({
+            meshes: {
+                "Axis" : { 
+                    url: "/data/<%= obj.getFileName3D() %>" 
+                    }
+            },
+            modelInstances : {
+                "Model1" : { mesh : "Axis" }
+            },
+            trackball: { 
+                type: SphereTrackball
+            },
+            space: {
+                centerMode: "explicit",
+                radiusMode: "explicit",
+                explicitCenter: [0.0, 0.0, 0.0],
+                explicitRadius: 200.0
+            }
+        });
+    }
+    else
+        alert("<%= __('Unable to initialize WebGL. Your browser may not support it.') %>");    
 }
 
 function actionsToolbar(action) {
