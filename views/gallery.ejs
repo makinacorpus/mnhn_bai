@@ -30,32 +30,34 @@
 <div class="detail_list">
 <% listObj.forEach(function(obj, index) {%>
 
+    
     <div class="detail flip">
         <div class="card"> 
-            <div class="face front">
-                <a href="/detail/<%= obj.getId() %>">
-                    <img src="<%= obj.getPreview() %>" alt="<%= obj.getTitle() %>" />
-                </a>
+            <a href="/detail/<%= obj.getId() %>">
+            <span class="face front">
+                <img src="<%= obj.getPreview() %>" alt="<%= obj.getTitle() %>" />
                 <% if(!obj.getPublished()) { %>
-                    <div class="not_publish"></div>
+                    <span class="not_publish"></span>
                 <% } %>
-            </div>
-            <div class="face back">
+            </span>
+            <span class="face back">
                 <img class="animated" src="<%= obj.getPreviewAnimated() %>" alt="<%= obj.getTitle() %>" />
-            </div> 
+            </span> 
+            </a>
         </div>
         <div class="gallery_desc">
-            <a href="/detail/<%= obj.getId() %>"><%= obj.getTitle() %></a><br/>
+            <%= obj.getTitle() %><br/>
             <span class="text_desc"><%= obj.getShortDesc() %></span>
             <% if (isAdmin) {%>
-                <div class="actions">
+                <span class="actions">
                     <span class="edit_link"><a href="/admin/edit_object/<%= obj.getId() %>"><img src="/img/icon_edit.png" alt="<%= __('Edit') %>" /></a></span>
                     <span class="del_link"><a href="#" onclick="javascript:delete_obj(<%= obj.getId() %>);"><img src="/img/icon_delete.png" alt="<%= __('Delete') %>" /></a></span>
-                </div>
+                </span>
             <% }%>
         </div>
-        
     </div>
+
+    
 <% }); %>
 </div>
 
