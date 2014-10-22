@@ -211,8 +211,16 @@ module.exports = {
                             medias_pictures.push(media);
                         }
                     });
-                    // Launch detail view
-                    res.view(template_view, {obj: obj3D, medias: medias, medias_pictures: medias_pictures, isAdmin: isAdmin});
+                    
+                    // Get annotations
+                    Annotation.find().where({object3d: obj3D.getId()}).exec(function (err, annotations) {
+                        if(err) {
+                            return res.error();
+                        }
+                        
+                        // Launch detail view
+                        res.view(template_view, {obj: obj3D, medias: medias, medias_pictures: medias_pictures, annotations: annotations, isAdmin: isAdmin});
+                    });
                 });
             }
         );

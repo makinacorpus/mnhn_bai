@@ -1,30 +1,34 @@
         <div id="3dhop" class="tdhop" onmousedown="if (event.preventDefault) event.preventDefault()">
 <!--             <div id="tdhlg"></div> -->
             <div id="toolbar">
-                <img id="home"     title="Home"                  src="/js/dependencies/3DHOP_2.0/skins/dark/home.png"   /><br/>
+                <img id="home"     title="Home"                  src="/js/dependencies/3DHOP_2.0/skins/dark/home.png" /><br/>
                 <img id="zoomin"   title="Zoom In"               src="/js/dependencies/3DHOP_2.0/skins/dark/zoomin.png" /><br/>
                 <img id="zoomout"  title="Zoom Out"              src="/js/dependencies/3DHOP_2.0/skins/dark/zoomout.png"/><br/>
                 <img id="light_on" title="Disable Light Control" src="/js/dependencies/3DHOP_2.0/skins/dark/light_on.png" style="position:absolute; visibility:hidden;"/>
                 <img id="light"    title="Enable Light Control"  src="/js/dependencies/3DHOP_2.0/skins/dark/light.png"/><br/>
+                <img id="hotspot_on" title="Hide Hotspots"       src="/js/dependencies/3DHOP_2.0/skins/dark/pin_on.png" style="position:absolute; visibility:hidden;"/>
+                <img id="hotspot"    title="Show Hotspots"       src="/js/dependencies/3DHOP_2.0/skins/dark/pin.png" /><br/>
                 <img id="full_on"  title="Exit Full Screen"      src="/js/dependencies/3DHOP_2.0/skins/dark/full_on.png" style="position:absolute; visibility:hidden;"/>
-                <img id="full"     title="Full Screen"           src="/js/dependencies/3DHOP_2.0/skins/dark/full.png"   />
+                <img id="full"     title="Full Screen"           src="/js/dependencies/3DHOP_2.0/skins/dark/full.png" />
             </div>
             <canvas id="draw-canvas" class="tdhop_canvas"/>    
         </div>
         <div id="opacity_slider" class="opacity_slider" oninput="javascript:changeSlice()"></div>
 
+        <div id="dialog_annotations" title="<%= __('Annotations') %>" class="dialog_annotations"><div class="annotation_content"></div><span class="dialog_close"><%= __('Close') %></span></div>
+        
 <script type="text/javascript">
 var presenter = null;
 
 function setup3dhop() { 
     presenter = new Presenter("draw-canvas");
     res = presenter.supportsWebGL();
+    scale = 5.0;
     if(res) {
         presenter.setScene({
             meshes: {
-                "Axis" : { 
-                    url: "/data/<%= obj.getFileName3D() %>" 
-                    }
+                "Axis" : { url: "/data/<%= obj.getFileName3D() %>" },
+                "Sphere" : { url: "/img/sphere.ply" }                 
             },
             modelInstances : {
                 "Model1" : { 
@@ -32,6 +36,21 @@ function setup3dhop() {
                     color : [0.4, 0.4, 0.4, 0.5]
                  }
             },
+            
+            <% if(annotations.length > 0) { %>
+            spots : {
+                <% annotations.forEach(function(annotation, index) {%>
+                    "POI<%= index %>" : {
+                        mesh: "Sphere",
+                        transform : { 
+                            matrix: SglMat4.mul(SglMat4.translation([<%= annotation.getX() %>, <%= annotation.getY() %>, <%= annotation.getZ() %>]), SglMat4.scaling([ scale, scale, scale]))
+                        },
+                        color : [1, 0.4, 0.4, 0.9]
+                    },
+                <% }); %>
+            },
+            <% } %>
+            
             trackball: { 
                 type: SphereTrackball
             },
@@ -47,7 +66,20 @@ function setup3dhop() {
         alert("<%= __('Unable to initialize WebGL. Your browser may not support it.') %>");  
         
     $(".opacity_slider").slider({slide: changeOpacity, min:0, max:100, value:50});
-        
+    presenter._onPickedSpot = onPickedSpot;
+}
+
+function onPickedSpot(id) {
+    switch(id) {
+        <% if(annotations.length > 0) { %>
+            <% annotations.forEach(function(annotation, index) {%>
+                case 'POI<%= index %>' : 
+                    $('.annotation_content').html('<h4><%= annotation.getTitle() %></h4><p><%= annotation.getDescription() %></p>');
+                    $('#dialog_annotations').dialog('open');
+                    break;
+            <% }); %>
+        <% } %>
+    }
 }
 
 function changeOpacity( event, ui) {
@@ -60,7 +92,12 @@ function actionsToolbar(action) {
     if(action=='home') presenter.resetTrackball(); 
     else if(action=='zoomin') presenter.zoomIn();
     else if(action=='zoomout') presenter.zoomOut(); 
-    else if(action=='light' || action=='light_on') { presenter.enableLightTrackball(!presenter.isLightTrackballEnabled()); lightSwitch(); } 
+    else if(action=='light' || action=='light_on') { presenter.enableLightTrackball(!presenter.isLightTrackballEnabled()); lightSwitch(); }
+    else if(action=='hotspot'|| action=='hotspot_on') {
+            presenter.toggleSpotVisibility(HOP_ALL, true); 
+            presenter.enableOnHover(!presenter.isOnHoverEnabled());
+            hotspotSwitch(); 
+    }    
     else if(action=='full'  || action=='full_on') fullscreenSwitch(); 
 }
 
@@ -69,5 +106,10 @@ $(document).ready(function(){
     setup3dhop();
     resizeCanvas(500, 400);
     moveToolbar(0,0);
+    
+    // Popup for displaying users annotations
+    $('#dialog_annotations').dialog({ dialogClass: 'noTitle' });
+    $('#dialog_annotations').dialog('close');
+    $('.dialog_close').on('click', function(){ $('#dialog_annotations').dialog('close'); });
 });
 </script>
