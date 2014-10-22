@@ -9,9 +9,9 @@
                 <img id="full_on"  title="Exit Full Screen"      src="/js/dependencies/3DHOP_2.0/skins/dark/full_on.png" style="position:absolute; visibility:hidden;"/>
                 <img id="full"     title="Full Screen"           src="/js/dependencies/3DHOP_2.0/skins/dark/full.png"   />
             </div>
-            <canvas id="draw-canvas" class="tdhop_canvas"/>
+            <canvas id="draw-canvas" class="tdhop_canvas"/>    
         </div>
-
+        <div id="opacity_slider" class="opacity_slider" oninput="javascript:changeSlice()"></div>
 
 <script type="text/javascript">
 var presenter = null;
@@ -27,7 +27,10 @@ function setup3dhop() {
                     }
             },
             modelInstances : {
-                "Model1" : { mesh : "Axis" }
+                "Model1" : { 
+                    mesh : "Axis",
+                    color : [0.4, 0.4, 0.4, 0.5]
+                 }
             },
             trackball: { 
                 type: SphereTrackball
@@ -41,7 +44,16 @@ function setup3dhop() {
         });
     }
     else
-        alert("<%= __('Unable to initialize WebGL. Your browser may not support it.') %>");    
+        alert("<%= __('Unable to initialize WebGL. Your browser may not support it.') %>");  
+        
+    $(".opacity_slider").slider({slide: changeOpacity, min:0, max:100, value:50});
+        
+}
+
+function changeOpacity( event, ui) {
+    alpha = ui.value / 100;
+    presenter._scene.modelInstances.Model1.color[3] = alpha;
+    presenter.setInstanceVisibility(HOP_ALL, true, true);
 }
 
 function actionsToolbar(action) {

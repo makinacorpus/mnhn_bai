@@ -898,16 +898,23 @@ Presenter.prototype = {
 
 			// GLstate setup			
 			gl.enable(gl.DEPTH_TEST);
-			
-			xform.model.push();													
+			// SBE
+                        gl.depthMask(false);
+                        gl.enable(gl.BLEND);
+                        //gl.blendFunc(gl.SRC_ALPHA, gl.ONE);
+                        gl.blendFunc(gl.SRC_ALPHA, gl.ONE);
+                        //gl.blendFunc(gl.SRC_ALPHA_SATURATE, gl.ONE);
+                       //
+
+                        xform.model.push();													
 			// transform using mesh & instance matrices
 			xform.model.multiply(instance.transform.matrix);
 			xform.model.multiply(mesh.transform.matrix);	
-
 			var uniforms = {
 				"uWorldViewProjectionMatrix" : xform.modelViewProjectionMatrix,
 				"uViewSpaceNormalMatrix"     : xform.viewSpaceNormalMatrix,
-				"uViewSpaceLightDirection"   : this._lightDirection
+				"uViewSpaceLightDirection"   : this._lightDirection,
+                               "uColorID"                   : [instance.color[0], instance.color[1], instance.color[2], instance.color[3]] // SBE
 			};			
 			
 			if(mesh.isNexus) {
@@ -927,7 +934,8 @@ Presenter.prototype = {
 			}
 			else { //drawing ply
 				renderer.begin();
-					renderer.setTechnique(CurrTechnique);
+					//renderer.setTechnique(CurrTechnique);
+                                       renderer.setTechnique(CCTechnique); // sbe
 					renderer.setDefaultGlobals();
 					renderer.setPrimitiveMode("FILL");
 					renderer.setGlobals(uniforms);
@@ -937,8 +945,12 @@ Presenter.prototype = {
 			}
 			
 			// GLstate cleanup
-			gl.disable(gl.DEPTH_TEST);
-			
+                        // SBE
+                        gl.disable(gl.BLEND);
+                        gl.depthMask(true);                     
+                        gl.disable(gl.DEPTH_TEST);                      
+			// 
+                        
 			xform.model.pop();
 		}
 		
