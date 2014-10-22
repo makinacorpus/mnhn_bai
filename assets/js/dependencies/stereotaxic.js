@@ -101,7 +101,7 @@ function Stereotaxic() {
         // draw flatObj
         if(this.flatObj)
             this.drawFlatObjImage();
-        else
+        /*else
         {
             var img = new Image();
             img.src = "data/" + this.name + "/" + this.view + ".jpg";
@@ -115,7 +115,7 @@ function Stereotaxic() {
                 this.canvas.height = h*W/w;
                 this.context.drawImage(this, 0, 0, W, h*W/w);
             };
-        }
+        }*/
     };
 
     /*
