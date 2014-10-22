@@ -64,6 +64,29 @@ module.exports = {
     getMainImg: function() {
         // TODO
         return "/img/default_detail.png";
+    },
+    hasFlat: function() {
+        if(!this.isEmpty(this.filename_flat))
+            return true;
+        return false;
+    },
+    hasShortDesc: function() {
+        if(!this.isEmpty(this.short_desc))
+            return true;
+        return false;
+    },
+    hasCompleteDesc: function() {
+        if(!this.isEmpty(this.complete_desc))
+            return true;
+        return false;
+    },
+    hasMedias: function() {
+        
+    },
+    isEmpty: function(pstring) {
+        if(pstring == '' || pstring == null)
+            return true;
+        return false;
     }
     
   }
