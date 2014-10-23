@@ -62,13 +62,13 @@
     <div class="block_form">
         <label for="preview" class="form_label"><%= __('Object preview') %> : </label>
         <input type="file" id="preview" name="preview" />
-        <div class='current_preview'><img src="<%= obj.getPreview() %>" alt="<%= obj.getTitle() %>" /></div>
+        <% if(obj) {%><div class='current_preview'><img src="<%= obj.getPreview() %>" alt="<%= obj.getTitle() %>" /></div><% } %>
     </div>
 
     <div class="block_form">
         <label for="preview_animated" class="form_label"><%= __('Object preview animated') %> : </label>
         <input type="file" id="preview_animated" name="preview_animated" />
-        <div class='current_preview'><img src="<%= obj.getPreviewAnimated() %>" alt="<%= obj.getTitle() %>" /></div>
+        <% if(obj) {%><div class='current_preview'><img src="<%= obj.getPreviewAnimated() %>" alt="<%= obj.getTitle() %>" /></div><% } %>
     </div>
     
     <div class="block_form">
@@ -88,27 +88,27 @@
         <label for="media_files" class="form_label"><%= __('Medias') %> : </label>
         <div class="edit_medias">
             <input type="file" id="media_files" name="media_files" multiple />
-    <!--    TODO: display already attached medias with option to delete them      -->
-
-            <% if(medias) { %>
-                <ul>
-                <% medias.forEach(function(media, index) {%>
-                    <li>
-                        <div id="<%= media.getId() %>" class="current_preview">
-                            <div class="media_any">
-                            <% if(media.isImage()) { %>
-                                <img src="<%= media.getUrl() %>" alt="<%= media.getTitle() %>">
-                            <% } else { %>
-                                <a target="_blank" href="<%= media.getUrl() %>"><%= media.getTitle() %></a>
-                            <% } %>
-                                <div class="delete" id="<%= media.getId() %>_delete"></div>
+            <% if(typeof medias != 'undefined') {%>
+                <% if(medias) { %>
+                    <ul>
+                    <% medias.forEach(function(media, index) {%>
+                        <li>
+                            <div id="<%= media.getId() %>" class="current_preview">
+                                <div class="media_any">
+                                <% if(media.isImage()) { %>
+                                    <img src="<%= media.getUrl() %>" alt="<%= media.getTitle() %>">
+                                <% } else { %>
+                                    <a target="_blank" href="<%= media.getUrl() %>"><%= media.getTitle() %></a>
+                                <% } %>
+                                    <div class="delete" id="<%= media.getId() %>_delete"></div>
+                                </div>
+                                
                             </div>
-                            
-                        </div>
-                    </li>
-                <% }); %>
-                </ul>
-            <% } %>            
+                        </li>
+                    <% }); %>
+                    </ul>
+                <% } %>
+            <% } %> 
         </div>
         <input type="hidden" name="delete_medias" id="delete_medias">
     </div>
