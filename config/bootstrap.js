@@ -9,7 +9,24 @@
  * http://sailsjs.org/#/documentation/reference/sails.config/sails.config.bootstrap.html
  */
 
+var fs = require('fs')
+  , path = require('path');
+
 module.exports.bootstrap = function(cb) {
 
-  cb();
+    //cb();
+  
+    // make a symlink for the upload directory in the public
+    var postsSource = path.join(process.cwd(), '.tmp/uploads')
+        , postsDest = path.join(process.cwd(), '.tmp/public/uploads');
+
+    if (!fs.existsSync(postsDest)) {
+        fs.symlink(postsSource, postsDest, function(err) {
+            cb(err);
+        });
+    }   
+    else {
+        cb();
+    }
+    
 };
