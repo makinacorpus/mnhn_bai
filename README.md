@@ -25,16 +25,6 @@ You need to create postgres database too, called 'bai'.
 Configure your setting by editing config/env/production.js
     module.exports.data {...}
     module.exports.connections {...}
-
-Create a symlink for the upoad directory :
-
-    cd ~/mnhn_bai/assets/
-    ln -s ../.tmp/uploads/ .
-
-Create a symlink for the data directory :
-
-    cd ~/mnhn_bai/assets/
-    ln -s ../.tmp/data/ .
     
 
 Launch the server
