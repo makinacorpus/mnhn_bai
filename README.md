@@ -48,7 +48,8 @@ If you are running a dev instance, create a symlink for the upoad directory :
 nodejs process management
 --------------------------
 You will need a proccess manager like forever, supervisor or circusd to maintain your node worker alive and healthy.
-Exemple circusd worker :
+
+Example circusd worker :
 
     [watcher:bai-bai]
     cmd = sails lift --prod
