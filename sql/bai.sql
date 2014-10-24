@@ -39,6 +39,7 @@ CREATE TABLE annotation (
     x integer,
     y integer,
     z integer,
+    author: text,
     object3d integer,
     id integer NOT NULL,
     "createdAt" timestamp with time zone,

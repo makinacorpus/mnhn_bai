@@ -16,6 +16,7 @@ module.exports = {
         x: 'integer',
         y: 'integer',
         z: 'integer',
+        author: 'string',
         object3d: {
             model: 'Object3D'
         },
