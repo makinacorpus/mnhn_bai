@@ -64,7 +64,7 @@
 html, body {
     margin: 0;
     padding: 0;
-    font-family: "Open Sans",Helvetica,Arial,sans-serif;
+    font-family: open_sanslight, "Open Sans",Helvetica,Arial,sans-serif;
 }
 
 body {
@@ -82,6 +82,14 @@ a {
 
 h1, h2, h3, h4, h5 {
     color: @baiBlue;
+}
+
+
+h1 {
+//     font-family: glegooregular;
+    font-size: 2.12em;
+    font-weight: normal;
+    line-height: 42px;
 }
 
 // bootstrap
@@ -564,7 +572,8 @@ label.form_label {
     margin: 2px;
     border-color: @blockBorderColor;
     border-style: solid;
-    border-width: 1px 1px 2px;    
+    border-width: 1px 1px 2px;   
+    overflow: hidden;
 }
 
 .bloc_desc .header_block {
@@ -606,6 +615,16 @@ label.form_label {
 .main-description {
     margin-top: @detailImgHeight;
 }
+
+
+.main-description .short-description {
+    color: #58595b;
+    font-family: open_sanslight;
+    font-size: 1.25em;
+    line-height: 30px;
+    margin-bottom: 20px;
+}
+
 
 
 // Gallery thumb effects
