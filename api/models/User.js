@@ -13,9 +13,12 @@ module.exports = {
             unique: true,
         },
         password: 'string',
+//         profile: {
+//             type: 'string'
+// //             required: true
+//         },
         profile: {
-            type: 'string'
-//             required: true
+            model: 'Profile'
         },
         
         getUserName: function () {
@@ -23,7 +26,9 @@ module.exports = {
         },
         
         isAdmin: function () {
-            return this.profile == 'admin';
+            if(this.profile)
+                return this.profile.isAdmin();
+            return false;
         }
     },
     

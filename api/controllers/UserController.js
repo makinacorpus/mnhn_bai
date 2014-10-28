@@ -19,7 +19,7 @@ module.exports = {
     login: function (req, res) {
         var bcrypt = require('bcrypt');
 
-        User.findOne().where({username: req.param('username')}).exec(function (err, user) {
+        User.findOne().populate('profile').where({username: req.param('username')}).exec(function (err, user) {
             if (err)
                 res.json({ error: req.__('DB error') }, 500);
 
@@ -30,10 +30,13 @@ module.exports = {
 
                     if (match) {
                         // password match
-                        req.session.user = user.id;
+                        //req.session.user = user.id;
+                        //req.session.user = user;
                         //res.json(user);
                         req.login(user, function (err) {
                             if (err) return res.negotiate(err);
+                            //console.log(req.user.profile);
+                            req.session.isadmin = user.isAdmin();
                             return res.redirect('/welcome');
                          });
                     } else {
@@ -55,6 +58,7 @@ module.exports = {
    */
   logout: function (req, res) {
     req.logout();
+    req.session.isadmin = false;
     //return res.ok('Logged out successfully.');
     return res.redirect('/');
   },
@@ -65,7 +69,7 @@ module.exports = {
     */
     signup: function (req, res) {
       
-        User.findOne().where({username: req.param('username')}).exec(function (err, user) {
+        User.findOne().populate('profile').where({username: req.param('username')}).exec(function (err, user) {
             if (err)
                 res.json({ error: 'DB error' }, 500);
 

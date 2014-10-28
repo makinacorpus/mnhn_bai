@@ -35,7 +35,8 @@ module.exports = {
                 filter_criteria['page_num'] =  page_num;
         }
         
-        if(req.user && req.user.isAdmin()) {
+        //if(req.user && req.user.isAdmin()) {
+        if (req.user && req.session.isadmin) {
             isAdmin = true;
             delete filters['published'];
         }

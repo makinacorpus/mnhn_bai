@@ -188,7 +188,8 @@ module.exports = {
         
         // Check if user is admin
         var isAdmin = false;
-        if(req.user && req.user.isAdmin())
+        //if(req.user && req.user.isAdmin())
+        if(req.user && req.session.isadmin)
             isAdmin = true;
         
         // Get object infos

@@ -12,7 +12,8 @@ module.exports = {
    */
   index: function (req, res, next) {
     //if (req.user && req.user.profile == "admin") {
-    if (req.user && req.user.isAdmin()) {
+    //if (req.user && req.user.isAdmin()) {
+    if (req.user && req.session.isadmin) {
         console.log("User allowed : " + req.user.username + " ( " + req.user.profile + " )");
         next();
     } else {

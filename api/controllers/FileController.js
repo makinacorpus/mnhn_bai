@@ -23,7 +23,10 @@ module.exports = {
         // Node defaults to 2 minutes.
         res.setTimeout(0);
 
-        req.file(input_name).upload({
+        req.file(input_name).on('progress', function(event){
+            //console.log(event.percent);
+            //console.log(event.written);
+        }).upload({
             // You can apply a file upload limit (in bytes)
             maxBytes: 5000000,
         }, function whenDone(err, uploadedFiles) {
