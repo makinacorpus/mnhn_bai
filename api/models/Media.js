@@ -15,9 +15,9 @@ module.exports = {
         type: 'string',
         path: 'string',
         filename:'string',
-        object3d: {
+        /*object3d: {
             model: 'Object3D'
-        },
+        },*/
         
         getId: function() {
             return this.id;

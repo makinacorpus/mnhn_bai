@@ -13,10 +13,6 @@ module.exports = {
             unique: true,
         },
         password: 'string',
-//         profile: {
-//             type: 'string'
-// //             required: true
-//         },
         profile: {
             model: 'Profile'
         },

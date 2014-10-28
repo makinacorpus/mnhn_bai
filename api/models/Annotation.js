@@ -17,9 +17,9 @@ module.exports = {
         y: 'integer',
         z: 'integer',
         author: 'string',
-        object3d: {
-            model: 'Object3D'
-        },
+        //object3d: {
+        //    model: 'Object3D'
+        //},
         
         getX: function() {
             return this.x;

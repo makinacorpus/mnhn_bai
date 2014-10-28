@@ -23,6 +23,12 @@ module.exports = {
     gallery: {
         model: 'Gallery'
     },
+    medias: {
+        collection: 'media'
+    },
+    annotations: {
+        collection: 'annotation'
+    },
     
     getId: function() {
         return this.id;

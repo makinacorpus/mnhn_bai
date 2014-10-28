@@ -39,8 +39,7 @@ CREATE TABLE annotation (
     x integer,
     y integer,
     z integer,
-    author: text,
-    object3d integer,
+    author text,
     id integer NOT NULL,
     "createdAt" timestamp with time zone,
     "updatedAt" timestamp with time zone
@@ -48,6 +47,40 @@ CREATE TABLE annotation (
 
 
 ALTER TABLE public.annotation OWNER TO gisuser;
+
+--
+-- Name: annotation_annotations_annotation__object3d_annotations; Type: TABLE; Schema: public; Owner: gisuser; Tablespace: 
+--
+
+CREATE TABLE annotation_annotations_annotation__object3d_annotations (
+    id integer NOT NULL,
+    object3d_annotations integer,
+    annotation_annotations_annotation integer
+);
+
+
+ALTER TABLE public.annotation_annotations_annotation__object3d_annotations OWNER TO gisuser;
+
+--
+-- Name: annotation_annotations_annotation__object3d_annotations_id_seq; Type: SEQUENCE; Schema: public; Owner: gisuser
+--
+
+CREATE SEQUENCE annotation_annotations_annotation__object3d_annotations_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.annotation_annotations_annotation__object3d_annotations_id_seq OWNER TO gisuser;
+
+--
+-- Name: annotation_annotations_annotation__object3d_annotations_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: gisuser
+--
+
+ALTER SEQUENCE annotation_annotations_annotation__object3d_annotations_id_seq OWNED BY annotation_annotations_annotation__object3d_annotations.id;
+
 
 --
 -- Name: annotation_id_seq; Type: SEQUENCE; Schema: public; Owner: gisuser
@@ -115,7 +148,6 @@ CREATE TABLE media (
     type text,
     path text,
     filename text,
-    object3d integer,
     id integer NOT NULL,
     "createdAt" timestamp with time zone,
     "updatedAt" timestamp with time zone
@@ -143,6 +175,40 @@ ALTER TABLE public.media_id_seq OWNER TO gisuser;
 --
 
 ALTER SEQUENCE media_id_seq OWNED BY media.id;
+
+
+--
+-- Name: media_medias_media__object3d_medias; Type: TABLE; Schema: public; Owner: gisuser; Tablespace: 
+--
+
+CREATE TABLE media_medias_media__object3d_medias (
+    id integer NOT NULL,
+    object3d_medias integer,
+    media_medias_media integer
+);
+
+
+ALTER TABLE public.media_medias_media__object3d_medias OWNER TO gisuser;
+
+--
+-- Name: media_medias_media__object3d_medias_id_seq; Type: SEQUENCE; Schema: public; Owner: gisuser
+--
+
+CREATE SEQUENCE media_medias_media__object3d_medias_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.media_medias_media__object3d_medias_id_seq OWNER TO gisuser;
+
+--
+-- Name: media_medias_media__object3d_medias_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: gisuser
+--
+
+ALTER SEQUENCE media_medias_media__object3d_medias_id_seq OWNED BY media_medias_media__object3d_medias.id;
 
 
 --
@@ -230,26 +296,24 @@ ALTER SEQUENCE passport_id_seq OWNED BY passport.id;
 
 
 --
--- Name: user; Type: TABLE; Schema: public; Owner: gisuser; Tablespace: 
+-- Name: profile; Type: TABLE; Schema: public; Owner: gisuser; Tablespace: 
 --
 
-CREATE TABLE "user" (
-    username text,
-    password text,
-    profile text,
+CREATE TABLE profile (
+    name text,
     id integer NOT NULL,
     "createdAt" timestamp with time zone,
     "updatedAt" timestamp with time zone
 );
 
 
-ALTER TABLE public."user" OWNER TO gisuser;
+ALTER TABLE public.profile OWNER TO gisuser;
 
 --
--- Name: user_id_seq; Type: SEQUENCE; Schema: public; Owner: gisuser
+-- Name: profile_id_seq; Type: SEQUENCE; Schema: public; Owner: gisuser
 --
 
-CREATE SEQUENCE user_id_seq
+CREATE SEQUENCE profile_id_seq
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -257,13 +321,13 @@ CREATE SEQUENCE user_id_seq
     CACHE 1;
 
 
-ALTER TABLE public.user_id_seq OWNER TO gisuser;
+ALTER TABLE public.profile_id_seq OWNER TO gisuser;
 
 --
--- Name: user_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: gisuser
+-- Name: profile_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: gisuser
 --
 
-ALTER SEQUENCE user_id_seq OWNED BY "user".id;
+ALTER SEQUENCE profile_id_seq OWNED BY profile.id;
 
 
 --
@@ -273,7 +337,7 @@ ALTER SEQUENCE user_id_seq OWNED BY "user".id;
 CREATE TABLE users (
     username text,
     password text,
-    profile text,
+    profile integer,
     id integer NOT NULL,
     "createdAt" timestamp with time zone,
     "updatedAt" timestamp with time zone
@@ -314,6 +378,13 @@ ALTER TABLE ONLY annotation ALTER COLUMN id SET DEFAULT nextval('annotation_id_s
 -- Name: id; Type: DEFAULT; Schema: public; Owner: gisuser
 --
 
+ALTER TABLE ONLY annotation_annotations_annotation__object3d_annotations ALTER COLUMN id SET DEFAULT nextval('annotation_annotations_annotation__object3d_annotations_id_seq'::regclass);
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: gisuser
+--
+
 ALTER TABLE ONLY gallery ALTER COLUMN id SET DEFAULT nextval('gallery_id_seq'::regclass);
 
 
@@ -322,6 +393,13 @@ ALTER TABLE ONLY gallery ALTER COLUMN id SET DEFAULT nextval('gallery_id_seq'::r
 --
 
 ALTER TABLE ONLY media ALTER COLUMN id SET DEFAULT nextval('media_id_seq'::regclass);
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: gisuser
+--
+
+ALTER TABLE ONLY media_medias_media__object3d_medias ALTER COLUMN id SET DEFAULT nextval('media_medias_media__object3d_medias_id_seq'::regclass);
 
 
 --
@@ -342,7 +420,7 @@ ALTER TABLE ONLY passport ALTER COLUMN id SET DEFAULT nextval('passport_id_seq':
 -- Name: id; Type: DEFAULT; Schema: public; Owner: gisuser
 --
 
-ALTER TABLE ONLY "user" ALTER COLUMN id SET DEFAULT nextval('user_id_seq'::regclass);
+ALTER TABLE ONLY profile ALTER COLUMN id SET DEFAULT nextval('profile_id_seq'::regclass);
 
 
 --
@@ -350,6 +428,14 @@ ALTER TABLE ONLY "user" ALTER COLUMN id SET DEFAULT nextval('user_id_seq'::regcl
 --
 
 ALTER TABLE ONLY users ALTER COLUMN id SET DEFAULT nextval('users_id_seq'::regclass);
+
+
+--
+-- Name: annotation_annotations_annotation__object3d_annotations_pkey; Type: CONSTRAINT; Schema: public; Owner: gisuser; Tablespace: 
+--
+
+ALTER TABLE ONLY annotation_annotations_annotation__object3d_annotations
+    ADD CONSTRAINT annotation_annotations_annotation__object3d_annotations_pkey PRIMARY KEY (id);
 
 
 --
@@ -366,6 +452,14 @@ ALTER TABLE ONLY annotation
 
 ALTER TABLE ONLY gallery
     ADD CONSTRAINT gallery_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: media_medias_media__object3d_medias_pkey; Type: CONSTRAINT; Schema: public; Owner: gisuser; Tablespace: 
+--
+
+ALTER TABLE ONLY media_medias_media__object3d_medias
+    ADD CONSTRAINT media_medias_media__object3d_medias_pkey PRIMARY KEY (id);
 
 
 --
@@ -393,11 +487,11 @@ ALTER TABLE ONLY passport
 
 
 --
--- Name: user_pkey; Type: CONSTRAINT; Schema: public; Owner: gisuser; Tablespace: 
+-- Name: profile_pkey; Type: CONSTRAINT; Schema: public; Owner: gisuser; Tablespace: 
 --
 
-ALTER TABLE ONLY "user"
-    ADD CONSTRAINT user_pkey PRIMARY KEY (id);
+ALTER TABLE ONLY profile
+    ADD CONSTRAINT profile_pkey PRIMARY KEY (id);
 
 
 --

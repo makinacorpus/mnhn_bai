@@ -46,24 +46,13 @@ module.exports = {
         nii_files = Utils.get_available_files('.gz');
         
         // Edit object
-        Object3D.findOne({ id: id }, function(err, obj3D) {
-                if(err)
-                    return res.error();
-                
-                // Get medias
-                Media.find().where({object3d: obj3D.getId()}).exec(function (err, medias) {
-                    if(err) {
-                        return res.error();
-                    }
-                    
-                    // Launch edit view
-                    res.view('admin/object3D_edit', {obj: obj3D, ply: ply_files, nii: nii_files, medias: medias});
-                });
-                
-                
-                //res.view('admin/object3D_edit', {obj: obj3D, ply: ply_files, nii: nii_files});
-            }
-        );
+        Object3D.findOne({ id: id }).populate('medias').exec(function(err, obj3D) {
+            if(err)
+                return res.error();
+            
+            // Launch edit view
+            res.view('admin/object3D_edit', {obj: obj3D, ply: ply_files, nii: nii_files, medias: obj3D.medias});
+        });
     },
 
 
@@ -72,7 +61,8 @@ module.exports = {
     */
     save: function (req, res) {
         var id = req.param('id')
-        Object3D.findOne({ id: id }, function(err, obj3D) {
+        //Object3D.findOne({ id: id }, function(err, obj3D) {
+        Object3D.findOne({ id: id }).populate('medias').exec(function(err, obj3D) {
                 if(err)
                     return res.error();
                 
@@ -105,10 +95,10 @@ module.exports = {
                 if(req.param('delete_medias')) {
                     del_medias = req.param('delete_medias').split(",");
                     for(i = 0; i < del_medias.length; i++) {
-                        Media.findOne({ id: del_medias[i] }, function(err, media) {
-                            if(err)
-                                return err;
-                            media.destroy();
+                        obj3D.medias.forEach(function(media, index) {
+                            if(media.getId() == del_medias[i]) {
+                                media.destroy();
+                            }
                         });
                     }
                 }                
@@ -130,13 +120,19 @@ module.exports = {
             params = {};
             params['title'] = files[i].filename; // title
             params['path'] = files[i].fd // path
-            params['object3d'] = obj3D.getId();
+            //params['object3d'] = obj3D.getId();
             params['type'] = files[i].type;
             params['filename'] = files[i].fd.replace(/^.*[\\\/]/, '');
 
             Media.create(params).exec(function (err, media) {
                 if (err)
-                    return res.negotiate(err);        
+                    return res.negotiate(err);
+                obj3D.medias.add(media.id);
+                obj3D.save(function(err){
+                    if(err){
+                        console.log(err);
+                    }
+                });                
             });
             
         }
@@ -172,12 +168,24 @@ module.exports = {
     */
     delete: function (req, res) {
         var id = req.param('id')
-        Object3D.findOne({ id: id }, function(err, obj3D) {
-                if(err)
-                    return res.error();
-                obj3D.destroy();
-                //Redirect to gallery
-                res.redirect('/gallery');
+        //Object3D.findOne({ id: id }, function(err, obj3D) {
+        Object3D.findOne({ id: id }).populate('medias').populate('annotations').exec(function(err, obj3D) {
+            if(err)
+                return res.error();
+            obj3D.destroy();
+            
+            // Destroy media associated
+            obj3D.medias.forEach(function(media, index) {
+                media.destroy();
+            });
+                
+            // Destroy annotations associated
+            obj3D.annotations.forEach(function(annotation, index) {
+                annotation.destroy();
+            });
+            
+            //Redirect to gallery
+            res.redirect('/gallery');
         });
     },
 
@@ -194,35 +202,21 @@ module.exports = {
         
         // Get object infos
         var id = req.param('id')
-        Object3D.findOne({ id: id }, function(err, obj3D) {
+        Object3D.findOne({ id: id }).populate('medias').populate('annotations').exec(function(err, obj3D) {
                 if(err) {
                     //return res.error();
                     return err;
                 }
                 
-                // Get medias
-                Media.find().where({object3d: obj3D.getId()}).exec(function (err, medias) {
-                    if(err) {
-                        return res.error();
+                medias_pictures = [];
+                obj3D.medias.forEach(function(media, index) {
+                    if(media.isImage()) {
+                        medias_pictures.push(media);
                     }
-                    
-                    medias_pictures = [];
-                    medias.forEach(function(media, index) {
-                        if(media.isImage()) {
-                            medias_pictures.push(media);
-                        }
-                    });
-                    
-                    // Get annotations
-                    Annotation.find().where({object3d: obj3D.getId()}).exec(function (err, annotations) {
-                        if(err) {
-                            return res.error();
-                        }
-                        
-                        // Launch detail view
-                        res.view(template_view, {obj: obj3D, medias: medias, medias_pictures: medias_pictures, annotations: annotations, isAdmin: isAdmin});
-                    });
                 });
+                
+                // Launch detail view
+                res.view(template_view, {obj: obj3D, medias: obj3D.medias, medias_pictures: medias_pictures, annotations: obj3D.annotations, isAdmin: isAdmin});
             }
         );
     },
