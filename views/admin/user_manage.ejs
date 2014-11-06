@@ -16,17 +16,19 @@
         <%= user.getUserName() %>
     </td>
     <td>
-        <% if (user.getProfile()) { %>
-            <select id="<%= user.getId() %>" class="select">
-                <% profiles.forEach(function(profile, index) {%>
-                    <% if (user.getProfile().getName() == profile.getName()) { %>
-                        <option value="<%= profile.getId() %>" selected><%= profile.getName() %></option>
+        <select id="<%= user.getId() %>" class="select">
+            <% profiles.forEach(function(profile, index) {%>
+                <% if (user.getProfile() && user.getProfile().getName() == profile.getName()) { %>
+                    <option value="<%= profile.getId() %>" selected><%= profile.getName() %></option>
+                <% } else { %>
+                    <% if (!user.getProfile() && profile.getName() == "user") { %>
+                        <option value="<%= profile.getId() %>" selected ><%= profile.getName() %></option>
                     <% } else { %>
                         <option value="<%= profile.getId() %>" ><%= profile.getName() %></option>
                     <% } %>
-                <% }); %>
-            </select>
-        <% } %>
+                <% } %>
+            <% }); %>
+        </select>
     </td>
 </tr>    
 <% }); %>
