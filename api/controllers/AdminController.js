@@ -54,8 +54,8 @@ module.exports = {
         User.findOne({id: id}).exec(function(err, user) {
             user.profile = profile;
             user.save();
+            return  res.json({status: true});
         });
-        return true;
   }
   
 };
