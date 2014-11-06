@@ -1,0 +1,52 @@
+<% layout('../base') -%>
+
+<h1><%= __('User manage') %></h1>
+
+
+<input type='hidden' name='_csrf' id='_csrf' value='<%= _csrf %>'>
+<table>
+<tr>
+    <th><%= __('Username') %></th>
+    <th><%= __('Profile') %></th>
+</tr>
+
+<% users.forEach(function(user, index) { %>
+<tr>
+    <td>
+        <%= user.getUserName() %>
+    </td>
+    <td>
+        <% if (user.getProfile()) { %>
+            <select id="<%= user.getId() %>" class="select">
+                <% profiles.forEach(function(profile, index) {%>
+                    <% if (user.getProfile().getName() == profile.getName()) { %>
+                        <option value="<%= profile.getId() %>" selected><%= profile.getName() %></option>
+                    <% } else { %>
+                        <option value="<%= profile.getId() %>" ><%= profile.getName() %></option>
+                    <% } %>
+                <% }); %>
+            </select>
+        <% } %>
+    </td>
+</tr>    
+<% }); %>
+
+</table>
+
+
+<script type="text/javascript">
+    $( ".select" ).change(function () {
+        id = $(this).attr('id');
+        profile = $(this).find(":selected").val();
+        
+        $.ajax({
+            type: "POST",
+            url: "/admin/update_profile/" + id,
+            data: { profile: profile, id: id, "_csrf": $("#_csrf").val()}
+        })
+        .done(function( msg ) {
+            alert( "Data Saved: " + msg );
+        });        
+    });
+
+</script>

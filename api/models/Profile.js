@@ -20,7 +20,12 @@ module.exports = {
 
     getName: function() {
         return this.name;
+    },
+    
+    getId: function() {
+        return this.id;
     }
+    
   }
 };
 

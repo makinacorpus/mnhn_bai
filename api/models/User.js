@@ -20,6 +20,14 @@ module.exports = {
         getUserName: function () {
             return this.username;
         },
+
+        getId: function () {
+            return this.id;
+        },
+        
+        getProfile: function () {
+            return this.profile;
+        },
         
         isAdmin: function () {
             if(this.profile)

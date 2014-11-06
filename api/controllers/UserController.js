@@ -37,7 +37,10 @@ module.exports = {
                             if (err) return res.negotiate(err);
                             //console.log(req.user.profile);
                             req.session.isadmin = user.isAdmin();
-                            return res.redirect('/welcome');
+                            if(user.isAdmin())
+                                return res.redirect('/admin/board');
+                            else
+                                return res.redirect('/welcome');
                          });
                     } else {
                         // invalid password

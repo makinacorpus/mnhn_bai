@@ -12,7 +12,12 @@
     <div class="collapse navbar-collapse" id="bai-menu">
       <ul class="nav navbar-nav navbar-right">
         <% if (req.isAuthenticated()) { %>
-            <li><a href="/"><%= __('Welcome') %> <%= req.user.getUserName() %></a></li>
+            <% if (req.session.isadmin) { %>
+                <li><a href="/admin/board"><%= __('Welcome') %> <%= req.user.getUserName() %></a></li>
+            <% } else { %>
+                <li><a href="/"><%= __('Welcome') %> <%= req.user.getUserName() %></a></li>
+            <% } %>
+            
             <li><a href="/logout"><%= __('Logout') %></a><li>
         <% } else { %>
             <li><a href="/login"><%= __('Login') %></a></li>

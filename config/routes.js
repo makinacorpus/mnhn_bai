@@ -48,7 +48,10 @@ module.exports.routes = {
     
     'get /admin/delete_object/:id': 'Object3DController.delete', // delete object
 
-    'get /admin/board': { view: 'admin/board' }, // admin board
+    'get /admin/board': { view: 'admin/board' }, // manage users
+    'get /admin/manage_users': 'AdminController.manage_users', // manage users
+    
+    'post /admin/update_profile/:id': 'AdminController.update_profile', // update user's profile
     
     // footer menu
     'get /about': { view: 'statics/about' },

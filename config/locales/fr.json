@@ -57,7 +57,12 @@
 	"Logout": "Logout",
 	"Object preview animated": "Aperçu animé",
 	"Delete ?": "Supprimer ?",
-	"Go to official atlasMaker website": "Go to official atlasMaker website",
+	"Go to official atlasMaker website": "Aller sur le site officiel AtlasMaker",
 	"Annotations": "Annotations",
-	"Close": "Close"
+	"Close": "Fermer",
+	"Boite à images": "Boite à images",
+	"Board": "Tableau de bord",
+	"Manage users": "Gestion des utilisateurs",
+	"User manage": "Gestion des utilisateurs",
+	"Profile": "Profile"
 }
