@@ -24,9 +24,9 @@ module.exports.routes = {
     'post /signup': 'UserController.signup',
     '/logout': 'UserController.logout',
     
-    'get /gallery/:page_num': 'GalleryController.filter_objects',
-    'get /gallery': 'GalleryController.filter_objects',
-    'post /gallery': 'GalleryController.filter_objects',
+    'get /gallery/:gallery/:page_num': 'GalleryController.filter_objects',
+    'get /gallery/:gallery': 'GalleryController.filter_objects',
+    'post /gallery/:gallery': 'GalleryController.filter_objects',
     
     'get /detail/:id': 'Object3DController.detail',
     'get /detail/:id/embed': 'Object3DController.embed',

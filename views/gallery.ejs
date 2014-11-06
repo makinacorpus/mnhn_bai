@@ -4,7 +4,7 @@
 <h1><%= __('Gallery') %></h1>
 
 <div class="filter_bar">
-    <form action="/gallery" method="post">
+    <form action="/gallery/<%= req.session.gallery %>" method="post">
         <input type='hidden' name='_csrf' value='<%= _csrf %>'>
         <%= __('Search by category') %><input type="text" name="category">
         <%= __('Free search') %><input type="text" name="freesearch">
@@ -65,14 +65,14 @@
     <div class="pagination">
         <%= __('Page') %>
         <% for(i = 1 ; i <= nb_pages; i++) {%>
-            <span><a href="/gallery/<%= i %>"><%= i %></a></span>
+            <span><a href="/gallery/<%= req.session.gallery %>/<%= i %>"><%= i %></a></span>
         <% } %>
     </div>
 <% } %>
 
 <script type="text/javascript">
     function remove_filter(filter) {
-        window.location.replace("/gallery?remove_filter="+filter);
+        window.location.replace("/gallery/<%= req.session.gallery %>?remove_filter="+filter);
     }
     
     function delete_obj(objId) {

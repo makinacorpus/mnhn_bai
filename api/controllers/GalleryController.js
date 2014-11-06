@@ -14,7 +14,12 @@ module.exports = {
         // see http://stackoverflow.com/questions/20378997/waterline-orm-sails-js-conditions-with-not-equal-in-query
         var filter_criteria = {};
         var isAdmin = false;
-        var filters = {'published' : true};
+        var gallery = req.param('gallery');
+        if(gallery)
+            req.session.gallery = gallery;
+        else
+            gallery = req.session.gallery;
+        var filters = {'published' : true, 'gallery': gallery};
 
         // pagination
         var items_per_page = req.param('items_per_page');
@@ -79,8 +84,6 @@ module.exports = {
             }
         }
 
-        // TODO: gallery (setting for default gallery ?)
-            
         // Remove filter    
         remove_filter = req.param('remove_filter');
         if(remove_filter) {
