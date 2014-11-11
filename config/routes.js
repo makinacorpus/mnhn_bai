@@ -31,6 +31,8 @@ module.exports.routes = {
     'get /detail/:id': 'Object3DController.detail',
     'get /detail/:id/embed': 'Object3DController.embed',
 
+    'get /comments/:id': 'Object3DController.get_comments',
+    
     'get /download' : 'FileController.download',
     
     '/atlasmaker': { view: 'atlasmaker' },
@@ -52,6 +54,8 @@ module.exports.routes = {
     'get /admin/manage_users': 'AdminController.manage_users', // manage users
     
     'post /admin/update_profile/:id': 'AdminController.update_profile', // update user's profile
+    
+    'post /add_comment': 'Object3DController.add_comment', // add comment on object
     
     // footer menu
     'get /about': { view: 'statics/about' },

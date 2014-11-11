@@ -29,6 +29,9 @@ module.exports = {
     annotations: {
         collection: 'annotation'
     },
+    comments: {
+        collection: 'comment'
+    },
     
     getId: function() {
         return this.id;

@@ -246,11 +246,28 @@ module.exports = {
                 });
                 
                 // Launch detail view
-                res.view(template_view, {obj: obj3D, medias: obj3D.medias, medias_pictures: medias_pictures, annotations: obj3D.annotations, isAdmin: isAdmin});
+                res.view(template_view, {obj: obj3D, medias: obj3D.medias, medias_pictures: medias_pictures, 
+                        annotations: obj3D.annotations, comments: obj3D.comments, isAdmin: isAdmin});
             }
         );
     },
     
+    /**
+    * `3DObjectController.getComments()`
+    */
+    get_comments: function (req, res) {
+        
+        // Get comments
+        var id = req.param('id');
+        var tab_comments = [];
+        
+        Comment.find({ object3d: id }).populate('author').exec(function(err, comments) {
+            comments.forEach(function(comment, index) {
+                tab_comments.push({'comment': comment.comment,'updated': comment.updatedAt, 'author': comment.author.getUserName()})
+            });
+            return res.json(tab_comments);
+        });
+    },
 
     /**
     * `3DObjectController.detail()`
@@ -258,12 +275,43 @@ module.exports = {
     detail: function (req, res) {        
         sails.controllers.object3d.getDetail(req, res, 'detail');
     },
-    
+
+
     /**
     * `3DObjectController.embed()`
     */
     embed: function (req, res) {
         sails.controllers.object3d.getDetail(req, res, 'embed');
+    },
+
+    
+    /**
+    * `3DObjectController.add_comment()`
+    */
+    add_comment: function (req, res) {
+        var id = req.param('id');
+        var comment = req.param('comment');
+
+        if(req.isAuthenticated) {
+            Object3D.findOne({ id: id }).exec(function(err, obj3D) {
+                Comment.create({'comment': comment, 'author': req.user, 'object3d': id}).exec(function (err, comment) {
+                    if (err)
+                        return res.negotiate(err);        
+                
+                    obj3D.comments.add(comment.id);
+                    obj3D.save(function(err){
+                        if(err){
+                            console.log(err);
+                        }
+                    });                
+                    
+                    return  res.json({status: true});
+                });
+            });                
+        } else {
+            return  res.json({status: false});
+        }
+
     }
 
 };
