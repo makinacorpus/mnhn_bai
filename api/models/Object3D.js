@@ -46,10 +46,10 @@ module.exports = {
         return this.category;
     },
     getFileName3D: function() {
-        return this.filename_3D;
+        return '/uploads/' + this.filename_3D;
     },
     getFileNameFlat: function() {
-        return this.filename_flat;
+        return '/uploads/' + this.filename_flat;
     },
     getPreview: function() {
         if(!this.preview || this.preview == '')

@@ -27,7 +27,7 @@ function setup3dhop() {
     if(res) {
         presenter.setScene({
             meshes: {
-                "Axis" : { url: "/data/<%= obj.getFileName3D() %>" },
+                "Axis" : { url: "<%= obj.getFileName3D() %>" },
                 "Sphere" : { url: "/img/sphere.ply" }                 
             },
             modelInstances : {

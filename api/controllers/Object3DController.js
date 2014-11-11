@@ -71,7 +71,7 @@ module.exports = {
                 obj3D.short_desc = req.param('short_desc');
                 obj3D.complete_desc = req.param('complete_desc');
                 obj3D.category = req.param('category');
-                obj3D.filename_3D = req.param('filename_3D');
+                //obj3D.filename_3D = req.param('filename_3D');
                 obj3D.filename_flat = req.param('filename_flat');
                 //obj3D.preview = req.param('preview');
                 obj3D.gallery = req.param('gallery');
@@ -81,6 +81,12 @@ module.exports = {
                 if(published == 'published') {
                     obj3D.published = true;
                 }
+
+                // Download 3D file
+                sails.controllers.file.upload(req, res, obj3D, sails.controllers.object3d.save3Dmodel, 'filename_3D');
+               
+                // Download flat file
+                sails.controllers.file.upload(req, res, obj3D, sails.controllers.object3d.saveFlatmodel, 'filename_flat');
                 
                 // Download preview file
                 sails.controllers.file.upload(req, res, obj3D, sails.controllers.object3d.savePreview, 'preview');
@@ -135,6 +141,30 @@ module.exports = {
                 });                
             });
             
+        }
+    },
+
+
+    /**
+    * `3DObjectController.save3Dmodel()`
+    */
+    save3Dmodel: function (files, obj3D) {
+        // Files will always contain one only file
+        if(files.length > 0) {
+            obj3D.filename_3D = files[0].fd.replace(/^.*[\\\/]/, '');
+            obj3D.save();
+        }
+    },
+
+
+    /**
+    * `3DObjectController.saveFlatmodel()`
+    */
+    saveFlatmodel: function (files, obj3D) {
+        // Files will always contain one only file
+        if(files.length > 0) {
+            obj3D.filename_flat = files[0].fd.replace(/^.*[\\\/]/, '');
+            obj3D.save();
         }
     },
 

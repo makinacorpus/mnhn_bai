@@ -184,7 +184,7 @@ function Stereotaxic() {
         ///////////////////////////////////////////////////////////////////////////
         var oReq = new XMLHttpRequest();
         //oReq.open("GET", "data/"+name+"/MRI-n4.nii.gz", true);
-        oReq.open("GET", "/data/"+this.name, true);
+        oReq.open("GET", this.name, true);
         oReq.addEventListener("progress", function(e){ 
                                     progress.html("Loading MRI ("+parseInt(100*e.loaded/e.total)+"%)");
                                 }, false);
@@ -274,7 +274,7 @@ function Stereotaxic() {
                             char  slice_code ;   //!< Slice timing order.   //
                             char  xyzt_units ;   //!< Units of pixdim[1..4] //
                             float cal_max;       //!< Max display intensity //  // float cal_max;       //
-                            float cal_min;       //!< Min display intensity //  // float cal_min;       //
+                            float cal_min;       //!< Min display intensity //  // float cal_min;       //this.name
                             float slice_duration;//!< Time for 1 slice.     //  // float compressed;    //
                             float toffset;       //!< Time axis shift.      //  // float verified;      //
                             int   glmax;         //!< ++UNUSED++            //  // int glmax;           //

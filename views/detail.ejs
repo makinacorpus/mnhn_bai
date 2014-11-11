@@ -1,9 +1,5 @@
 <% layout('base') -%>
 
-<% if (isAdmin) {%>
-    <div class="edit"><a href="/admin/edit_object/<%= obj.getId() %>"><%= __('Edit object') %></a></div>
-<% }%>
-  
 <% if(medias_pictures.length > 0) { %>
 <div class="bloc_img_detail">
     <% if(medias_pictures) { %>
@@ -41,6 +37,10 @@
 
 <div class="col-lg-12 col-lg-6-desc main-description">
     
+<% if (isAdmin) {%>
+    <div class="edit"><a href="/admin/edit_object/<%= obj.getId() %>"><%= __('Edit object') %></a></div>
+<% }%>
+  
     <div class="bloc_desc">
         <h1><%= obj.getTitle() %></h1>
         <% if(obj.hasShortDesc()) { %>

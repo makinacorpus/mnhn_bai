@@ -47,7 +47,11 @@
     
     <div class="block_form">
         <label for="filename_3D" class="form_label"><%= __('3D image path') %> : </label>
-        <input name="filename_3D" id="filename_3D" type="hidden" <% if(obj) {%> value="<%= obj.getFileName3D() %>"<% } %>/>
+        <input type="file" id="filename_3D" name="filename_3D" />
+        <div class="current_file"><%= __('Current file') %> : <%= obj.getFileName3D() %></div>
+
+        <!-- <input name="filename_3D" id="filename_3D" type="hidden" <% if(obj) {%> value="<%= obj.getFileName3D() %>"<% } %>/> -->
+        <!-- 
         <div class="select_list">
             <ul class="ply_list">
             <% ply.forEach(function(file, index) {%>
@@ -55,12 +59,16 @@
             <% }); %>
             </ul>
         </div>
+        -->
 
     </div>
 
     <div class="block_form">
         <label for="filename_flat" class="form_label"><%= __('Flat image path') %> : </label>
-        <input name="filename_flat" id="filename_flat" type="hidden" <% if(obj) {%> value="<%= obj.getFileNameFlat() %>"<% } %>/>
+        <input type="file" id="filename_flat" name="filename_flat" />
+        <div class="current_file"><%= __('Current file') %> : <%= obj.getFileNameFlat() %></div>
+
+        <!--<input name="filename_flat" id="filename_flat" type="hidden" <% if(obj) {%> value="<%= obj.getFileNameFlat() %>"<% } %>/>
         <div class="select_list">
             <ul class="nii_list">
             <% nii.forEach(function(file, index) {%>
@@ -68,6 +76,7 @@
             <% }); %>
             </ul>
         </div>
+        -->
         
     </div>
 
