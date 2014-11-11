@@ -31,18 +31,36 @@ module.exports = {
         Profile.find().exec(function(err, profiles) {
             // Get users infos
             User.find().populate('profile').exec(function(err, users) {
-                    if(err) {
-                        //return res.error();
-                        return err;
-                    }
-                    
-                    // Launch detail view
-                    res.view('admin/user_manage', {users: users, profiles: profiles});
+                if(err) {
+                    //return res.error();
+                    return err;
+                }
+                
+                // Launch manage view
+                res.view('admin/user_manage', {users: users, profiles: profiles});
             });
         });
   },
   
   
+  /**
+   * `AdminControllerController.manage_comments()`
+   */
+  manage_comments: function (req, res) {
+        
+        // Get comments
+        Comment.find().populate('author').exec(function(err, comments) {
+            if(err) {
+                //return res.error();
+                return err;
+            }
+            
+            // Launch manage view
+            res.view('admin/comment_manage', {comments: comments});
+        });
+  },
+
+
   /**
    * `AdminControllerController.update_profile()`
    */
@@ -56,7 +74,22 @@ module.exports = {
             user.save();
             return  res.json({status: true});
         });
+  },
+
+  
+  /**
+   * `AdminControllerController.delete_comment()`
+   */
+  delete_comment: function (req, res) {
+        var id = req.param('id');
+        
+        // Get comment
+        Comment.findOne({id: id}).exec(function(err, comment) {
+            comment.destroy();
+            return  res.json({status: true});
+        });
   }
+  
   
 };
 

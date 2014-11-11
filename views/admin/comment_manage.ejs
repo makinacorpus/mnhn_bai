@@ -1,0 +1,56 @@
+<% layout('../base') -%>
+
+<h1><%= __('Comments manage') %></h1>
+
+
+<input type='hidden' name='_csrf' id='_csrf' value='<%= _csrf %>'>
+<table>
+<tr>
+    <th><%= __('Comment') %></th>
+    <th><%= __('Author') %></th>
+    <th><%= __('Date') %></th>
+    <th><%= __('Object') %></th>
+    <th><%= __('Action') %></th>
+</tr>
+
+<% comments.forEach(function(comment, index) { %>
+<tr id="<%= comment.getId() %>">
+    <td>
+        <%= comment.getComment() %>
+    </td>
+    <td>
+        <%= comment.getAuthor().getUserName() %>
+    </td>
+    <td>
+        <%= comment.getUpdated() %>
+    </td>
+    <td>
+        <a href="/detail/<%= comment.getObject3d() %>"><%= comment.getObject3d() %></a>
+    </td>
+    <td>
+        <button onclick="delComment(<%= comment.getId() %>)"><%= __('Del comment') %></button>
+    </td>
+</tr>    
+<% }); %>
+
+</table>
+
+
+<script type="text/javascript">
+    function delComment(id) {
+        if (confirm("<%= __('Delete this comment ?') %>")) { 
+            $.ajax({
+                type: "POST",
+                url: "/admin/delete_comment/" + id,
+                data: { id: id, "_csrf": $("#_csrf").val()}
+            })
+            .done(function( msg ) {
+                if(msg.status == true)
+                    $('#'+id).remove();
+            });        
+
+        }
+        
+    }
+
+</script>

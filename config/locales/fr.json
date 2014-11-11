@@ -71,5 +71,14 @@
 	"Comments": "Commentaires",
 	"Add your comment here": "Ajoutez votre commentaire ici",
 	"Add comment": "Ajouter le commentaire",
-	"By": "De"
+	"By": "De",
+	"Manage comments": "Modération des commentaires",
+	"Comments manage": "Modération des commentaires",
+	"Comment": "Commentaire",
+	"Author": "Auteur",
+	"Date": "Date",
+	"Object": "Objet",
+	"Action": "Action",
+	"Del comment": "Supprimer",
+	"Delete this comment ?": "Supprimer ce commentaire ?"
 }

@@ -26,7 +26,16 @@ module.exports = {
         },
         
         getAuthor: function() {
-            return this.author();
+            return this.author;
+        },
+        
+        getUpdated: function() {
+            return this.updatedAt;
+        },
+        
+        getObject3d: function() {
+            return this.object3d;
         }        
+        
     }
 };
