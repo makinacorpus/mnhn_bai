@@ -29,9 +29,10 @@ module.exports = {
     */
     add: function (req, res) {
         // List available .ply and .nii file on the server
-        ply_files = Utils.get_available_files('.ply');
-        nii_files = Utils.get_available_files('.gz');
-        res.view('admin/object3D_edit', {obj: undefined, ply: ply_files, nii: nii_files});
+        //ply_files = Utils.get_available_files('.ply');
+        //nii_files = Utils.get_available_files('.gz');
+        //res.view('admin/object3D_edit', {obj: undefined, ply: ply_files, nii: nii_files});
+        res.view('admin/object3D_edit', {obj: undefined});
     },
     
 
@@ -42,8 +43,8 @@ module.exports = {
         var id = req.param('id');
         
         // List available .ply and .nii file on the server
-        ply_files = Utils.get_available_files('.ply');
-        nii_files = Utils.get_available_files('.gz');
+        //ply_files = Utils.get_available_files('.ply');
+        //nii_files = Utils.get_available_files('.gz');
         
         // Edit object
         Object3D.findOne({ id: id }).populate('medias').exec(function(err, obj3D) {
@@ -51,7 +52,8 @@ module.exports = {
                 return res.error();
             
             // Launch edit view
-            res.view('admin/object3D_edit', {obj: obj3D, ply: ply_files, nii: nii_files, medias: obj3D.medias});
+            //res.view('admin/object3D_edit', {obj: obj3D, ply: ply_files, nii: nii_files, medias: obj3D.medias});
+            res.view('admin/object3D_edit', {obj: obj3D, medias: obj3D.medias});
         });
     },
 
@@ -75,6 +77,11 @@ module.exports = {
                 obj3D.filename_flat = req.param('filename_flat');
                 //obj3D.preview = req.param('preview');
                 obj3D.gallery = req.param('gallery');
+                
+                associated_tab = req.param('associated_objects');
+                associated_tab.forEach(function(associated, index) {
+                    obj3D.associated.add(associated);
+                });
                 
                 published = req.param('published');
                 obj3D.published = false;
@@ -232,7 +239,7 @@ module.exports = {
         
         // Get object infos
         var id = req.param('id')
-        Object3D.findOne({ id: id }).populate('medias').populate('annotations').exec(function(err, obj3D) {
+        Object3D.findOne({ id: id }).populate('medias').populate('annotations').populate('associated').exec(function(err, obj3D) {
                 if(err) {
                     //return res.error();
                     return err;
@@ -247,13 +254,13 @@ module.exports = {
                 
                 // Launch detail view
                 res.view(template_view, {obj: obj3D, medias: obj3D.medias, medias_pictures: medias_pictures, 
-                        annotations: obj3D.annotations, comments: obj3D.comments, isAdmin: isAdmin});
+                        annotations: obj3D.annotations, associated: obj3D.associated, comments: obj3D.comments, isAdmin: isAdmin});
             }
         );
     },
     
     /**
-    * `3DObjectController.getComments()`
+    * `3DObjectController.get_comments()`
     */
     get_comments: function (req, res) {
         
@@ -268,6 +275,32 @@ module.exports = {
             return res.json(tab_comments);
         });
     },
+
+
+    /**
+    * `3DObjectController.get_objects()`
+    */
+    get_objects: function (req, res) {
+        
+        // Get comments
+        var id = req.param('id');
+
+        var tab_objects = [];
+        if(id)
+            var filters = {'published' : true, id: { '!': id }};
+        else
+            var filters = {'published' : true};
+        
+        Object3D.find(filters).exec(function(err, objects) {
+            if(objects) {
+                objects.forEach(function(object, index) {
+                    tab_objects.push({'id': object.getId(), 'name': object.getTitle() })
+                });
+            }
+            return res.json(tab_objects);
+        });
+    },
+
 
     /**
     * `3DObjectController.detail()`

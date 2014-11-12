@@ -32,6 +32,9 @@ module.exports = {
     comments: {
         collection: 'comment'
     },
+    associated: {
+        collection: 'object3d'
+    },
     
     getId: function() {
         return this.id;

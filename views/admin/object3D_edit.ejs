@@ -48,36 +48,19 @@
     <div class="block_form">
         <label for="filename_3D" class="form_label"><%= __('3D image path') %> : </label>
         <input type="file" id="filename_3D" name="filename_3D" />
-        <div class="current_file"><%= __('Current file') %> : <%= obj.getFileName3D() %></div>
-
-        <!-- <input name="filename_3D" id="filename_3D" type="hidden" <% if(obj) {%> value="<%= obj.getFileName3D() %>"<% } %>/> -->
-        <!-- 
-        <div class="select_list">
-            <ul class="ply_list">
-            <% ply.forEach(function(file, index) {%>
-                <li onclick="selectFile(this,'<%= file %>','.ply_list','filename_3D')" <% if(obj) {%><% if(obj.getFileName3D() == file) { %> class = "selected" <% } %><% } %>><%= file %></li>
-            <% }); %>
-            </ul>
-        </div>
-        -->
+        <% if(obj) {%>
+            <div class="current_file"><%= __('Current file') %> : <%= obj.getFileName3D() %></div>
+        <% } %>
 
     </div>
 
     <div class="block_form">
         <label for="filename_flat" class="form_label"><%= __('Flat image path') %> : </label>
         <input type="file" id="filename_flat" name="filename_flat" />
-        <div class="current_file"><%= __('Current file') %> : <%= obj.getFileNameFlat() %></div>
+        <% if(obj) {%>
+            <div class="current_file"><%= __('Current file') %> : <%= obj.getFileNameFlat() %></div>
+        <% } %>
 
-        <!--<input name="filename_flat" id="filename_flat" type="hidden" <% if(obj) {%> value="<%= obj.getFileNameFlat() %>"<% } %>/>
-        <div class="select_list">
-            <ul class="nii_list">
-            <% nii.forEach(function(file, index) {%>
-                <li onclick="selectFile(this,'<%= file %>','.nii_list','filename_flat')" <% if(obj) {%><% if(obj.getFileNameFlat() == file) { %> class = "selected" <% } %><% } %>><%= file %></li>
-            <% }); %>
-            </ul>
-        </div>
-        -->
-        
     </div>
 
     <div class="block_form">
@@ -122,6 +105,13 @@
         <input type="hidden" name="delete_medias" id="delete_medias">
     </div>
     
+    <div class="block_form">
+        <label for="associated_objects" class="form_label"><%= __('Associated objects') %> : </label>
+        <select name="associated_objects" id="associated_objects" multiple size=10>
+        </select>
+    </div>
+    
+    
     
   <div class="block_form_button">
     <input type="submit"/>
@@ -129,6 +119,19 @@
 </form>
 
 <script type="text/javascript">
+    $(document).ready(function(){
+        $.ajax({
+            type: "GET",
+            url: "/objects" <% if (obj) { %>+ '/'+<%= obj.getId() %><% } %>
+        })
+        .done(function( objects ) {
+            objects.forEach(function(object, index) {
+                $("#associated_objects").append($("<option />").val(object.id).text(object.name));
+            });
+        });
+    });
+    
+    /*
     function selectFile(li, file, selector, hidden) {
         // Unselect all
         $(selector).each(function(){
@@ -144,6 +147,7 @@
         // Store chosen file in hidden field
         $('input#'+hidden).val(file);
     }
+    */
    
     // Manage media delete
     $( ".delete" ).click(function() {

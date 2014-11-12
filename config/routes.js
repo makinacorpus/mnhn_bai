@@ -32,6 +32,8 @@ module.exports.routes = {
     'get /detail/:id/embed': 'Object3DController.embed',
 
     'get /comments/:id': 'Object3DController.get_comments',
+    'get /objects/:id': 'Object3DController.get_objects',
+    'get /objects': 'Object3DController.get_objects',
     
     'get /download' : 'FileController.download',
     
