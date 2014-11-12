@@ -104,6 +104,77 @@ ALTER SEQUENCE annotation_id_seq OWNED BY annotation.id;
 
 
 --
+-- Name: comment; Type: TABLE; Schema: public; Owner: gisuser; Tablespace: 
+--
+
+CREATE TABLE comment (
+    comment text,
+    author integer,
+    object3d integer,
+    id integer NOT NULL,
+    "createdAt" timestamp with time zone,
+    "updatedAt" timestamp with time zone
+);
+
+
+ALTER TABLE public.comment OWNER TO gisuser;
+
+--
+-- Name: comment_comments_comment__object3d_comments; Type: TABLE; Schema: public; Owner: gisuser; Tablespace: 
+--
+
+CREATE TABLE comment_comments_comment__object3d_comments (
+    id integer NOT NULL,
+    object3d_comments integer,
+    comment_comments_comment integer
+);
+
+
+ALTER TABLE public.comment_comments_comment__object3d_comments OWNER TO gisuser;
+
+--
+-- Name: comment_comments_comment__object3d_comments_id_seq; Type: SEQUENCE; Schema: public; Owner: gisuser
+--
+
+CREATE SEQUENCE comment_comments_comment__object3d_comments_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.comment_comments_comment__object3d_comments_id_seq OWNER TO gisuser;
+
+--
+-- Name: comment_comments_comment__object3d_comments_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: gisuser
+--
+
+ALTER SEQUENCE comment_comments_comment__object3d_comments_id_seq OWNED BY comment_comments_comment__object3d_comments.id;
+
+
+--
+-- Name: comment_id_seq; Type: SEQUENCE; Schema: public; Owner: gisuser
+--
+
+CREATE SEQUENCE comment_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.comment_id_seq OWNER TO gisuser;
+
+--
+-- Name: comment_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: gisuser
+--
+
+ALTER SEQUENCE comment_id_seq OWNED BY comment.id;
+
+
+--
 -- Name: gallery; Type: TABLE; Schema: public; Owner: gisuser; Tablespace: 
 --
 
@@ -235,6 +306,40 @@ CREATE TABLE object3d (
 ALTER TABLE public.object3d OWNER TO gisuser;
 
 --
+-- Name: object3d_associated_object3d__object3d_associated; Type: TABLE; Schema: public; Owner: gisuser; Tablespace: 
+--
+
+CREATE TABLE object3d_associated_object3d__object3d_associated (
+    id integer NOT NULL,
+    object3d_associated integer,
+    object3d_associated_object3d integer
+);
+
+
+ALTER TABLE public.object3d_associated_object3d__object3d_associated OWNER TO gisuser;
+
+--
+-- Name: object3d_associated_object3d__object3d_associated_id_seq; Type: SEQUENCE; Schema: public; Owner: gisuser
+--
+
+CREATE SEQUENCE object3d_associated_object3d__object3d_associated_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.object3d_associated_object3d__object3d_associated_id_seq OWNER TO gisuser;
+
+--
+-- Name: object3d_associated_object3d__object3d_associated_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: gisuser
+--
+
+ALTER SEQUENCE object3d_associated_object3d__object3d_associated_id_seq OWNED BY object3d_associated_object3d__object3d_associated.id;
+
+
+--
 -- Name: object3d_id_seq; Type: SEQUENCE; Schema: public; Owner: gisuser
 --
 
@@ -256,7 +361,7 @@ ALTER SEQUENCE object3d_id_seq OWNED BY object3d.id;
 
 
 --
--- Name: passport; Type: TABLE; Schema: public; Owner: gisuser; Tablespace: 
+-- Name: passport; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
 --
 
 CREATE TABLE passport (
@@ -272,10 +377,10 @@ CREATE TABLE passport (
 );
 
 
-ALTER TABLE public.passport OWNER TO gisuser;
+ALTER TABLE public.passport OWNER TO postgres;
 
 --
--- Name: passport_id_seq; Type: SEQUENCE; Schema: public; Owner: gisuser
+-- Name: passport_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
 --
 
 CREATE SEQUENCE passport_id_seq
@@ -286,10 +391,10 @@ CREATE SEQUENCE passport_id_seq
     CACHE 1;
 
 
-ALTER TABLE public.passport_id_seq OWNER TO gisuser;
+ALTER TABLE public.passport_id_seq OWNER TO postgres;
 
 --
--- Name: passport_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: gisuser
+-- Name: passport_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
 
 ALTER SEQUENCE passport_id_seq OWNED BY passport.id;
@@ -385,6 +490,20 @@ ALTER TABLE ONLY annotation_annotations_annotation__object3d_annotations ALTER C
 -- Name: id; Type: DEFAULT; Schema: public; Owner: gisuser
 --
 
+ALTER TABLE ONLY comment ALTER COLUMN id SET DEFAULT nextval('comment_id_seq'::regclass);
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: gisuser
+--
+
+ALTER TABLE ONLY comment_comments_comment__object3d_comments ALTER COLUMN id SET DEFAULT nextval('comment_comments_comment__object3d_comments_id_seq'::regclass);
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: gisuser
+--
+
 ALTER TABLE ONLY gallery ALTER COLUMN id SET DEFAULT nextval('gallery_id_seq'::regclass);
 
 
@@ -411,6 +530,13 @@ ALTER TABLE ONLY object3d ALTER COLUMN id SET DEFAULT nextval('object3d_id_seq':
 
 --
 -- Name: id; Type: DEFAULT; Schema: public; Owner: gisuser
+--
+
+ALTER TABLE ONLY object3d_associated_object3d__object3d_associated ALTER COLUMN id SET DEFAULT nextval('object3d_associated_object3d__object3d_associated_id_seq'::regclass);
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: postgres
 --
 
 ALTER TABLE ONLY passport ALTER COLUMN id SET DEFAULT nextval('passport_id_seq'::regclass);
@@ -447,6 +573,22 @@ ALTER TABLE ONLY annotation
 
 
 --
+-- Name: comment_comments_comment__object3d_comments_pkey; Type: CONSTRAINT; Schema: public; Owner: gisuser; Tablespace: 
+--
+
+ALTER TABLE ONLY comment_comments_comment__object3d_comments
+    ADD CONSTRAINT comment_comments_comment__object3d_comments_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: comment_pkey; Type: CONSTRAINT; Schema: public; Owner: gisuser; Tablespace: 
+--
+
+ALTER TABLE ONLY comment
+    ADD CONSTRAINT comment_pkey PRIMARY KEY (id);
+
+
+--
 -- Name: gallery_pkey; Type: CONSTRAINT; Schema: public; Owner: gisuser; Tablespace: 
 --
 
@@ -471,6 +613,14 @@ ALTER TABLE ONLY media
 
 
 --
+-- Name: object3d_associated_object3d__object3d_associated_pkey; Type: CONSTRAINT; Schema: public; Owner: gisuser; Tablespace: 
+--
+
+ALTER TABLE ONLY object3d_associated_object3d__object3d_associated
+    ADD CONSTRAINT object3d_associated_object3d__object3d_associated_pkey PRIMARY KEY (id);
+
+
+--
 -- Name: object3d_pkey; Type: CONSTRAINT; Schema: public; Owner: gisuser; Tablespace: 
 --
 
@@ -479,7 +629,7 @@ ALTER TABLE ONLY object3d
 
 
 --
--- Name: passport_pkey; Type: CONSTRAINT; Schema: public; Owner: gisuser; Tablespace: 
+-- Name: passport_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
 --
 
 ALTER TABLE ONLY passport
