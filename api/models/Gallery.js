@@ -14,6 +14,10 @@ module.exports = {
         collection: 'Object3D',
         via: 'gallery'
     },
+
+    getId: function() {
+        return this.id;
+    },
     
     getTitle: function() {
         return this.title;

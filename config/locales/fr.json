@@ -80,5 +80,9 @@
 	"Object": "Objet",
 	"Action": "Action",
 	"Del comment": "Supprimer",
-	"Delete this comment ?": "Supprimer ce commentaire ?"
+	"Delete this comment ?": "Supprimer ce commentaire ?",
+	"Pictures": "Pictures",
+	"3D": "3D",
+	"Flat": "Flat",
+	"Associated": "Associated"
 }

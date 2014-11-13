@@ -304,6 +304,24 @@ module.exports = {
 
 
     /**
+    * `3DObjectController.get_galleries()`
+    */
+    get_galleries: function (req, res) {
+        
+        // Get comments
+        var tab_galleries = [];
+        Gallery.find({}).exec(function(err, galleries) {
+            if(galleries) {
+                galleries.forEach(function(gallery, index) {
+                    tab_galleries.push({'id': gallery.getId(), 'title': gallery.getTitle() })
+                });
+            }
+            return res.json(tab_galleries);
+        });
+    },
+
+
+    /**
     * `3DObjectController.detail()`
     */
     detail: function (req, res) {        

@@ -25,7 +25,8 @@
 
     <div class="block_form">
         <label for="gallery" class="form_label"><%= __('Gallery') %> : </label>
-        <input name="gallery" type="text" <% if(obj) {%> value="<%= obj.getGallery() %>"<% } %>/>
+        <select name="gallery" id="gallery" class="select">
+        </select>
     </div>
     
     <div class="block_form">
@@ -129,6 +130,23 @@
                 $("#associated_objects").append($("<option />").val(object.id).text(object.name));
             });
         });
+        
+        $.ajax({
+            type: "GET",
+            url: "/galleries"
+        })
+        .done(function( objects ) {
+            objects.forEach(function(gallery, index) {
+                $("#gallery").append($("<option />").val(gallery.id).text(gallery.title));
+                if (gallery.id == <%= obj.getGallery() %>) {
+                    //$("#gallery").append($("<option selected />").val(gallery.id).text(gallery.title));
+                    $("#gallery").val(gallery.id);
+                }
+                //else
+                //    $("#gallery").append($("<option />").val(gallery.id).text(gallery.title));
+            });
+        });
+        
     });
     
     /*

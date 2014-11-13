@@ -1,86 +1,166 @@
 <% layout('base_embed') -%>
 
-<% if (isAdmin) {%>
-    <div class="edit"><a href="/admin/edit_object/<%= obj.getId() %>"><%= __('Edit object') %></a></div>
-<% }%>
-  
-<div class="bloc_img_detail">
-    <div class="bloc_title"><%= obj.getTitle() %></div>
-    <% if(medias_pictures) { %>
-        <div id="mediaCarousel" class="carousel slide" data-ride="carousel">
-            
-        <!-- Indicators -->
-        <ol class="carousel-indicators">
-            <% medias_pictures.forEach(function(media, index) {%>
-                <li data-target="#mediaCarousel" data-slide-to="<%= index %>" <% if (index == 0) {%>class="active"<%}%>></li>
-            <% }); %>
-        </ol>
-        
-        <div class="carousel-inner">
-            <% medias_pictures.forEach(function(media, index) {%>
-                <div class="item <% if (index == 0) {%>active<%}%>">
-                    <img src="<%= media.getUrl() %>" alt="<%= media.getTitle() %>">
-                    <div class="container">
-                        <div class="carousel-caption">
-                            <h1><%= media.getTitle() %></h1>
-                        </div>
+<input type='hidden' name='_csrf' id='_csrf' value='<%= _csrf %>'>
+
+
+
+<div id="tabs">
+    <ul>
+        <li><a href="#tabs-1"><%= __('Description') %></a></li>
+        <li><a href="#tabs-2"><%= __('Pictures') %></a></li>
+        <li><a href="#tabs-3"><%= __('3D') %></a></li>
+        <li><a href="#tabs-4"><%= __('Flat') %></a></li>
+        <li><a href="#tabs-5"><%= __('Medias') %></a></li>
+        <li><a href="#tabs-6"><%= __('Comments') %></a></li>
+        <li><a href="#tabs-7"><%= __('Associated') %></a></li>
+    </ul>
+    <div id="tabs-1">
+        <div class="col-lg-12 col-lg-6-desc main-description">
+            <div class="bloc_desc">
+                <h1><%= obj.getTitle() %></h1>
+                <% if(obj.hasShortDesc()) { %>
+                    <div class="short-description">
+                        <%= obj.getShortDesc() %>
                     </div>
-                </div>
-            <% }); %>
+                <% } %>
+                
+                <% if(obj.hasCompleteDesc()) { %>
+                    <div class="complete-description">
+                        <p><%= obj.getCompleteDesc() %></p>
+                    </div>
+                <% } %>          
+            
+            </div>
         </div>
-        <a class="left carousel-control" href="#mediaCarousel" role="button" data-slide="prev"><span class="glyphicon glyphicon-chevron-left"></span></a>
-        <a class="right carousel-control" href="#mediaCarousel" role="button" data-slide="next"><span class="glyphicon glyphicon-chevron-right"></span></a>
+    </div>
+    <div id="tabs-2">
+        <% if(medias_pictures.length > 0) { %>
+        <div class="col-lg-12 col-lg-12-desc">
+            <div class="bloc_desc">
+                <% medias_pictures.forEach(function(media, index) {%>
+                        <div class="detail flip">
+                            <div class="card"> 
+                                <span class="face front">
+                                    <img src="<%= req.protocol + '://' + req.get('host') %><%= media.getUrl() %>" alt="<%= media.getTitle() %>">
+                                </span>
+                            </div>
+                        </div>
+                <% }); %>
+            </div>
+        </div>
+        <% } %>
         
-        </div><!-- /.carousel -->
-    <% } else { %>
-        <img src="<%= obj.getMainImg() %>" alt="<%= obj.getTitle() %>" />
+    </div>
+    <div id="tabs-3">
+        <div class="col-lg-6 col-lg-6-desc view-3D">
+            <div class="bloc_desc">
+                <% include 3dhop.ejs %>
+            </div>
+        </div>        
+    </div>
+    <div id="tabs-4">
+        <% if(obj.hasFlat()) { %>
+            <div class="col-lg-6 col-lg-6-desc view-flat">
+                <div class="bloc_desc">
+                    <% include flat.ejs %>
+                </div>
+            </div>
+        <% } %>        
+    </div>
+    <div id="tabs-5">
+        <% if(medias.length > 0) { %>
+        <div class="col-lg-6 col-lg-6-desc">
+            <div class="bloc_desc">
+                <ul>
+                <% medias.forEach(function(media, index) {%>
+                    <li><a target="_blank" href="<%= req.protocol + '://' + req.get('host') %>/download?path=<%= req.protocol + '://' + req.get('host') %><%= media.getPath() %>"><%= media.getTitle() %></a></li>
+                <% }); %>
+                </ul>
+            </div>
+        </div>
+        <% } %>        
+    </div>
+    <div id="tabs-6">
+        <div class="col-lg-12 col-lg-12-desc">
+            <div class="bloc_desc">
+                <div id="comments">
+                </div>
+                
+                <% if (req.isAuthenticated()) { %>
+                    <textarea name="add_comment" id="add_comment" rows="5" cols="40"><%= __('Add your comment here') %></textarea>
+                    <button onclick="addComment()"><%= __('Add comment') %></button>
+                <% } %>
+            </div>
+        </div>
+    </div>
+    
+    <div id="tabs-7">
+        <% if(associated.length > 0) { %>
+        <div class="col-lg-12 col-lg-12-desc">
+            <div class="bloc_desc">
+                <div class="header_block"><h4><%= __('Associated objects') %></h4></div>
+                <% associated.forEach(function(assoc, index) {%>
+                        <div class="detail flip">
+                            <div class="card"> 
+                                <a href="/detail/<%= assoc.getId() %>">
+                                <span class="face front">
+                                    <img src="<%= req.protocol + '://' + req.get('host') %><%= assoc.getPreview() %>" alt="<%= assoc.getTitle() %>" />
+                                </span>
+                                </a>
+                            </div>
+                        </div>
+                <% }); %>
+            </div>
+        </div>
+        <% } %>    
+    </div>
+
+</div>
+
+
+<script type="text/javascript">
+    $(function() {
+        $( "#tabs" ).tabs();
+    });
+
+    <% if(medias_pictures.length == 0) { %>
+        // If no media pictures, we need to remove the margin of the first blocks
+        if($('.main-description')) {
+            $('.main-description').css( "margin-top", "0" );
+        }
     <% } %>
-</div>
 
-
-<div class="col-lg-12 col-lg-6-desc main-description">
-    <div class="bloc_desc">
-        <%= obj.getShortDesc() %>
-    </div>
-</div>
-
-<div class="col-lg-6 col-lg-6-desc view-3D">
-    <div class="bloc_desc">
-        <div class="header_block"><h4><%= __('3D view') %></h4></div>
-        <% include 3dhop.ejs %>
-    </div>
-</div>
-<div class="col-lg-6 col-lg-6-desc view-flat">
-    <div class="bloc_desc">
-        <div class="header_block"><h4><%= __('Flat view') %></h4></div>
-        <% include flat.ejs %>
-    </div>
-</div>
-
-
-<div class="col-lg-6 col-lg-6-desc">
-    <div class="bloc_desc">
-        <div class="header_block"><h4><%= __('Description') %></h4></div>
-        <p><%= obj.getCompleteDesc() %></p>
-    </div>
-</div>
-<div class="col-lg-6 col-lg-6-desc">
-    <div class="bloc_desc">
-        <div class="header_block"><h4><%= __('Medias associated') %></h4></div>
-        <ul>
-        <% medias.forEach(function(media, index) {%>
-            <li><a target="_blank" href="/download?path=<%= media.getPath() %>"><%= media.getTitle() %></a></li>
-        <% }); %>
-        </ul>
-    </div>
-</div>
-
-
-<div class="col-lg-12 col-lg-12-desc">
-    <div class="bloc_desc">
-        <div class="header_block"><h4><%= __('Associated objects') %></h4></div>
-        <p>TODO</p>
-    </div>
-</div>
-
-
+    $(document).ready(function(){
+        $.ajax({
+            type: "GET",
+            url: "<%= req.protocol + '://' + req.get('host') %>/comments/" + <%= obj.getId() %>,
+            data: { "_csrf": $("#_csrf").val() }
+        })
+        .done(function( comments ) {
+            comments.forEach(function(comment, index) {
+                $("#comments").append(formatComment(comment.comment, comment.updated, comment.author));
+            });
+        });
+    });
+    
+    function addComment() {
+        comment = $("#add_comment").val();
+            
+        $.ajax({
+            type: "POST",
+            url: "<%= req.protocol + '://' + req.get('host') %>/add_comment",
+            data: { "comment": comment, "id": <%= obj.getId() %>, "_csrf": $("#_csrf").val()}
+        })
+        .done(function( msg ) {
+            if(msg.status) {
+                $("#comments").append(formatComment(comment));
+            }
+        });
+    }
+    
+    function formatComment(comment, updated, author) {
+        var comment = "<div class='comment'><div class='comment_content'>"+comment+"</div><div class='author'><%= __('By') %> "+author+" - " + updated + "</div></div>";
+        return comment;
+    }
+    
+</script>
