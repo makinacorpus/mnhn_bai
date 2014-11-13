@@ -138,10 +138,12 @@
         .done(function( objects ) {
             objects.forEach(function(gallery, index) {
                 $("#gallery").append($("<option />").val(gallery.id).text(gallery.title));
-                if (gallery.id == <%= obj.getGallery() %>) {
-                    //$("#gallery").append($("<option selected />").val(gallery.id).text(gallery.title));
-                    $("#gallery").val(gallery.id);
-                }
+                <% if(obj) {%>
+                    if (gallery.id == <%= obj.getGallery() %>) {
+                        //$("#gallery").append($("<option selected />").val(gallery.id).text(gallery.title));
+                        $("#gallery").val(gallery.id);
+                    }
+                <% } %>
                 //else
                 //    $("#gallery").append($("<option />").val(gallery.id).text(gallery.title));
             });
