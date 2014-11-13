@@ -79,10 +79,11 @@ module.exports = {
                 obj3D.gallery = req.param('gallery');
                 
                 associated_tab = req.param('associated_objects');
-                associated_tab.forEach(function(associated, index) {
-                    obj3D.associated.add(associated);
-                });
-                
+                if(associated_tab) {
+                    associated_tab.forEach(function(associated, index) {
+                        obj3D.associated.add(associated);
+                    });
+                }                
                 published = req.param('published');
                 obj3D.published = false;
                 if(published == 'published') {
