@@ -81,8 +81,18 @@
 	"Action": "Action",
 	"Del comment": "Supprimer",
 	"Delete this comment ?": "Supprimer ce commentaire ?",
-	"Pictures": "Pictures",
+	"Pictures": "Images",
 	"3D": "3D",
-	"Flat": "Flat",
-	"Associated": "Associated"
+	"Flat": "Plat",
+	"Associated": "Associée",
+	"Edit annotations": "Editer les annotations",
+	"Add annotation": "Ajouter une annotation",
+	"Title": "Titre",
+	"X": "X",
+	"Y": "Y",
+	"Z": "Z",
+	"Add annotation line": "Ajouter une annotation",
+	"Are you sure you want to delete this annotation ?": "Are you sure you want to delete this annotation ?",
+	"Delete this annotation": "Delete this annotation",
+	"Save": "Save"
 }

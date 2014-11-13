@@ -51,6 +51,9 @@ module.exports.routes = {
     'get /admin/edit_object/:id': 'Object3DController.edit', // edit existing object
     'post /admin/edit_object/:id': 'Object3DController.save', // save existing object
     
+    'get /admin/edit_annotations/:id': 'Object3DController.edit_annotations', // edit 3D model's annotations
+    'post /admin/edit_annotations/:id': 'Object3DController.save_annotations', // save 3D model's annotations
+    
     'get /admin/delete_object/:id': 'Object3DController.delete', // delete object
 
     'get /admin/board': { view: 'admin/board' }, // manage users

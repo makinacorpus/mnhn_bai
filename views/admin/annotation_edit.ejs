@@ -1,0 +1,101 @@
+<% layout('../base') -%>
+
+
+    <h1><%= __('Edit annotations') %></h1>
+    <form action="/admin/edit_annotations/<%= obj.getId() %>" method="post" enctype="multipart/form-data">
+
+        <input type='hidden' name='_csrf' value='<%= _csrf %>'>
+
+        <input type='hidden' name='count_new_annotation' id='count_new_annotation' value='0'>
+        
+        <input type="hidden" name="delete_annotations" id="delete_annotations">
+        
+        <div class="annotations_container">
+
+            <% annotations.forEach(function(annotation, index) {%>
+            <div class="annotation_bloc" id="<%= annotation.getId() %>">
+                <div class="block_form">
+                    <label for="title_<%= annotation.getId() %>" class="form_label"><%= __('Title') %> : </label>
+                    <input name="title_<%= annotation.getId() %>" type="text" value="<%= annotation.getTitle() %>"/>
+                </div>
+                
+                <div class="block_form">
+                    <label for="x_<%= annotation.getId() %>" class="form_label"><%= __('X') %> : </label>
+                    <input name="x_<%= annotation.getId() %>" type="text" value="<%= annotation.getX() %>"/>
+                </div>
+                
+                <div class="block_form">
+                    <label for="y_<%= annotation.getId() %>" class="form_label"><%= __('Y') %> : </label>
+                    <input name="y_<%= annotation.getId() %>" type="text" value="<%= annotation.getY() %>"/>
+                </div>
+                
+                <div class="block_form">
+                    <label for="z_<%= annotation.getId() %>" class="form_label"><%= __('Z') %> : </label>
+                    <input name="z_<%= annotation.getId() %>" type="text" value="<%= annotation.getZ() %>"/>
+                </div>
+                
+                <div class="block_form">
+                    <label for="description_<%= annotation.getId() %>" class="form_label"><%= __('Description') %> : </label>
+                    <textarea name="description_<%= annotation.getId() %>" rows="5" cols="40"><%= annotation.getDescription() %></textarea>
+                </div>                
+                
+                <button onclick="deleteAnnotation(<%= annotation.getId() %>)" type='button'><%= __('Delete this annotation') %></button>
+            </div>
+            <% }); %>
+        
+        </div>
+        
+        <div class="block_form_button">
+            <input type="submit" value="<%= __('Save') %>"/>
+            <button onclick="addLineAnnotation()" type='button'><%= __('Add annotation line') %></button>
+        </div>
+        
+        
+        
+</form>
+
+<script type="text/javascript">
+    function addLineAnnotation() {
+        count_new = 1 * $("#count_new_annotation").val() + 1;
+        $("#count_new_annotation").val(count_new);
+
+        content = "    \
+            <div class='annotation_bloc'>   \
+                <div class='block_form'>   \
+                    <label for='title_new_"+count_new+"' class='form_label'><%= __('Title') %> : </label>   \
+                    <input name='title_new_"+count_new+"' type='text' value=''/>   \
+                </div>   \
+                <div class='block_form'>   \
+                    <label for='x_new_"+count_new+"' class='form_label'><%= __('X') %> : </label>   \
+                    <input name='x_new_"+count_new+"' type='text' value=''/>   \
+                </div>   \
+                <div class='block_form'>   \
+                    <label for='y_new_"+count_new+"' class='form_label'><%= __('Y') %> : </label>   \
+                    <input name='y_new_"+count_new+"' type='text' value=''/>   \
+                </div>   \
+                <div class='block_form'>   \
+                    <label for='z_new_"+count_new+"' class='form_label'><%= __('Z') %> : </label>   \
+                    <input name='z_new_"+count_new+"' type='text' value=''/>   \
+                </div>   \
+                <div class='block_form'>   \
+                    <label for='description_new_"+count_new+"' class='form_label'><%= __('Description') %> : </label>   \
+                    <textarea name='description_new_"+count_new+"' rows='5' cols='40'></textarea>   \
+                </div>   \
+            </div>";
+
+        $(".annotations_container").append(content);
+ 
+    }
+    
+    // Manage annotation delete
+    function deleteAnnotation(id) {
+        if (confirm("<%= __('Are you sure you want to delete this annotation ?') %>")) { 
+            // tag the hidden field associated to the annotation, for delete process
+            delete_annotation = $("#delete_annotations").val();
+            $("#delete_annotations").val(delete_annotation + "," + id);
+            // Hide the annotation
+            $("#"+id).hide();
+        }
+    }
+    
+</script>

@@ -63,7 +63,6 @@ module.exports = {
     */
     save: function (req, res) {
         var id = req.param('id')
-        //Object3D.findOne({ id: id }, function(err, obj3D) {
         Object3D.findOne({ id: id }).populate('medias').exec(function(err, obj3D) {
                 if(err)
                     return res.error();
@@ -364,7 +363,105 @@ module.exports = {
             return  res.json({status: false});
         }
 
+    },
+    
+    
+    /**
+    * `3DObjectController.edit_annotations()`
+    */
+    edit_annotations: function (req, res) {
+        var id = req.param('id');
+
+        // Edit object
+        Object3D.findOne({ id: id }).populate('annotations').exec(function(err, obj3D) {
+            if(err)
+                return res.error();
+            
+            annotations = obj3D.annotations;
+            
+            // Launch edit view
+            res.view('admin/annotation_edit', {obj: obj3D, annotations: annotations});
+        });
+
+    },
+    
+    /**
+    * `3DObjectController.save_annotations()`
+    */
+    save_annotations: function (req, res) {
+        var id = req.param('id');
+        Object3D.findOne({ id: id }).populate('annotations').exec(function(err, obj3D) {
+                if(err)
+                    return res.error();
+                
+                count_new_annotations = req.param('count_new_annotation');
+                del_annotations = req.param('delete_annotations');
+        
+                // save existing annotations
+                obj3D.annotations.forEach(function(annotation, index) {
+                    // for each annotation check if changes occurs
+                    title = req.param('title_' + annotation.getId());
+                    description = req.param('description_' + annotation.getId());
+                    x = req.param('x_' + annotation.getId());
+                    y = req.param('y_' + annotation.getId());
+                    z = req.param('z_' + annotation.getId());
+                    
+                    annotation.title = title;
+                    annotation.description = description;
+                    annotation.x = x;
+                    annotation.y = y;
+                    annotation.z = z;
+                    
+                    annotation.save();
+                });
+
+                
+                // Delete annotations
+                if(del_annotations) {
+                    del_annotations = del_annotations.split(",");
+                    for(i = 0; i < del_annotations.length; i++) {
+                        obj3D.annotations.forEach(function(annotation, index) {
+                            if(annotation.getId() == del_annotations[i]) {
+                                annotation.destroy();
+                            }
+                        });
+                    }
+                }                
+                
+                // Add new annotations
+                for(i = 1; i <= count_new_annotations; i++) {
+                    
+                    title = req.param('title_new_' + i);
+                    description = req.param('description_new_' + i);
+                    x = req.param('x_new_' + i);
+                    y = req.param('y_new_' + i);
+                    z = req.param('z_new_' + i);
+                    
+                    params = {};
+                    params['title'] = title;
+                    params['description'] = description;
+                    params['x'] = x;
+                    params['y'] = y;
+                    params['z'] = z;
+                    Annotation.create(params).exec(function (err, annotation) {
+                        if (err)
+                            return res.negotiate(err);
+                        obj3D.annotations.add(annotation.id);
+                        obj3D.save(function(err){
+                            if(err){
+                                console.log(err);
+                            }
+                        });                
+                    });
+                }
+                
+                //Redirect to detail view
+                res.redirect('/detail/'+obj3D.getId());
+        });
+
+
     }
+    
 
 };
 

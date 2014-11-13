@@ -20,6 +20,10 @@ module.exports = {
         //object3d: {
         //    model: 'Object3D'
         //},
+
+        getId: function() {
+            return this.id;
+        },
         
         getX: function() {
             return this.x;
