@@ -76,6 +76,7 @@ module.exports = {
                 obj3D.filename_flat = req.param('filename_flat');
                 //obj3D.preview = req.param('preview');
                 obj3D.gallery = req.param('gallery');
+                obj3D.copyright = req.param('copyright');
                 
                 associated_tab = req.param('associated_objects');
                 if(associated_tab) {

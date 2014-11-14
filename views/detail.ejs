@@ -66,8 +66,9 @@
         <div class="header_block"><h4><%= __('3D view') %></h4></div>
         <% include 3dhop.ejs %>
         <% if (isAdmin) {%>
-            <div class="edit"><a href="/admin/edit_annotations/<%= obj.getId() %>"><%= __('Edit annotations') %></a></div>
+            <div class="edit_annotation"><a href="/admin/edit_annotations/<%= obj.getId() %>"><%= __('Edit annotations') %></a></div>
         <% }%>
+        <div class="copyright"><%= __('Copyright') %> : <%= obj.getCopyright() %></div>
     </div>
 </div>
 

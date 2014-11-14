@@ -33,6 +33,11 @@
         <label for="category" class="form_label"><%= __('Category') %> : </label>
         <input name="category" type="text" <% if(obj) {%> value="<%= obj.getCategory() %>"<% } %>/>
     </div>
+
+    <div class="block_form">
+        <label for="copyright" class="form_label"><%= __('Copyright') %> : </label>
+        <input name="copyright" type="text" <% if(obj) {%> value="<%= obj.getCopyright() %>"<% } %>/>
+    </div>
     
     <div class="block_form">
         <label for="published" class="form_label"><%= __('Published') %> : </label>

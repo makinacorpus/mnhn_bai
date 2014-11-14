@@ -20,6 +20,7 @@ module.exports = {
     preview: 'string',
     preview_animated: 'string',
     published: 'boolean',
+    copyright: 'string',
     gallery: {
         model: 'Gallery'
     },
@@ -50,6 +51,9 @@ module.exports = {
     },
     getCategory: function() {
         return this.category;
+    },
+    getCopyright: function() {
+        return this.copyright;
     },
     getFileName3D: function() {
         return '/uploads/' + this.filename_3D;
