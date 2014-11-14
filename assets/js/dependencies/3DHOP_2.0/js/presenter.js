@@ -899,24 +899,36 @@ Presenter.prototype = {
 			// GLstate setup			
 			gl.enable(gl.DEPTH_TEST);
 			// SBE
-                        gl.depthMask(false);
-                        gl.enable(gl.BLEND);
-                        //gl.blendFunc(gl.SRC_ALPHA, gl.ONE);
-                        gl.blendFunc(gl.SRC_ALPHA, gl.ONE);
-                        //gl.blendFunc(gl.SRC_ALPHA_SATURATE, gl.ONE);
-                       //
+                        if(this._opacity_enabled) {
+                            gl.depthMask(false);
+                            gl.enable(gl.BLEND);
+                            //gl.blendFunc(gl.SRC_ALPHA, gl.ONE);
+                            gl.blendFunc(gl.SRC_ALPHA, gl.ONE);
+                            //gl.blendFunc(gl.SRC_ALPHA_SATURATE, gl.ONE);
+                            //
+                        }
 
                         xform.model.push();													
 			// transform using mesh & instance matrices
 			xform.model.multiply(instance.transform.matrix);
 			xform.model.multiply(mesh.transform.matrix);	
-			var uniforms = {
-				"uWorldViewProjectionMatrix" : xform.modelViewProjectionMatrix,
-				"uViewSpaceNormalMatrix"     : xform.viewSpaceNormalMatrix,
-				"uViewSpaceLightDirection"   : this._lightDirection,
-                               "uColorID"                   : [instance.color[0], instance.color[1], instance.color[2], instance.color[3]] // SBE
-			};			
-			
+                        
+                        if(this._opacity_enabled) {
+                            var uniforms = {
+                                    "uWorldViewProjectionMatrix" : xform.modelViewProjectionMatrix,
+                                    "uViewSpaceNormalMatrix"     : xform.viewSpaceNormalMatrix,
+                                    "uViewSpaceLightDirection"   : this._lightDirection,
+                                "uColorID"                   : [instance.color[0], instance.color[1], instance.color[2], instance.color[3]] // SBE
+                            };			
+                        }
+                        else {
+                            var uniforms = {
+                                    "uWorldViewProjectionMatrix" : xform.modelViewProjectionMatrix,
+                                    "uViewSpaceNormalMatrix"     : xform.viewSpaceNormalMatrix,
+                                    "uViewSpaceLightDirection"   : this._lightDirection
+                            };                  
+                        }
+                            
 			if(mesh.isNexus) {
 				if (!renderable.isReady) continue;
 				var nexus = renderable;
@@ -934,22 +946,25 @@ Presenter.prototype = {
 			}
 			else { //drawing ply
 				renderer.begin();
-					//renderer.setTechnique(CurrTechnique);
-                                       renderer.setTechnique(CCTechnique); // sbe
-					renderer.setDefaultGlobals();
-					renderer.setPrimitiveMode("FILL");
-					renderer.setGlobals(uniforms);
-					renderer.setModel(renderable);
-					renderer.renderModel();
+                                if(this._opacity_enabled)
+                                    renderer.setTechnique(CCTechnique); // sbe
+                                else
+                                    renderer.setTechnique(CurrTechnique);
+                                renderer.setDefaultGlobals();
+                                renderer.setPrimitiveMode("FILL");
+                                renderer.setGlobals(uniforms);
+                                renderer.setModel(renderable);
+                                renderer.renderModel();
 				renderer.end();
 			}
 			
 			// GLstate cleanup
                         // SBE
-                        gl.disable(gl.BLEND);
-                        gl.depthMask(true);                     
-                        gl.disable(gl.DEPTH_TEST);                      
-			// 
+                        if(this._opacity_enabled) {
+                            gl.disable(gl.BLEND);
+                            gl.depthMask(true);
+                        }
+                        gl.disable(gl.DEPTH_TEST);
                         
 			xform.model.pop();
 		}
@@ -1323,6 +1338,8 @@ Presenter.prototype = {
 		this._animating      = false;
 		this._movingLight    = false;
 
+                this._opacity_enabled = false;
+                
 		this._clickable      = false;
 		this._onHover        = false;
 
@@ -1570,6 +1587,14 @@ Presenter.prototype = {
 		this.trackball.animateToState(newposition);
 		this.ui.postDrawEvent();
 	},
+        
+        enableOpacity : function () {
+                if(this._opacity_enabled)
+                    this._opacity_enabled = false;
+                else
+                    this._opacity_enabled = true;
+                this.ui.postDrawEvent();
+        },
 
 	isAnimate : function () {
 		if(this.ui.animateRate > 0) this._animating = true;
