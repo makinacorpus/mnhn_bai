@@ -87,9 +87,15 @@
 <div class="col-lg-6 col-lg-6-desc">
     <div class="bloc_desc">
         <div class="header_block"><h4><%= __('Medias associated') %></h4></div>
-        <ul>
+        <ul class="associated_docs">
         <% medias.forEach(function(media, index) {%>
-            <li><a target="_blank" href="/download?path=<%= media.getPath() %>"><%= media.getTitle() %></a></li>
+            <% if(media.isImage()) { %>
+                <li class="doc_img">
+            <% } else { %>
+                <li class="doc_doc">
+            <% } %>
+                    <a target="_blank" href="/download?path=<%= media.getPath() %>"><%= media.getTitle() %></a>
+                </li>
         <% }); %>
         </ul>
     </div>
