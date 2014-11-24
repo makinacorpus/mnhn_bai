@@ -92,8 +92,11 @@
 	"Y": "Y",
 	"Z": "Z",
 	"Add annotation line": "Ajouter une annotation",
-	"Are you sure you want to delete this annotation ?": "Are you sure you want to delete this annotation ?",
-	"Delete this annotation": "Delete this annotation",
-	"Save": "Save",
-	"Copyright": "Copyright"
+	"Are you sure you want to delete this annotation ?": "Etes vous sûr de vouloir supprimer cette annotation ?",
+	"Delete this annotation": "Supprimer cette annotation",
+	"Save": "Sauvegarder",
+	"Copyright": "Copyright",
+	"Integrate this page in your website": "Intégrez cet objet dans votre site web",
+	"Embed view": "Vue détail",
+	"Insert the following code into your website": "Insérez le code suivant sur votre site web"
 }

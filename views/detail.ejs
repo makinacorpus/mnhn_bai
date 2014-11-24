@@ -136,13 +136,27 @@
 </div>
 
 
+<div class="col-lg-12 col-lg-12-desc">
+    <div class="bloc_desc">
+        <a href="javascript:void(0);" onclick="showEmbedCode()"><%= __('Integrate this page in your website') %></a>
+        
+    </div>
+</div>
+
+<div id="dialog_embed" title="<%= __('Embed view') %>" class="dialog_embed">
+    <div class="embed_content"></div>
+    <%= __('Insert the following code into your website') %>:
+    <span class="code"><pre> &lt;iframe src="<%= req.protocol + '://' + req.get('host') %>/detail/<%= obj.getId() %>/embed" width="500" height="500" frameborder="0" &gt;&lt;/iframe&gt; </pre></span>
+    <span class="dialog_close"><%= __('Close') %></span>
+</div>
+
 <script type="text/javascript">
 
     <% if(medias_pictures.length == 0) { %>
         // If no media pictures, we need to remove the margin of the first blocks
         if($('.main-description')) {
             $('.main-description').css( "margin-top", "0" );
-        }
+        }annotations
     <% } %>
 
     $(document).ready(function(){
@@ -156,6 +170,11 @@
                 $("#comments").append(formatComment(comment.comment, comment.updated, comment.author));
             });
         });
+        
+        
+        $('#dialog_embed').dialog({ dialogClass: 'noTitle' });
+        $('#dialog_embed').dialog('close');
+        $('.dialog_close').on('click', function(){ $('#dialog_embed').dialog('close'); });        
     });
     
     function addComment() {
@@ -176,6 +195,10 @@
     function formatComment(comment, updated, author) {
         var comment = "<div class='comment'><div class='comment_content'>"+comment+"</div><div class='author'><%= __('By') %> "+author+" - " + updated + "</div></div>";
         return comment;
+    }
+    
+    function showEmbedCode() {
+        $('#dialog_embed').dialog('open');
     }
     
 </script>
