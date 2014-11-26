@@ -98,5 +98,8 @@
 	"Copyright": "Copyright",
 	"Integrate this page in your website": "Intégrez cet objet dans votre site web",
 	"Embed view": "Vue détail",
-	"Insert the following code into your website": "Insérez le code suivant sur votre site web"
+	"Insert the following code into your website": "Insérez le code suivant sur votre site web",
+	"Object saved successfully": "Objet enregistré",
+	"An error has occured while saving the object": "Une erreur s'est produite pendant l'enregistrement",
+	"Please wait while the object is saved": "Merci de patienter pendant l'enregistrement de l'objet"
 }

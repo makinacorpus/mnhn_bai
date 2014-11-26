@@ -2,10 +2,10 @@
 
 <% if(obj) {%>
     <h1><%= __('Edit object') %></h1>
-    <form action="/admin/edit_object/<%= obj.getId() %>" method="post" enctype="multipart/form-data">
+    <form id="edit_form" action="/admin/edit_object/<%= obj.getId() %>" method="post" enctype="multipart/form-data">
 <% } else { %>
     <h1><%= __('Add object') %></h1>
-    <form action="/admin/add_object" method="post" enctype="multipart/form-data">
+    <form id="edit_form" action="/admin/add_object" method="post" enctype="multipart/form-data">
 <% } %>
     <input type='hidden' name='_csrf' value='<%= _csrf %>'>
     <div class="block_form">
@@ -118,6 +118,11 @@
     </div>
     
     
+    <div id="progress_dialog">
+        <p><%= __('Please wait while the object is saved') %></p>
+        <div id="progressbar"></div>
+    </div>
+    
     
   <div class="block_form_button">
     <input type="submit"/>
@@ -154,7 +159,44 @@
             });
         });
         
+        
+        var options = { 
+            //target: '#output',   // target element(s) to be updated with server response
+            replaceTarget: true,
+            uploadProgress: uploadProgress,
+            beforeSubmit: beforeSubmit,
+            success: showResponse,  // post-submit callback 
+            type: 'POST'
+        }; 
+
+        // bind form using 'ajaxForm' 
+        $('#edit_form').ajaxForm(options); 
+        
+        $('#progress_dialog').dialog({ dialogClass: 'noTitle' });
+        $('#progress_dialog').dialog('close');
+        
     });
+    
+    function uploadProgress(event, position, total, percentComplete) {        
+        $( "#progressbar" ).progressbar({
+            value: percentComplete
+        });
+    }
+    
+    function beforeSubmit(arr, $form, options) { 
+        $('#progress_dialog').dialog('open');
+    }    
+    
+    // post-submit callback 
+    function showResponse(responseText, statusText, xhr, $form)  { 
+        $('#progress_dialog').dialog('close');
+        if(responseText.status == true) {
+            alert("<%= __('Object saved successfully') %>");
+            window.location.replace(responseText.url);
+        } else {
+            alert("<%= __('An error has occured while saving the object') %>");
+        }
+    }     
     
     /*
     function selectFile(li, file, selector, hidden) {

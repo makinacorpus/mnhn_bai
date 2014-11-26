@@ -120,7 +120,8 @@ module.exports = {
                 
                 //Redirect to detail view
                 //res.view('detail', {obj: obj3D, isAdmin: true});
-                res.redirect('/detail/'+obj3D.getId());
+                //res.redirect('/detail/'+obj3D.getId());
+                return  res.json({url: '/detail/'+obj3D.getId(), status: true});
         });
     },
 
