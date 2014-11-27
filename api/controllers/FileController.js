@@ -28,7 +28,7 @@ module.exports = {
             //console.log(event.written);
         }).upload({
             // You can apply a file upload limit (in bytes)
-            maxBytes: 200000000,
+            maxBytes: 500000000,
         }, function whenDone(err, uploadedFiles) {
             if (err)
                 return res.serverError(err);

@@ -12,14 +12,17 @@ module.exports = {
     */
     create: function (req, res) {
         Object3D.create(req.params.all()).exec(function (err, obj3D) {
-            if (err)
-                return res.negotiate(err);        
+            if (err) {
+                //return res.negotiate(err);        
+                return  res.json({status: false});
+            }
             
             // Download files attached
             sails.controllers.file.upload(req, res, obj3D, sails.controllers.object3d.saveMedias);
             
             //res.view('detail', {obj: obj3D, isAdmin: true});
-            res.redirect('/detail/'+obj3D.getId());
+//             res.redirect('/detail/'+obj3D.getId());
+            return  res.json({url: '/detail/'+obj3D.getId(), status: true});
         });
     },
 
