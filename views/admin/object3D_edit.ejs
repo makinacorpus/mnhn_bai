@@ -172,8 +172,7 @@
         // bind form using 'ajaxForm' 
         $('#edit_form').ajaxForm(options); 
         
-        $('#progress_dialog').dialog({ dialogClass: 'noTitle' });
-        $('#progress_dialog').dialog('close');
+        $('#progress_dialog').hide();
         
     });
     
@@ -183,13 +182,14 @@
         });
     }
     
-    function beforeSubmit(arr, $form, options) { 
-        $('#progress_dialog').dialog('open');
+    function beforeSubmit(arr, $form, options) {
+        $.blockUI({ message: $('#progress_dialog') });
     }    
     
     // post-submit callback 
     function showResponse(responseText, statusText, xhr, $form)  { 
-        $('#progress_dialog').dialog('close');
+        $.unblockUI();
+
         if(responseText.status == true) {
             alert("<%= __('Object saved successfully') %>");
             window.location.replace(responseText.url);
@@ -198,24 +198,6 @@
         }
     }     
     
-    /*
-    function selectFile(li, file, selector, hidden) {
-        // Unselect all
-        $(selector).each(function(){
-            $(this).find('li').each(function(){
-                var current = $(this);
-                current.removeClass("selected");
-            });
-        });
-        
-        // Add selected to the selected one
-        $(li).addClass("selected");
-        
-        // Store chosen file in hidden field
-        $('input#'+hidden).val(file);
-    }
-    */
-   
     // Manage media delete
     $( ".delete" ).click(function() {
         if (confirm("<%= __('Are you sure you want to delete this object ?') %>")) { 
