@@ -7,12 +7,20 @@
 <div id="tabs">
     <ul>
         <li><a href="#tabs-1"><%= __('Description') %></a></li>
-        <li><a href="#tabs-2"><%= __('Pictures') %></a></li>
+        <% if(medias_pictures.length > 0) { %>
+            <li><a href="#tabs-2"><%= __('Pictures') %></a></li>
+        <% } %>
         <li><a href="#tabs-3"><%= __('3D') %></a></li>
-        <li><a href="#tabs-4"><%= __('Flat') %></a></li>
-        <li><a href="#tabs-5"><%= __('Medias') %></a></li>
+        <% if(obj.hasFlat()) { %>
+            <li><a href="#tabs-4"><%= __('Flat') %></a></li>
+        <% } %>    
+        <% if(medias.length > 0) { %>
+            <li><a href="#tabs-5"><%= __('Medias') %></a></li>
+        <% } %>
         <li><a href="#tabs-6"><%= __('Comments') %></a></li>
-        <li><a href="#tabs-7"><%= __('Associated') %></a></li>
+        <% if(associated.length > 0) { %>
+            <li><a href="#tabs-7"><%= __('Associated') %></a></li>
+        <% } %>
     </ul>
     <div id="tabs-1">
         <div class="col-lg-12 col-lg-6-desc main-description">
