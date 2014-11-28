@@ -227,7 +227,7 @@ module.exports = {
             });
             
             //Redirect to gallery
-            res.redirect('/gallery');
+            res.redirect('/gallery/'+req.session.gallery);
         });
     },
 
