@@ -102,7 +102,7 @@
                 <% associated.forEach(function(assoc, index) {%>
                         <div class="detail flip">
                             <div class="card"> 
-                                <a href="/detail/<%= assoc.getId() %>">
+                                <a href="/detail/<%= assoc.getId() %>/embed">
                                 <span class="face front">
                                     <img src="<%= req.protocol + '://' + req.get('host') %><%= assoc.getPreview() %>" alt="<%= assoc.getTitle() %>" />
                                 </span>
