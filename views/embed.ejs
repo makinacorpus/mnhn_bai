@@ -23,7 +23,7 @@
         <% } %>
     </ul>
     <div id="tabs-1">
-        <div class="col-lg-12 col-lg-6-desc main-description">
+        <div class="main-description">
             <div class="bloc_desc">
                 <h1><%= obj.getTitle() %></h1>
                 <% if(obj.hasShortDesc()) { %>
@@ -43,7 +43,7 @@
     </div>
     <div id="tabs-2">
         <% if(medias_pictures.length > 0) { %>
-        <div class="col-lg-12 col-lg-12-desc">
+        <div class="">
             <div class="bloc_desc">
                 <% medias_pictures.forEach(function(media, index) {%>
                         <div class="detail flip">
@@ -60,7 +60,7 @@
         
     </div>
     <div id="tabs-3">
-        <div class="col-lg-6 col-lg-6-desc view-3D">
+        <div class="view-3D">
             <div class="bloc_desc">
                 <% include 3dhop.ejs %>
             </div>
@@ -68,7 +68,7 @@
     </div>
     <div id="tabs-4">
         <% if(obj.hasFlat()) { %>
-            <div class="col-lg-6 col-lg-6-desc view-flat">
+            <div class="view-flat">
                 <div class="bloc_desc">
                     <% include flat.ejs %>
                 </div>
@@ -77,7 +77,7 @@
     </div>
     <div id="tabs-5">
         <% if(medias.length > 0) { %>
-        <div class="col-lg-6 col-lg-6-desc">
+        <div class="">
             <div class="bloc_desc">
                 <ul>
                 <% medias.forEach(function(media, index) {%>
@@ -89,7 +89,7 @@
         <% } %>        
     </div>
     <div id="tabs-6">
-        <div class="col-lg-12 col-lg-12-desc">
+        <div class="">
             <div class="bloc_desc">
                 <div id="comments">
                 </div>
@@ -104,7 +104,7 @@
     
     <div id="tabs-7">
         <% if(associated.length > 0) { %>
-        <div class="col-lg-12 col-lg-12-desc">
+        <div class="">
             <div class="bloc_desc">
                 <% associated.forEach(function(assoc, index) {%>
                         <div class="detail flip">
