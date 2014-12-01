@@ -1,9 +1,10 @@
-assets/upload
-config/env/production.js
+/assets/upload
+/assets/data
+/config/env/production.js
+/config/env/production.json
+/config/env/salt.json
+/env.sh
 .tmp
-config/env/production.json
-config/env/salt.json
-env.sh
 node_modules/
 
 !.salt/
