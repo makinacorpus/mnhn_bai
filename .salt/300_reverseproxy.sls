@@ -1,8 +1,18 @@
 {% set cfg = opts.ms_project %}
 {% set data = cfg.data %}
-{% set scfg = salt['mc_utils.json_dump'](cfg) %}
-{% import "makina-states/services/http/nginx/init.sls" as nginx %}
+{% import "makina-states/services/http/nginx/init.sls" as nginx with context%}
+{% import "makina-states/services/http/apache/init.sls" as apache with context%}
 include:
+  {% if data.apache%}
+  - makina-states.services.http.apache_modproxy
+{{ apache.virtualhost(data.domain,
+                      cfg.data.docroot,
+                      server_aliases=data.server_aliases,
+                      vhost_name=cfg.name,
+                      project_name=cfg.name,
+                      vh_in_template_source="salt://makina-projects/{0}/files/in_virtualhost.conf".format(cfg.name)) }}
+
+  {% else %}
   - makina-states.services.http.nginx
 {% set vhost = 'salt://makina-projects/{0}/files/nginx.conf'.format(cfg.name) %}
 {{ nginx.virtualhost(domain=data.domain,
@@ -11,6 +21,7 @@ include:
                      doc_root=cfg.data.docroot,
                      vh_content_source=vhost, vcfg=cfg) }}
 
+{% endif %}
 {{cfg.name}}-htaccess:
   file.managed:
     - name: {{data.htaccess}}
