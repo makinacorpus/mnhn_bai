@@ -1,10 +1,12 @@
 <% layout('../base') -%>
 
+<% include admin_menu.ejs %>
+
 <h1><%= __('Comments manage') %></h1>
 
 
 <input type='hidden' name='_csrf' id='_csrf' value='<%= _csrf %>'>
-<table>
+<table class="admin_table">
 <tr>
     <th><%= __('Comment') %></th>
     <th><%= __('Author') %></th>
@@ -27,7 +29,7 @@
     <td>
         <a href="/detail/<%= comment.getObject3d() %>"><%= comment.getObject3d() %></a>
     </td>
-    <td>
+    <td clas="last">
         <button onclick="delComment(<%= comment.getId() %>)"><%= __('Del comment') %></button>
     </td>
 </tr>    

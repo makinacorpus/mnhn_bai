@@ -1,8 +1,4 @@
-<% layout('../base') -%>
-
-<h1><%= __('Board') %></h1>
-
-<ul class="nav">
+<ul class="nav_admin">
 <% if (req.isAuthenticated()) { %>
     <li><a class="admin" href="/admin/add_object"><%= __('Add object') %></a><li>
     <li><a class="admin" href="/admin/manage_users"><%= __('Manage users') %></a><li>

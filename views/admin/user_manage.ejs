@@ -1,10 +1,12 @@
 <% layout('../base') -%>
 
+<% include admin_menu.ejs %>
+
 <h1><%= __('User manage') %></h1>
 
 
 <input type='hidden' name='_csrf' id='_csrf' value='<%= _csrf %>'>
-<table>
+<table class="admin_table">
 <tr>
     <th><%= __('Username') %></th>
     <th><%= __('Profile') %></th>
@@ -15,7 +17,7 @@
     <td>
         <%= user.getUserName() %>
     </td>
-    <td>
+    <td class="last">
         <select id="<%= user.getId() %>" class="select">
             <% profiles.forEach(function(profile, index) {%>
                 <% if (user.getProfile() && user.getProfile().getName() == profile.getName()) { %>

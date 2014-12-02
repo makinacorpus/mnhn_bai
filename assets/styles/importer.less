@@ -93,6 +93,7 @@ h1 {
     font-size: 2.12em;
     font-weight: normal;
     line-height: 42px;
+    clear: both;
 }
 
 // bootstrap
@@ -162,7 +163,6 @@ nav.navbar {
     box-shadow: none;
     z-index: 8;
 }
-
 
 .navbar-default .navbar-nav > li > a {
     text-shadow: none;
@@ -816,3 +816,32 @@ ul.associated_docs li.doc_doc {
 #progress_dialog {
     padding: 20px;
 }
+
+
+
+/* Admin */
+
+.admin_table td,
+.admin_table th {
+    padding: 0px 10px 0px 10px;
+}
+
+.admin_table td {
+    border-right: 1px dotted #ccc;
+}
+
+.admin_table td.last {
+    border-right: none;
+}
+
+ul.nav_admin {
+    list-style:none;
+    padding-left: 3px;
+    margin-bottom: 20px;
+}
+
+ul.nav_admin li {
+    float: left;
+    padding-right: 10px;
+}
+
