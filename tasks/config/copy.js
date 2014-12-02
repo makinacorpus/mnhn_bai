@@ -31,6 +31,12 @@ module.exports = function(grunt) {
 				src: ['**/*'],
 				dest: 'www'
 			}]
+		},
+ 		prod: {
+			files: [{
+                src: ['.tmp/public/concat/production.js'],
+                dest: '.tmp/public/min/production.min.js'
+			}]
 		}
 	});
 
