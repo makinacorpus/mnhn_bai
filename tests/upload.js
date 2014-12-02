@@ -1,6 +1,15 @@
 /*
 * casper upload test
+*
 */
+
+var fs = require('fs');
+var system = require('system')
+
+console.log(system.env.PWD);
+
+
+var utils = require('utils');
 var URL = 'http://bai.makina-corpus.net/';
 var USERNAME = 'root';
 var PASSWORD = 'foo';
@@ -16,6 +25,11 @@ casper.start(URL);
 function timeout() {this.echo("ERROR -- Timeout !").exit(1);}
 
 casper.setHttpAuth(USERNAME, PASSWORD);
+
+function logconsole(msg, lineNum, sourceId) {
+      casper.echo('CONSOLE: ' + msg);
+};
+casper.page.onConsoleMessage = logconsole;
 
 casper.then(function enterlog(){casper.click('a[href="/login"]');});
 
@@ -43,13 +57,14 @@ casper.then(function edit(){
 });
 
 casper.then(function mod(){
+    this.page.onConsoleMessage = logconsole;
     return this.waitFor(
         function testmod(){return this.exists('select#gallery option[value="1"]')},
 
         function editmod(){return this.fill('#edit_form', {"gallery": "Galerie principale",
-                                                    "media_files": '15mo'},
+                                                    "media_files": [system.env.PWD+'/15mo']},
                                      true)},
-        timeout)
+        timeout, 10000)
 });
 
 casper.then(function(){casper.exit(0)});
