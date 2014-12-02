@@ -6,7 +6,7 @@
 <div class="filter_bar">
     <form action="/gallery/<%= req.session.gallery %>" method="post">
         <input type='hidden' name='_csrf' value='<%= _csrf %>'>
-        <%= __('Search by category') %><input type="text" name="category">
+        <%= __('Search by category') %><input type="text" name="category" id="category">
         <%= __('Free search') %><input type="text" name="freesearch">
         <%= __('Items per page') %><select name="items_per_page">
                                     <option value="20" <% if(items_per_page == 20) {%>selected<% } %>>20</option>
@@ -71,6 +71,19 @@
 <% } %>
 
 <script type="text/javascript">
+    $(function() {
+        $.ajax({
+            type: "GET",
+            url: "/categories",
+            data: { "_csrf": $("#_csrf").val() }
+        })
+        .done(function( categories ) {
+            $( "#category" ).autocomplete({
+                source: categories
+            });
+        });
+    });
+
     function remove_filter(filter) {
         window.location.replace("/gallery/<%= req.session.gallery %>?remove_filter="+filter);
     }

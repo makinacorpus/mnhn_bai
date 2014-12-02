@@ -35,6 +35,7 @@ module.exports.routes = {
     'get /objects/:id': 'Object3DController.get_objects',
     'get /objects': 'Object3DController.get_objects',
     'get /galleries': 'Object3DController.get_galleries',
+    'get /categories': 'Object3DController.get_categories',
     
     'get /download' : 'FileController.download',
     

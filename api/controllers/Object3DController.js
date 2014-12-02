@@ -326,6 +326,25 @@ module.exports = {
 
 
     /**
+    * `3DObjectController.get_categories()`
+    */
+    get_categories: function (req, res) {
+        // Get object's categories
+        var tab_categories = [];
+        
+        Object3D.find({}).exec(function(err, objects) {
+            objects.forEach(function(object, index) {
+                var found = tab_categories.indexOf(object.category); 
+                if(object.category && found == -1) {
+                    tab_categories.push(object.category)
+                }
+            });
+            return res.json(tab_categories);
+        });
+    },
+    
+    
+    /**
     * `3DObjectController.detail()`
     */
     detail: function (req, res) {        
