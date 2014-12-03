@@ -22,23 +22,21 @@ module.exports = {
         //
         // Node defaults to 2 minutes.
         res.setTimeout(0);
-
-        req.file(input_name).on('progress', function(event){
-            //console.log(event.percent);
-            //console.log(event.written);
-        }).upload({
+        req.file(input_name).upload(
             // You can apply a file upload limit (in bytes)
-            maxBytes: 500000000,
-        }, function whenDone(err, uploadedFiles) {
-            if (err)
-                return res.serverError(err);
-            else
-                callback(uploadedFiles, obj);
-                return res.json({
-                    files: uploadedFiles,
-                    textParams: req.params.all()
-                });
-        });
+            {maxBytes: 500000000, log: function (msg){console.log(msg);}},
+            function onUploadComplete(err, uploadedFiles) {
+                if (err) {
+                    return res.serverError(err);
+                }
+                else {
+                    callback(uploadedFiles, obj);
+                    return res.json({
+                        files: uploadedFiles,
+                        textParams: req.params.all()
+                    });
+                }
+            });
     },
 
 
