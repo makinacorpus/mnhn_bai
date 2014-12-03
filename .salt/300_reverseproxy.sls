@@ -14,11 +14,13 @@ include:
 
   {% else %}
   - makina-states.services.http.nginx
+{% set tvhost = 'salt://makina-projects/{0}/files/nginx.top.conf'.format(cfg.name) %}
 {% set vhost = 'salt://makina-projects/{0}/files/nginx.conf'.format(cfg.name) %}
 {{ nginx.virtualhost(domain=data.domain,
                      server_aliases=data.server_aliases,
                      active=True,
                      doc_root=cfg.data.docroot,
+                     vh_top_source=tvhost,
                      vh_content_source=vhost, vcfg=cfg) }}
 
 {% endif %}
