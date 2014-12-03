@@ -109,6 +109,13 @@ $(document).ready(function(){
     resizeCanvas(500, 400);
     moveToolbar(0,0);
     
+    $(window).resize(function() {
+        if($(window).width() < 500) {
+            resizeCanvas($(window).width() - 50, 400);
+            presenter.setInstanceVisibility(HOP_ALL, true, true);
+        }   
+    });    
+    
     // Popup for displaying users annotations
     $('#dialog_annotations').dialog({ dialogClass: 'noTitle' });
     $('#dialog_annotations').dialog('close');
