@@ -26,8 +26,8 @@
     "passport": "^0.2.0",
     "passport-local": "^1.0.0",
     "rc": "~0.5.0",
-    "sails": "~0.10.3",
-    "sails-disk": "~0.10.0",
+    "sails": "~0.10.5",
+    "sails-disk": "~0.10.5",
     "sails-postgresql": "^0.10.9",
     "skipper": "^0.5.3"
   },
