@@ -93,6 +93,9 @@ module.exports = {
                     obj3D.published = true;
                 }
 
+                // Download files attached
+                sails.controllers.file.upload(req, res, obj3D, sails.controllers.object3d.saveMedias, 'media_files');
+
                 // Download 3D file
                 sails.controllers.file.upload(req, res, obj3D, sails.controllers.object3d.save3Dmodel, 'filename_3D');
                
@@ -104,9 +107,6 @@ module.exports = {
 
                 // Download preview animated file
                 sails.controllers.file.upload(req, res, obj3D, sails.controllers.object3d.savePreviewAnimated, 'preview_animated');
-
-                // Download files attached
-                sails.controllers.file.upload(req, res, obj3D, sails.controllers.object3d.saveMedias, 'media_files');
                 
                 // manage media deletion
                 if(req.param('delete_medias')) {
