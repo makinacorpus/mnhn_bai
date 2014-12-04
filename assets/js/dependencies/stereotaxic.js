@@ -161,7 +161,7 @@ function Stereotaxic() {
                 var xhr = new window.XMLHttpRequest();
                 xhr.upload.addEventListener("progress", function(e) {
                     if (e.lengthComputable) {
-                        progress.html("Loading MRI ("+parseInt(100*e.loaded/e.total)+"%)")
+                        progress.html("Loading ("+parseInt(100*e.loaded/e.total)+"%)")
                     }
                 }, false);
 
@@ -186,7 +186,7 @@ function Stereotaxic() {
         //oReq.open("GET", "data/"+name+"/MRI-n4.nii.gz", true);
         oReq.open("GET", this.name, true);
         oReq.addEventListener("progress", function(e){ 
-                                    progress.html("Loading MRI ("+parseInt(100*e.loaded/e.total)+"%)");
+                                    progress.html("Loading ("+parseInt(100*e.loaded/e.total)+"%)");
                                 }, false);
         oReq.responseType = "arraybuffer";
         oReq.onload = function(oEvent)

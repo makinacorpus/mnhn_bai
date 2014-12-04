@@ -12,9 +12,10 @@
                 <img id="full"     title="Full Screen"           src="/js/dependencies/3DHOP_2.0/skins/dark/full.png" /><br/>
                 <img id="opacity"     title="Opacity"           src="/js/dependencies/3DHOP_2.0/skins/dark/opacity.png" />
             </div>
+            <div id="opacity_slider" class="opacity_slider"></div>
+            <div class="copyright"><%= __('Copyright') %> : <%= obj.getCopyright() %></div>
             <canvas id="draw-canvas" class="tdhop_canvas"/>    
         </div>
-        <div id="opacity_slider" class="opacity_slider"></div>
 
         <div id="dialog_annotations" title="<%= __('Annotations') %>" class="dialog_annotations"><div class="annotation_content"></div><span class="dialog_close"><%= __('Close') %></span></div>
         
@@ -23,6 +24,7 @@ var presenter = null;
 
 function setup3dhop() { 
     presenter = new Presenter("draw-canvas");
+    presenter.is_full_screen = false;
     res = presenter.supportsWebGL();
     distance_view = 200.0;
     scale = 5.0;
@@ -160,16 +162,18 @@ function adjustZoom() {
 }
 
 $(document).ready(function(){
-    init3dhop();
-    setup3dhop();
-    resizeCanvas(500, 400);
-    moveToolbar(0,0);
-    adjustZoom();
-    //presenter.setInstanceFullZoomed("Obj3D", true);
+
+     init3dhop();
+     setup3dhop();
+     resizeCanvas($(".bloc_3d").width(), $(".bloc_3d").height() - 40);
+     moveToolbar(5,5);
+     adjustZoom();
     
     $(window).resize(function() {
-        if($(window).width() < 500) {
-            resizeCanvas($(window).width() - 50, 400);
+        //if($(window).width() < 500) {
+        if(!presenter.is_full_screen) {
+            //resizeCanvas($(window).width() - 50, 400);
+            resizeCanvas($(".bloc_3d").width(), $(".bloc_3d").height() - 40);
             presenter.setInstanceVisibility(HOP_ALL, true, true);
         }   
     });    

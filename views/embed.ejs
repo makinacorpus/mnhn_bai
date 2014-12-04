@@ -18,9 +18,6 @@
             <li><a href="#tabs-5"><%= __('Medias') %></a></li>
         <% } %>
         <li><a href="#tabs-6"><%= __('Comments') %></a></li>
-        <% if(associated.length > 0) { %>
-            <li><a href="#tabs-7"><%= __('Associated') %></a></li>
-        <% } %>
     </ul>
     <div id="tabs-1">
         <div class="main-description">
@@ -102,26 +99,6 @@
         </div>
     </div>
     
-    <div id="tabs-7">
-        <% if(associated.length > 0) { %>
-        <div class="">
-            <div class="bloc_desc">
-                <% associated.forEach(function(assoc, index) {%>
-                        <div class="detail flip">
-                            <div class="card"> 
-                                <a href="/detail/<%= assoc.getId() %>/embed">
-                                <span class="face front">
-                                    <img src="<%= req.protocol + '://' + req.get('host') %><%= assoc.getPreview() %>" alt="<%= assoc.getTitle() %>" />
-                                </span>
-                                </a>
-                            </div>
-                        </div>
-                <% }); %>
-            </div>
-        </div>
-        <% } %>    
-    </div>
-
 </div>
 
 

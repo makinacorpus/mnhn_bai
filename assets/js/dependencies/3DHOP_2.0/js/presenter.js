@@ -1625,6 +1625,24 @@ Presenter.prototype = {
 			ui.postDrawEvent();
 	},
 
+        /*
+        setInstanceFullZoomed : function (tag, redraw) {
+            var ui = this.ui;
+        
+                var instances = this._scene.modelInstances;
+                
+                for (var inst in instances) {
+                    for (var tg in instances[inst].tags){
+                        if(instances[inst].tags[tg] == tag) {
+                        }
+                    }
+                }
+                
+                if(redraw)
+                        ui.postDrawEvent();
+        },
+        */
+        
 	toggleInstanceVisibility : function (tag, redraw) {
 	    var ui = this.ui;
 	

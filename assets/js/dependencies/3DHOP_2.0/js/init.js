@@ -144,6 +144,7 @@ function enterFullscreen() {
   else if (el.webkitRequestFullscreen) el.webkitRequestFullscreen();
 
   presenter.ui.postDrawEvent();
+  presenter.is_full_screen = true;
 }
 
 function exitFullscreen() {
@@ -157,6 +158,8 @@ function exitFullscreen() {
   else if (document.webkitExitFullscreen) document.webkitExitFullscreen();
 
   presenter.ui.postDrawEvent(); 
+  
+  presenter.is_full_screen = false;
 }
 
 function moveToolbar(l,t) {
