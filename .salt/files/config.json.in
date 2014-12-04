@@ -52,7 +52,7 @@ module.exports.connections = {
 
 
 module.exports.data = {
-    __pathData: '{{data.data}}'
+    __pathData: '{{data.data}}',
     __uploadData: '{{data.upload}}'
 };
 

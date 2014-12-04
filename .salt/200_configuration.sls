@@ -5,6 +5,11 @@
 include:
   - makina-states.services.monitoring.circus
 
+echo restart:
+  cmd.run:
+    - watch_in:
+      - mc_proxy: circus-pre-conf
+
 {{cfg.name}}-config:
   file.managed:
     - name: {{cfg.project_root}}/config/env/production.js
@@ -56,7 +61,9 @@ include:
     - user: root
     - group: root
     - mode: 750
-    - contents: */30 * * * * root find "{{data.upload}}" -mmin +30|while read i;do rm -f "${i}";done # purge temp files
+    - contents: |
+                # purge temp files" 
+                "*/30 * * * * root find "{{data.upload}}" -mmin +30|while read i;do rm -f "${i}";done
 
 {#
 {{cfg.name}}-cron-cmd:
