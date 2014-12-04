@@ -49,12 +49,9 @@ module.exports = function _fs(sails) {
                     fs.symlink(postsSource, postsDest, function(err) {
                         if(err) {console.log(err);return cb(err);}
                     });
-                    return cb();
-                }
-                else {
-                    return cb();
                 }
             });
+            return cb();
         }
     }
 
