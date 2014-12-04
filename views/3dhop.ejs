@@ -24,31 +24,60 @@ var presenter = null;
 function setup3dhop() { 
     presenter = new Presenter("draw-canvas");
     res = presenter.supportsWebGL();
+    distance_view = 200.0;
     scale = 5.0;
     if(res) {
+        modelInstances = {};
+        modelInstances["ModelObj3D"] =
+                { 
+                     mesh : "Obj3D",
+                     color : [0.4, 0.4, 0.4, 0.5],
+                     tags: ["Obj3D"]
+                };
+                
+        // Grid
+        /*
+        grid_size = 400;
+        grid_step = 100;
+        
+        for(x = - grid_size / 2; x < grid_size / 2; x = x + grid_step) {
+            color_r = 1;
+            for(y = - grid_size / 2; y < grid_size / 2; y = y + grid_step) {
+                color_r = 1;
+                for(z = - grid_size / 2; z < grid_size / 2; z = z + grid_step) {
+                    id = "GRID"+x+y+z;
+                    modelInstances[id] = {
+                            mesh: "Square",
+                            transform : { 
+                                matrix: SglMat4.mul(SglMat4.translation([x, y, z]), SglMat4.scaling([ 1, 1, 1]))
+                            },
+                            color : [0, color_r, 0, 1]
+                    };
+                    color_r = 0;
+                }
+            }
+        }
+        */
+        
         presenter.setScene({
             meshes: {
                 "Obj3D" : { url: "<%= obj.getFileName3D() %>" },
-                "Sphere" : { url: "/img/sphere.ply" }                 
+                "Sphere" : { url: "/img/sphere.ply" },                 
+                "Square" : { url: "/img/square.ply" },
             },
-            modelInstances : {
-                "ModelObj3D" : { 
-                    mesh : "Obj3D",
-                    color : [0.4, 0.4, 0.4, 0.5]
-                 }
-            },
+            modelInstances : modelInstances,
             
             <% if(annotations.length > 0) { %>
             spots : {
-                <% annotations.forEach(function(annotation, index) {%>
-                    "POI<%= index %>" : {
-                        mesh: "Sphere",
-                        transform : { 
-                            matrix: SglMat4.mul(SglMat4.translation([<%= annotation.getX() %>, <%= annotation.getY() %>, <%= annotation.getZ() %>]), SglMat4.scaling([ scale, scale, scale]))
-                        },
-                        color : [1, 0.4, 0.4, 1]
-                    },
-                <% }); %>
+                 <% annotations.forEach(function(annotation, index) {%>
+                     "POI<%= index %>" : {
+                         mesh: "Sphere",
+                         transform : { 
+                             matrix: SglMat4.mul(SglMat4.translation([<%= annotation.getX() %>, <%= annotation.getY() %>, <%= annotation.getZ() %>]), SglMat4.scaling([ scale, scale, scale]))
+                         },
+                         color : [1, 0.4, 0.4, 1]
+                     },
+                 <% }); %>
             },
             <% } %>
             
@@ -59,15 +88,16 @@ function setup3dhop() {
                 centerMode: "explicit",
                 radiusMode: "explicit",
                 explicitCenter: [0.0, 0.0, 0.0],
-                explicitRadius: 200.0
+                explicitRadius: distance_view
             }
         });
+        
+        $(".opacity_slider").slider({slide: changeOpacity, min:0, max:100, value:50});
+        presenter._onPickedSpot = onPickedSpot;
+        
     }
     else
-        alert("<%= __('Unable to initialize WebGL. Your browser may not support it.') %>");  
-        
-    $(".opacity_slider").slider({slide: changeOpacity, min:0, max:100, value:50});
-    presenter._onPickedSpot = onPickedSpot;
+        alert("<%= __('Unable to initialize WebGL. Your browser may not support it.') %>");          
 }
 
 function onPickedSpot(id) {
@@ -103,11 +133,39 @@ function actionsToolbar(action) {
     else if(action=='opacity') presenter.enableOpacity(); 
 }
 
+function adjustZoom() {
+    var timer = setInterval(function() {
+        if(presenter._scene.meshes.Obj3D.renderable) {
+            clearInterval(timer);
+            max = presenter._scene.meshes.Obj3D.renderable.boundingBox.max;
+            min = presenter._scene.meshes.Obj3D.renderable.boundingBox.min;
+            delta_x = max[0] - min[0];
+            delta_y = max[1] - min[1];
+            delta_z = max[2] - min[2];
+            delta = [delta_x, delta_y, delta_z];
+            var delta_min = Math.min.apply(Math, delta);
+            
+            if(delta_min < distance_view) {
+                nb_zoom = distance_view / delta_min;
+                for(i = 0 ; i <= nb_zoom; i++)
+                    presenter.zoomOut();
+            }
+            else {
+                nb_zoom = distance_view / delta_min;
+                for(i = 0 ; i <= nb_zoom; i++)
+                    presenter.zoomIn();
+            }
+        }
+    }, 1000);
+}
+
 $(document).ready(function(){
     init3dhop();
     setup3dhop();
     resizeCanvas(500, 400);
     moveToolbar(0,0);
+    adjustZoom();
+    //presenter.setInstanceFullZoomed("Obj3D", true);
     
     $(window).resize(function() {
         if($(window).width() < 500) {
@@ -120,5 +178,6 @@ $(document).ready(function(){
     $('#dialog_annotations').dialog({ dialogClass: 'noTitle' });
     $('#dialog_annotations').dialog('close');
     $('.dialog_close').on('click', function(){ $('#dialog_annotations').dialog('close'); });
+    
 });
 </script>
