@@ -30,15 +30,20 @@ module.exports = {
                 try {
                     var fs_file = file.toJSON();
                     var bn = path.basename(fs_file['path']);
-                    if(!fs_file['mime'])
-                        fs_file['mime'] = 'application/octect-stream';
-                    if(!fs_file['filename'])
-                        fs_file['filename'] = bn;
+                    var ext = path.extname(fs_file['name']);
+                    if(!ext)
+                        ext = path.extname(fs_file['path']);
+                    if(ext && ext != '.')
+                        bn += ext;
+                    fs_file['tmp_path'] = fs_file['path'] ;
                     if(!fs_file['name'])
                         fs_file['name'] = bn;
-                    fs_file['tmp_path'] = fs_file['path'];
+                    fs_file['filename'] = bn;
                     fs_file['path'] = path.join(
                         sails.config.data.__pathData, bn);
+                    if(!fs_file['mime'])
+                        fs_file['mime'] = 'application/octect-stream';
+                    // comat alias
                     fs_file['fd'] = fs_file['path'];
                     fs_file['title'] = fs_file['name'];
                     fs_file['f_file'] = file.toJSON();

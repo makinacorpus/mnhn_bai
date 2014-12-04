@@ -2,10 +2,39 @@
  * Utilities functions
  *
  * @description :: Utilities
- * @help        :: 
+ * @help        ::
  */
 
+
+var fs = require('fs');
+var _path = require('path');
+
+function exists(fic) {
+       try{
+           fs.lstatSync(fic);
+           return true;
+       } catch(err) {return false;}
+}
+
+function remove_path(path) {
+    if (path) {
+        if (exists(path)) {
+            try {
+                fs.unlinkSync(path);
+            }
+            catch(err){console.log(err);}
+        }
+    }
+}
+
+function upload_path(path){
+    return _path.join(sails.config.data.__pathData, path);
+}
+
 module.exports = {
+    file_exists: exists,
+    remove_path: remove_path,
+    upload_path: upload_path,
     get_available_files: function(ext) {
         var required_files = [];
         var fs = require('fs');
@@ -31,6 +60,6 @@ module.exports = {
 //                     });
 //                 });
 //             }
-//         });    
-    }    
+//         });
+    }
 };

@@ -5,6 +5,8 @@
 * @docs        :: http://sailsjs.org/#!documentation/models
 */
 
+var fs = require('fs');
+
 module.exports = {
 
   attributes: {
@@ -36,7 +38,31 @@ module.exports = {
     associated: {
         collection: 'object3d'
     },
-    
+
+    remove: function(){
+        // Destroy media associated
+        this.medias.forEach(function(media, index) {
+            media.remove();
+        });
+        // Destroy annotations associated
+        this.annotations.forEach(function(annotation, index) {
+            annotation.destroy();
+        });
+        if(this.preview_animated !== undefined) {
+            Utils.remove_path(Utils.upload_path(this.preview_animated));
+        }
+        if(this.filename_flat !== undefined) {
+            Utils.remove_path(Utils.upload_path(this.filename_flat));
+        }
+        if(this.filename_3D !== undefined) {
+            Utils.remove_path(Utils.upload_path(this.filename_3D));
+        }
+        if(this.preview !== undefined) {
+            Utils.remove_path(Utils.upload_path(this.preview));
+        }
+        return this.destroy();
+    },
+
     getId: function() {
         return this.id;
     },
@@ -97,15 +123,15 @@ module.exports = {
         return false;
     },
     hasMedias: function() {
-        
+
     },
     isEmpty: function(pstring) {
         if(pstring == '' || pstring == null)
             return true;
         return false;
     }
-    
+
   }
 };
 
- 
+

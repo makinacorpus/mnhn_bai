@@ -5,15 +5,30 @@
  * @help        :: See http://links.sailsjs.org/docs/controllers
  */
 
+var _ = require('lodash');
 var multiparty = require('multiparty');
 var http = require('http');
 var util = require('util');
 
 
-function save_obj(req, res, obj3D, err) {
-    if(err)
-        if (err) {return  res.json({status: false});}
 
+function destroy_obj(obj3D) {
+    return obj3D.remove();
+}
+
+
+function save_obj(req, res, obj3D, err, create) {
+    if(err)
+        if (err) {
+            if(obj3D !== undefined && create) {
+                try {
+                    destroy_obj(obj3D);
+                } catch(err) {console.log(err);}
+            }
+            return res.json({"err": err, "status": false});}
+    if (create) {
+        obj3D.save();
+    }
     // Maj object's attributes
     obj3D.title = req.param('title');
     obj3D.short_desc = req.param('short_desc');
@@ -58,7 +73,7 @@ function save_obj(req, res, obj3D, err) {
         for(i = 0; i < del_medias.length; i++) {
             obj3D.medias.forEach(function(media, index) {
                 if(media.getId() == del_medias[i]) {
-                    media.destroy();
+                    media.remove();
                 }
             });
         }
@@ -66,6 +81,11 @@ function save_obj(req, res, obj3D, err) {
     var ret = true;
     var rerr = null;
     obj3D.save(function(err){
+        if(obj3D !== undefined && create && err) {
+            try {
+                destroy_obj(obj3D);
+            } catch(derr) {console.log(derr);}
+        }
         if(err){console.log(err);rerr=err;ret=false;}
     });
 
@@ -94,8 +114,15 @@ module.exports = {
     * `3DObjectController.create()`
     */
     create: function (req, res) {
-        Object3D.create(req.params.all()).exec(function (err, obj3D) {
-            return save_obj(req, res, obj3D, err);
+        var params = {};
+        var filtered = ['media_files', 'filename_flat', 'filename_3d', 'preview', 'preview_animated'];
+        for(param in req.body) {
+            if (!_.contains(filtered, param)) {
+                params[param] = req.body[param];
+            }
+        }
+        Object3D.create(params).exec(function (err, obj3D) {
+            return save_obj(req, res, obj3D, err, true);
         });
     },
 
@@ -220,18 +247,7 @@ module.exports = {
         Object3D.findOne({ id: id }).populate('medias').populate('annotations').exec(function(err, obj3D) {
             if(err)
                 return res.error();
-            obj3D.destroy();
-
-            // Destroy media associated
-            obj3D.medias.forEach(function(media, index) {
-                media.destroy();
-            });
-
-            // Destroy annotations associated
-            obj3D.annotations.forEach(function(annotation, index) {
-                annotation.destroy();
-            });
-
+            destroy_obj(obj3D);
             //Redirect to gallery
             res.redirect('/gallery/'+req.session.gallery);
         });
@@ -247,27 +263,25 @@ module.exports = {
         //if(req.user && req.user.isAdmin())
         if(req.user && req.session.isadmin)
             isAdmin = true;
-
         // Get object infos
         var id = req.param('id')
-        Object3D.findOne({ id: id }).populate('medias').populate('annotations').populate('associated').exec(function(err, obj3D) {
-                if(err) {
-                    //return res.error();
-                    return err;
-                }
-
+        Object3D.findOne({id: id})
+            .populate('medias').populate('annotations').populate('associated')
+            .exec(function(err, obj3D) {
+                if(err) { return err;}
                 medias_pictures = [];
-                obj3D.medias.forEach(function(media, index) {
-                    if(media.isImage()) {
-                        medias_pictures.push(media);
-                    }
-                });
-
+                if(obj3D.medias !== undefined) {
+                    obj3D.medias.forEach(function(media, index) {
+                        if(media.isImage()) {
+                            medias_pictures.push(media);
+                        }
+                    });
+                }
                 // Launch detail view
                 res.view(template_view, {obj: obj3D, medias: obj3D.medias, medias_pictures: medias_pictures,
-                        annotations: obj3D.annotations, associated: obj3D.associated, comments: obj3D.comments, isAdmin: isAdmin});
-            }
-        );
+                         annotations: obj3D.annotations, associated: obj3D.associated,
+                         comments: obj3D.comments, isAdmin: isAdmin});
+            });
     },
 
     /**

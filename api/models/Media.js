@@ -18,6 +18,13 @@ module.exports = {
         /*object3d: {
             model: 'Object3D'
         },*/
+
+        remove: function() {
+            if(this.path !== undefined) {
+                Utils.remove_path(this.path);
+            }
+            return this.destroy();
+        },
         
         getId: function() {
             return this.id;
