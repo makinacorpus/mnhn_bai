@@ -49,6 +49,15 @@ include:
     "max_age": 24*60*60 } %}
 {{ circus.circusAddWatcher(cfg.name+"-bai", **circus_data) }}
 
+
+# cleanup old node upload files
+/etc/cron.d/{{cfg.name}}cleanup:
+  file.managed:
+    - user: root
+    - group: root
+    - mode: 750
+    - contents: */30 * * * * root find "{{data.upload}}" -mmin +30|while read i;do rm -f "${i}";done # purge temp files
+
 {#
 {{cfg.name}}-cron-cmd:
   file.managed:

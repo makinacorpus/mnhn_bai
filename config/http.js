@@ -7,8 +7,7 @@
  *
  * For more information on configuration, check out:
  * http://sailsjs.org/#/documentation/reference/sails.config/sails.config.http.html
- */
-
+ */;
 module.exports.http = {
 
   /****************************************************************************
@@ -21,7 +20,7 @@ module.exports.http = {
   *                                                                           *
   ****************************************************************************/
 
-  // middleware: {
+  middleware: {
 
   /***************************************************************************
   *                                                                          *
@@ -30,23 +29,6 @@ module.exports.http = {
   *                                                                          *
   ***************************************************************************/
 
-    // order: [
-    //   'startRequestTimer',
-    //   'cookieParser',
-    //   'session',
-    //   'myRequestLogger',
-    //   'bodyParser',
-    //   'handleBodyParserError',
-    //   'compress',
-    //   'methodOverride',
-    //   'poweredBy',
-    //   '$custom',
-    //   'router',
-    //   'www',
-    //   'favicon',
-    //   '404',
-    //   '500'
-    // ],
 
   /****************************************************************************
   *                                                                           *
@@ -68,10 +50,27 @@ module.exports.http = {
   * http://www.senchalabs.org/connect/multipart.html for other options.      *
   *                                                                          *
   ***************************************************************************/
+    bodyParser: false,
+    cbodyParser: require('../bodyParser')(
+        {urls: [/\/admin\/edit_object/]}),
+    order: [
+     'startRequestTimer',
+     'cookieParser',
+     'session',
+     'cbodyParser',
+     'handleBodyParserError',
+     'compress',
+     'methodOverride',
+     'poweredBy',
+     '$custom',
+     'router',
+     'www',
+     'favicon',
+     '404',
+     '500'
+   ],
 
-    // bodyParser: require('skipper')
-
-  // },
+  }
 
   /***************************************************************************
   *                                                                          *
@@ -85,3 +84,5 @@ module.exports.http = {
 
   // cache: 31557600000
 };
+
+

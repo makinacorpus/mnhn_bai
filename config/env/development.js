@@ -1,5 +1,3 @@
-{%- set cfg = salt['mc_utils.json_load'](data) -%}
-{%- set data = cfg.data -%}
 /**
  * Production environment settings
  *
@@ -27,14 +25,14 @@ module.exports = {
    * Set the port in the production environment to 80                        *
    ***************************************************************************/
 
-   port: {{data.node_port}},
+   port: 3000,
 
   /***************************************************************************
    * Set the log level in production environment to "silent"                 *
    ***************************************************************************/
 
   log: {
-    level: "{{data.loglevel}}"
+    level: "debug"
   }
 
 };
@@ -42,17 +40,15 @@ module.exports = {
 module.exports.connections = {
 
   baiPostgresqlServer: {
-    adapter: '{{data.db_driver}}',
-    host: '{{data.db_host}}',
-    user: '{{data.db_user}}',
-    password: '{{data.db_password}}',
-    database: '{{data.db_name}}'
+    adapter: 'sails-postgresql',
+    host: '127.0.0.1',
+    user: 'bai',
+    password: 'bai',
+    database: 'bai'
   }
 };
 
 
 module.exports.data = {
-    __pathData: '{{data.data}}'
-    __uploadData: '{{data.upload}}'
 };
 

@@ -5,6 +5,10 @@
  * @help        :: See http://links.sailsjs.org/docs/controllers
  */
 
+var multiparty = require('multiparty');
+var http = require('http');
+var util = require('util');
+
 module.exports = {
 
     /**
@@ -13,13 +17,13 @@ module.exports = {
     create: function (req, res) {
         Object3D.create(req.params.all()).exec(function (err, obj3D) {
             if (err) {
-                //return res.negotiate(err);        
+                //return res.negotiate(err);
                 return  res.json({status: false});
             }
-            
+
             // Download files attached
             sails.controllers.file.upload(req, res, obj3D, sails.controllers.object3d.saveMedias);
-            
+
             //res.view('detail', {obj: obj3D, isAdmin: true});
 //             res.redirect('/detail/'+obj3D.getId());
             return  res.json({url: '/detail/'+obj3D.getId(), status: true});
@@ -37,23 +41,23 @@ module.exports = {
         //res.view('admin/object3D_edit', {obj: undefined, ply: ply_files, nii: nii_files});
         res.view('admin/object3D_edit', {obj: undefined});
     },
-    
+
 
     /**
     * `3DObjectController.edit()`
     */
     edit: function (req, res) {
         var id = req.param('id');
-        
+
         // List available .ply and .nii file on the server
         //ply_files = Utils.get_available_files('.ply');
         //nii_files = Utils.get_available_files('.gz');
-        
+
         // Edit object
         Object3D.findOne({ id: id }).populate('medias').exec(function(err, obj3D) {
             if(err)
                 return res.error();
-            
+
             // Launch edit view
             //res.view('admin/object3D_edit', {obj: obj3D, ply: ply_files, nii: nii_files, medias: obj3D.medias});
             res.view('admin/object3D_edit', {obj: obj3D, medias: obj3D.medias});
@@ -65,28 +69,29 @@ module.exports = {
     * `3DObjectController.save()`
     */
     save: function (req, res) {
+        // parse a file upload
         var id = req.param('id')
         Object3D.findOne({ id: id }).populate('medias').exec(function(err, obj3D) {
                 if(err)
                     return res.error();
-                
+
                 // Maj object's attributes
                 obj3D.title = req.param('title');
                 obj3D.short_desc = req.param('short_desc');
                 obj3D.complete_desc = req.param('complete_desc');
                 obj3D.category = req.param('category');
                 //obj3D.filename_3D = req.param('filename_3D');
-                obj3D.filename_flat = req.param('filename_flat');
+                //obj3D.filename_flat = req.param('filename_flat');
                 //obj3D.preview = req.param('preview');
                 obj3D.gallery = req.param('gallery');
                 obj3D.copyright = req.param('copyright');
-                
+
                 associated_tab = req.param('associated_objects');
                 if(associated_tab) {
                     associated_tab.forEach(function(associated, index) {
                         obj3D.associated.add(associated);
                     });
-                }                
+                }
                 published = req.param('published');
                 obj3D.published = false;
                 if(published == 'published') {
@@ -98,16 +103,16 @@ module.exports = {
 
                 // Download 3D file
                 sails.controllers.file.upload(req, res, obj3D, sails.controllers.object3d.save3Dmodel, 'filename_3D');
-               
+
                 // Download flat file
                 sails.controllers.file.upload(req, res, obj3D, sails.controllers.object3d.saveFlatmodel, 'filename_flat');
-                
+
                 // Download preview file
                 sails.controllers.file.upload(req, res, obj3D, sails.controllers.object3d.savePreview, 'preview');
 
                 // Download preview animated file
                 sails.controllers.file.upload(req, res, obj3D, sails.controllers.object3d.savePreviewAnimated, 'preview_animated');
-                
+
                 // manage media deletion
                 if(req.param('delete_medias')) {
                     del_medias = req.param('delete_medias').split(",");
@@ -118,17 +123,22 @@ module.exports = {
                             }
                         });
                     }
-                }                
-                obj3D.save();
-                
+                }
+                var ret = true;
+                var rerr = null;
+                obj3D.save(function(err){
+                    if(err){console.log(err);rerr=err;ret=false;}
+                });
+
                 //Redirect to detail view
                 //res.view('detail', {obj: obj3D, isAdmin: true});
                 //res.redirect('/detail/'+obj3D.getId());
-                return  res.json({url: '/detail/'+obj3D.getId(), status: true});
-        });
+                return res.json({url: '/detail/'+obj3D.getId(),
+                                err: rerr, status: ret});
+         });
     },
 
-    
+
     /**
     * `3DObjectController.saveMedias()`
     */
@@ -136,23 +146,20 @@ module.exports = {
         // create Media object, and attached them to obj3D
         for(i = 0; i < files.length; i++) {
             params = {};
-            params['title'] = files[i].filename; // title
+            params['title'] = files[i].title; // title
             params['path'] = files[i].fd // path
             //params['object3d'] = obj3D.getId();
             params['type'] = files[i].type;
-            params['filename'] = files[i].fd.replace(/^.*[\\\/]/, '');
-
+            params['filename'] = files[i].filename;
             Media.create(params).exec(function (err, media) {
                 if (err)
                     return res.negotiate(err);
                 obj3D.medias.add(media.id);
                 obj3D.save(function(err){
-                    if(err){
-                        console.log(err);
-                    }
-                });                
+                    if(err){console.log(err);return err;}
+                });
             });
-            
+
         }
     },
 
@@ -163,8 +170,10 @@ module.exports = {
     save3Dmodel: function (files, obj3D) {
         // Files will always contain one only file
         if(files.length > 0) {
-            obj3D.filename_3D = files[0].fd.replace(/^.*[\\\/]/, '');
-            obj3D.save();
+            obj3D.filename_3D = files[0].filename;
+            obj3D.save(function(err){
+                if(err){console.log(err);return err;}
+            });
         }
     },
 
@@ -175,8 +184,9 @@ module.exports = {
     saveFlatmodel: function (files, obj3D) {
         // Files will always contain one only file
         if(files.length > 0) {
-            obj3D.filename_flat = files[0].fd.replace(/^.*[\\\/]/, '');
-            obj3D.save();
+            obj3D.filename_flat = files[0].filename;
+            obj3D.save(function(err){
+                if(err){console.log(err);return err;}});
         }
     },
 
@@ -187,24 +197,26 @@ module.exports = {
     savePreview: function (files, obj3D) {
         // Files will always contain one only file
         if(files.length > 0) {
-            obj3D.preview = files[0].fd.replace(/^.*[\\\/]/, '');
-            obj3D.save();
+            obj3D.preview = files[0].filename;
+            obj3D.save(function(err){
+                if(err){console.log(err);return err;}});
         }
     },
 
-    
+
     /**
     * `3DObjectController.savePreviewAnimated()`
     */
     savePreviewAnimated: function (files, obj3D) {
         // Files will always contain one only file
         if(files.length > 0) {
-            obj3D.preview_animated = files[0].fd.replace(/^.*[\\\/]/, '');
-            obj3D.save();
+            obj3D.preview_animated = files[0].filename;
+            obj3D.save(function(err){
+                if(err){console.log(err);return err;}});
         }
     },
 
-    
+
     /**
     * `3DObjectController.delete()`
     */
@@ -215,17 +227,17 @@ module.exports = {
             if(err)
                 return res.error();
             obj3D.destroy();
-            
+
             // Destroy media associated
             obj3D.medias.forEach(function(media, index) {
                 media.destroy();
             });
-                
+
             // Destroy annotations associated
             obj3D.annotations.forEach(function(annotation, index) {
                 annotation.destroy();
             });
-            
+
             //Redirect to gallery
             res.redirect('/gallery/'+req.session.gallery);
         });
@@ -235,13 +247,13 @@ module.exports = {
     * `3DObjectController.getDetail()`
     */
     getDetail: function (req, res, template_view) {
-        
+
         // Check if user is admin
         var isAdmin = false;
         //if(req.user && req.user.isAdmin())
         if(req.user && req.session.isadmin)
             isAdmin = true;
-        
+
         // Get object infos
         var id = req.param('id')
         Object3D.findOne({ id: id }).populate('medias').populate('annotations').populate('associated').exec(function(err, obj3D) {
@@ -249,30 +261,30 @@ module.exports = {
                     //return res.error();
                     return err;
                 }
-                
+
                 medias_pictures = [];
                 obj3D.medias.forEach(function(media, index) {
                     if(media.isImage()) {
                         medias_pictures.push(media);
                     }
                 });
-                
+
                 // Launch detail view
-                res.view(template_view, {obj: obj3D, medias: obj3D.medias, medias_pictures: medias_pictures, 
+                res.view(template_view, {obj: obj3D, medias: obj3D.medias, medias_pictures: medias_pictures,
                         annotations: obj3D.annotations, associated: obj3D.associated, comments: obj3D.comments, isAdmin: isAdmin});
             }
         );
     },
-    
+
     /**
     * `3DObjectController.get_comments()`
     */
     get_comments: function (req, res) {
-        
+
         // Get comments
         var id = req.param('id');
         var tab_comments = [];
-        
+
         Comment.find({ object3d: id }).populate('author').exec(function(err, comments) {
             comments.forEach(function(comment, index) {
                 tab_comments.push({'comment': comment.comment,'updated': comment.updatedAt, 'author': comment.author.getUserName()})
@@ -286,7 +298,7 @@ module.exports = {
     * `3DObjectController.get_objects()`
     */
     get_objects: function (req, res) {
-        
+
         // Get comments
         var id = req.param('id');
 
@@ -295,7 +307,7 @@ module.exports = {
             var filters = {'published' : true, id: { '!': id }};
         else
             var filters = {'published' : true};
-        
+
         Object3D.find(filters).exec(function(err, objects) {
             if(objects) {
                 objects.forEach(function(object, index) {
@@ -311,7 +323,7 @@ module.exports = {
     * `3DObjectController.get_galleries()`
     */
     get_galleries: function (req, res) {
-        
+
         // Get comments
         var tab_galleries = [];
         Gallery.find({}).exec(function(err, galleries) {
@@ -331,10 +343,10 @@ module.exports = {
     get_categories: function (req, res) {
         // Get object's categories
         var tab_categories = [];
-        
+
         Object3D.find({}).exec(function(err, objects) {
             objects.forEach(function(object, index) {
-                var found = tab_categories.indexOf(object.category); 
+                var found = tab_categories.indexOf(object.category);
                 if(object.category && found == -1) {
                     tab_categories.push(object.category)
                 }
@@ -342,12 +354,12 @@ module.exports = {
             return res.json(tab_categories);
         });
     },
-    
-    
+
+
     /**
     * `3DObjectController.detail()`
     */
-    detail: function (req, res) {        
+    detail: function (req, res) {
         sails.controllers.object3d.getDetail(req, res, 'detail');
     },
 
@@ -359,7 +371,7 @@ module.exports = {
         sails.controllers.object3d.getDetail(req, res, 'embed');
     },
 
-    
+
     /**
     * `3DObjectController.add_comment()`
     */
@@ -371,25 +383,25 @@ module.exports = {
             Object3D.findOne({ id: id }).exec(function(err, obj3D) {
                 Comment.create({'comment': comment, 'author': req.user, 'object3d': id}).exec(function (err, comment) {
                     if (err)
-                        return res.negotiate(err);        
-                
+                        return res.negotiate(err);
+
                     obj3D.comments.add(comment.id);
                     obj3D.save(function(err){
                         if(err){
                             console.log(err);
                         }
-                    });                
-                    
+                    });
+
                     return  res.json({status: true});
                 });
-            });                
+            });
         } else {
             return  res.json({status: false});
         }
 
     },
-    
-    
+
+
     /**
     * `3DObjectController.edit_annotations()`
     */
@@ -400,15 +412,15 @@ module.exports = {
         Object3D.findOne({ id: id }).populate('annotations').exec(function(err, obj3D) {
             if(err)
                 return res.error();
-            
+
             annotations = obj3D.annotations;
-            
+
             // Launch edit view
             res.view('admin/annotation_edit', {obj: obj3D, annotations: annotations});
         });
 
     },
-    
+
     /**
     * `3DObjectController.save_annotations()`
     */
@@ -417,10 +429,10 @@ module.exports = {
         Object3D.findOne({ id: id }).populate('annotations').exec(function(err, obj3D) {
                 if(err)
                     return res.error();
-                
+
                 count_new_annotations = req.param('count_new_annotation');
                 del_annotations = req.param('delete_annotations');
-        
+
                 // save existing annotations
                 obj3D.annotations.forEach(function(annotation, index) {
                     // for each annotation check if changes occurs
@@ -429,17 +441,17 @@ module.exports = {
                     x = req.param('x_' + annotation.getId());
                     y = req.param('y_' + annotation.getId());
                     z = req.param('z_' + annotation.getId());
-                    
+
                     annotation.title = title;
                     annotation.description = description;
                     annotation.x = x;
                     annotation.y = y;
                     annotation.z = z;
-                    
+
                     annotation.save();
                 });
 
-                
+
                 // Delete annotations
                 if(del_annotations) {
                     del_annotations = del_annotations.split(",");
@@ -450,17 +462,17 @@ module.exports = {
                             }
                         });
                     }
-                }                
-                
+                }
+
                 // Add new annotations
                 for(i = 1; i <= count_new_annotations; i++) {
-                    
+
                     title = req.param('title_new_' + i);
                     description = req.param('description_new_' + i);
                     x = req.param('x_new_' + i);
                     y = req.param('y_new_' + i);
                     z = req.param('z_new_' + i);
-                    
+
                     params = {};
                     params['title'] = title;
                     params['description'] = description;
@@ -473,19 +485,19 @@ module.exports = {
                         obj3D.annotations.add(annotation.id);
                         obj3D.save(function(err){
                             if(err){
-                                console.log(err);
+                                console.log(err);return err;
                             }
-                        });                
+                        });
                     });
                 }
-                
+
                 //Redirect to detail view
                 res.redirect('/detail/'+obj3D.getId());
         });
 
 
     }
-    
+
 
 };
 

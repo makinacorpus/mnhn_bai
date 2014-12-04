@@ -32,11 +32,18 @@ include:
       - {{data.upload}}
     - user: {{cfg.user}}
     - group: {{cfg.group}}
-
+{{cfg.name}}-upload-www:
+  file.symlink:
+    - name: {{cfg.project_root}}/.tmp/public/uploads
+    - target: {{cfg.data_root}}/.tmp/uploads
+    - makedirs: true
+    - watch:
+      - file: {{cfg.name}}-directories
 {{cfg.name}}-upload:
   file.symlink:
-    - name: {{cfg.project_root}}/assets/upload
-    - target: {{cfg.data_root}}/upload
+    - name: {{cfg.project_root}}/.tmp/uploads
+    - target: {{cfg.data_root}}/data
+    - makedirs: true
     - watch:
       - file: {{cfg.name}}-directories
 
