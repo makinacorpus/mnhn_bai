@@ -14,7 +14,7 @@ function mime(req) {
 function parseMultipart(req, res, next) {
   req.form = new formidable.IncomingForm();
   req.form.uploadDir = sails.config.data.__uploadData;
-  req.form.maxFieldsSize = sails.config.maxsize;
+  req.form.maxFieldsSize = sails.config.data.maxsize;
   req.form.multiple = true;
   // res.setTimeout(0);
   req.form.parse(req, function(err, fields, files) {
