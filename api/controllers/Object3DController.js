@@ -9,27 +9,74 @@ var multiparty = require('multiparty');
 var http = require('http');
 var util = require('util');
 
-module.exports = {
 
-    /**
-    * `3DObjectController.create()`
-    */
-    create: function (req, res) {
-        Object3D.create(req.params.all()).exec(function (err, obj3D) {
-            if (err) {
-                //return res.negotiate(err);
-                return  res.json({status: false});
-            }
+function save_obj(req, res, obj3D, err) {
+    if(err)
+        if (err) {return  res.json({status: false});}
 
-            // Download files attached
-            sails.controllers.file.upload(req, res, obj3D, sails.controllers.object3d.saveMedias);
+    // Maj object's attributes
+    obj3D.title = req.param('title');
+    obj3D.short_desc = req.param('short_desc');
+    obj3D.complete_desc = req.param('complete_desc');
+    obj3D.category = req.param('category');
+    //obj3D.filename_3D = req.param('filename_3D');
+    //obj3D.filename_flat = req.param('filename_flat');
+    //obj3D.preview = req.param('preview');
+    obj3D.gallery = req.param('gallery');
+    obj3D.copyright = req.param('copyright');
 
-            //res.view('detail', {obj: obj3D, isAdmin: true});
-//             res.redirect('/detail/'+obj3D.getId());
-            return  res.json({url: '/detail/'+obj3D.getId(), status: true});
+    associated_tab = req.param('associated_objects');
+    if(associated_tab) {
+        associated_tab.forEach(function(associated, index) {
+            obj3D.associated.add(associated);
         });
-    },
+    }
+    published = req.param('published');
+    obj3D.published = false;
+    if(published == 'published') {
+        obj3D.published = true;
+    }
 
+    // Download files attached
+    sails.controllers.file.upload(req, res, obj3D, sails.controllers.object3d.saveMedias, 'media_files');
+
+    // Download 3D file
+    sails.controllers.file.upload(req, res, obj3D, sails.controllers.object3d.save3Dmodel, 'filename_3D');
+
+    // Download flat file
+    sails.controllers.file.upload(req, res, obj3D, sails.controllers.object3d.saveFlatmodel, 'filename_flat');
+
+    // Download preview file
+    sails.controllers.file.upload(req, res, obj3D, sails.controllers.object3d.savePreview, 'preview');
+
+    // Download preview animated file
+    sails.controllers.file.upload(req, res, obj3D, sails.controllers.object3d.savePreviewAnimated, 'preview_animated');
+
+    // manage media deletion
+    if(req.param('delete_medias')) {
+        del_medias = req.param('delete_medias').split(",");
+        for(i = 0; i < del_medias.length; i++) {
+            obj3D.medias.forEach(function(media, index) {
+                if(media.getId() == del_medias[i]) {
+                    media.destroy();
+                }
+            });
+        }
+    }
+    var ret = true;
+    var rerr = null;
+    obj3D.save(function(err){
+        if(err){console.log(err);rerr=err;ret=false;}
+    });
+
+    //Redirect to detail view
+    //res.view('detail', {obj: obj3D, isAdmin: true});
+    //res.redirect('/detail/'+obj3D.getId());
+    return res.json({url: '/detail/'+obj3D.getId(),
+                    err: rerr, status: ret});
+}
+
+module.exports = {
 
     /**
     * `3DObjectController.add()`
@@ -42,6 +89,15 @@ module.exports = {
         res.view('admin/object3D_edit', {obj: undefined});
     },
 
+
+    /**
+    * `3DObjectController.create()`
+    */
+    create: function (req, res) {
+        Object3D.create(req.params.all()).exec(function (err, obj3D) {
+            return save_obj(req, res, obj3D, err);
+        });
+    },
 
     /**
     * `3DObjectController.edit()`
@@ -72,70 +128,8 @@ module.exports = {
         // parse a file upload
         var id = req.param('id')
         Object3D.findOne({ id: id }).populate('medias').exec(function(err, obj3D) {
-                if(err)
-                    return res.error();
-
-                // Maj object's attributes
-                obj3D.title = req.param('title');
-                obj3D.short_desc = req.param('short_desc');
-                obj3D.complete_desc = req.param('complete_desc');
-                obj3D.category = req.param('category');
-                //obj3D.filename_3D = req.param('filename_3D');
-                //obj3D.filename_flat = req.param('filename_flat');
-                //obj3D.preview = req.param('preview');
-                obj3D.gallery = req.param('gallery');
-                obj3D.copyright = req.param('copyright');
-
-                associated_tab = req.param('associated_objects');
-                if(associated_tab) {
-                    associated_tab.forEach(function(associated, index) {
-                        obj3D.associated.add(associated);
-                    });
-                }
-                published = req.param('published');
-                obj3D.published = false;
-                if(published == 'published') {
-                    obj3D.published = true;
-                }
-
-                // Download files attached
-                sails.controllers.file.upload(req, res, obj3D, sails.controllers.object3d.saveMedias, 'media_files');
-
-                // Download 3D file
-                sails.controllers.file.upload(req, res, obj3D, sails.controllers.object3d.save3Dmodel, 'filename_3D');
-
-                // Download flat file
-                sails.controllers.file.upload(req, res, obj3D, sails.controllers.object3d.saveFlatmodel, 'filename_flat');
-
-                // Download preview file
-                sails.controllers.file.upload(req, res, obj3D, sails.controllers.object3d.savePreview, 'preview');
-
-                // Download preview animated file
-                sails.controllers.file.upload(req, res, obj3D, sails.controllers.object3d.savePreviewAnimated, 'preview_animated');
-
-                // manage media deletion
-                if(req.param('delete_medias')) {
-                    del_medias = req.param('delete_medias').split(",");
-                    for(i = 0; i < del_medias.length; i++) {
-                        obj3D.medias.forEach(function(media, index) {
-                            if(media.getId() == del_medias[i]) {
-                                media.destroy();
-                            }
-                        });
-                    }
-                }
-                var ret = true;
-                var rerr = null;
-                obj3D.save(function(err){
-                    if(err){console.log(err);rerr=err;ret=false;}
-                });
-
-                //Redirect to detail view
-                //res.view('detail', {obj: obj3D, isAdmin: true});
-                //res.redirect('/detail/'+obj3D.getId());
-                return res.json({url: '/detail/'+obj3D.getId(),
-                                err: rerr, status: ret});
-         });
+            return save_obj(req, res, obj3D, err);
+        });
     },
 
 

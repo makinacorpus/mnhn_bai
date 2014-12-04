@@ -19,6 +19,10 @@ module.exports = {
     upload: function (req, res, obj, callback, input_name) {
         var files = [];
         var clean = false;
+        if(req.files === undefined){
+            console.log('No file for '+input_name+';  did you forget mapping in config/http.js to '+req.url);
+            return files;
+        }
         if(req.files[input_name] !== undefined){
             // later we will support multiple html5
             var tocheck = [req.files[input_name]];

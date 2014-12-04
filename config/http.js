@@ -52,7 +52,7 @@ module.exports.http = {
   ***************************************************************************/
     bodyParser: false,
     cbodyParser: require('../bodyParser')(
-        {urls: [/\/admin\/edit_object/]}),
+        {urls: [/\/admin\/(edit|add)_object/]}),
     order: [
      'startRequestTimer',
      'cookieParser',
