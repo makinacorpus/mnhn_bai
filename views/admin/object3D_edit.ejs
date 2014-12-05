@@ -31,7 +31,7 @@
     
     <div class="block_form">
         <label for="category" class="form_label"><%= __('Category') %> : </label>
-        <input name="category" type="text" <% if(obj) {%> value="<%= obj.getCategory() %>"<% } %>/>
+        <input name="category" id="category" type="text" <% if(obj) {%> value="<%= obj.getCategory() %>"<% } %>/>
     </div>
 
     <div class="block_form">
@@ -131,6 +131,18 @@
 
 <script type="text/javascript">
     $(document).ready(function(){
+    
+        $.ajax({
+            type: "GET",
+            url: "/categories",
+            data: { "_csrf": $("#_csrf").val() }
+        })
+        .done(function( categories ) {
+            $( "#category" ).autocomplete({
+                source: categories
+            });
+        });
+    
         $.ajax({
             type: "GET",
             url: "/objects" <% if (obj) { %>+ '/'+<%= obj.getId() %><% } %>
