@@ -82,7 +82,10 @@ module.exports = {
         return this.copyright;
     },
     getFileName3D: function() {
-        return '/uploads/' + this.filename_3D;
+        if(this.filename_3D)
+            return '/uploads/' + this.filename_3D;
+        else 
+            return null;
     },
     getFileNameFlat: function() {
         return '/uploads/' + this.filename_flat;

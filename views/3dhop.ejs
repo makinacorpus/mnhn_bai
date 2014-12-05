@@ -136,8 +136,10 @@ function actionsToolbar(action) {
 }
 
 function adjustZoom() {
+    <% if(obj.getFileName3D() != null) {%>
+    var max_count = 0;
     var timer = setInterval(function() {
-        if(presenter._scene.meshes.Obj3D.renderable) {
+        if(presenter._scene.meshes.Obj3D.renderable || max_count > 300) {
             clearInterval(timer);
             max = presenter._scene.meshes.Obj3D.renderable.boundingBox.max;
             min = presenter._scene.meshes.Obj3D.renderable.boundingBox.min;
@@ -158,7 +160,9 @@ function adjustZoom() {
                     presenter.zoomIn();
             }
         }
+        max_count = max_count + 1;
     }, 1000);
+    <% } %>
 }
 
 $(document).ready(function(){
