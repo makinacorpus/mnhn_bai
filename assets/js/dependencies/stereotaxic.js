@@ -193,7 +193,7 @@ function Stereotaxic() {
         {
             var prog = new Object();
             prog.drawProgress = function(pct){ 
-                progress.html("Uncompressing MRI ("+parseInt(100*pct)+"%)") 
+                progress.html("Uncompressing ("+parseInt(100*pct)+"%)") 
             };
             var gunzip = new Gunzip(prog);
             gunzip.gunzip(this.response, function(data) {
