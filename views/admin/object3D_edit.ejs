@@ -72,13 +72,13 @@
     <div class="block_form">
         <label for="preview" class="form_label"><%= __('Object preview') %> : </label>
         <input type="file" id="preview" name="preview" />
-        <% if(obj) {%><div class='current_preview'><img src="<%= obj.getPreview() %>" alt="<%= obj.getTitle() %>" /></div><% } %>
+        <% if(obj) {%><div class='current_preview'><div class="media_any media_single"><img src="<%= obj.getPreview() %>" alt="<%= obj.getTitle() %>" /></div></div><% } %>
     </div>
 
     <div class="block_form">
         <label for="preview_animated" class="form_label"><%= __('Object preview animated') %> : </label>
         <input type="file" id="preview_animated" name="preview_animated" />
-        <% if(obj) {%><div class='current_preview'><img src="<%= obj.getPreviewAnimated() %>" alt="<%= obj.getTitle() %>" /></div><% } %>
+        <% if(obj) {%><div class='current_preview'><div class="media_any media_single"><img src="<%= obj.getPreviewAnimated() %>" alt="<%= obj.getTitle() %>" /></div></div><% } %>
     </div>
     
     
