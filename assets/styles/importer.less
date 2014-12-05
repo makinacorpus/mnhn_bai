@@ -252,6 +252,7 @@ img.flat {
 
 input[type=text],
 input[type=password],
+#edit_form select,
 textarea,
 .select_list {
     border: 1px solid @inputColor;
@@ -259,7 +260,8 @@ textarea,
     margin-left: @spaceLabelInputForm;
 }
 
-input[type=checkbox] {
+input[type=checkbox],
+.file_selector {
     margin-left: @spaceLabelInputForm
 }
 
@@ -281,6 +283,14 @@ input[type=submit] {
 input[type=button]:hover,
 input[type=submit]:hover {
     background: @inputBgColorHover;
+}
+
+select[multiple] {
+    width: 300px;
+}
+
+.current_file {
+    margin-left: 250px;
 }
 
 label.form_label {
@@ -335,6 +345,7 @@ label.form_label {
 }
 
 .block_form .current_preview img {
+    margin: 10px;
     max-width: 200px;
     max-height: 200px;
 }
@@ -358,11 +369,13 @@ label.form_label {
 
 
 .block_form .edit_medias {
-    margin-left: 260px;
+    //margin-left: 260px;
 }
 
 .block_form .edit_medias ul {
     list-style: none;
+    margin-left: 251px;
+    padding-left: 0;
 }
 
 // Gallery
