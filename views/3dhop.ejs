@@ -63,7 +63,7 @@ function setup3dhop() {
         
         presenter.setScene({
             meshes: {
-                "Obj3D" : { url: "<%= obj.getFileName3D() %>" },
+                "Obj3D" : { url: "<%= obj.getFileName3D() %>", onready: sceneLoaded},
                 "Sphere" : { url: "/img/sphere.ply" },                 
                 "Square" : { url: "/img/square.ply" },
             },
@@ -135,34 +135,27 @@ function actionsToolbar(action) {
     else if(action=='opacity') presenter.enableOpacity(); 
 }
 
-function adjustZoom() {
-    <% if(obj.getFileName3D() != null) {%>
-    var max_count = 0;
-    var timer = setInterval(function() {
-        if(presenter._scene.meshes.Obj3D.renderable || max_count > 300) {
-            clearInterval(timer);
-            max = presenter._scene.meshes.Obj3D.renderable.boundingBox.max;
-            min = presenter._scene.meshes.Obj3D.renderable.boundingBox.min;
-            delta_x = max[0] - min[0];
-            delta_y = max[1] - min[1];
-            delta_z = max[2] - min[2];
-            delta = [delta_x, delta_y, delta_z];
-            var delta_min = Math.min.apply(Math, delta);
-            
-            if(delta_min < distance_view) {
-                nb_zoom = distance_view / delta_min;
-                for(i = 0 ; i <= nb_zoom; i++)
-                    presenter.zoomOut();
-            }
-            else {
-                nb_zoom = distance_view / delta_min;
-                for(i = 0 ; i <= nb_zoom; i++)
-                    presenter.zoomIn();
-            }
+function sceneLoaded() {
+    if(presenter._scene.meshes.Obj3D.renderable) {
+        max = presenter._scene.meshes.Obj3D.renderable.boundingBox.max;
+        min = presenter._scene.meshes.Obj3D.renderable.boundingBox.min;
+        delta_x = max[0] - min[0];
+        delta_y = max[1] - min[1];
+        delta_z = max[2] - min[2];
+        delta = [delta_x, delta_y, delta_z];
+        var delta_min = Math.min.apply(Math, delta);
+        
+        if(delta_min < distance_view) {
+            nb_zoom = distance_view / delta_min;
+            for(i = 0 ; i <= nb_zoom; i++)
+                presenter.zoomOut();
         }
-        max_count = max_count + 1;
-    }, 1000);
-    <% } %>
+        else {
+            nb_zoom = distance_view / delta_min;
+            for(i = 0 ; i <= nb_zoom; i++)
+                presenter.zoomIn();
+        }
+    }
 }
 
 $(document).ready(function(){
@@ -171,7 +164,6 @@ $(document).ready(function(){
      setup3dhop();
      resizeCanvas($(".bloc_3d").width(), $(".bloc_3d").height() - 40);
      moveToolbar(5,5);
-     adjustZoom();
     
     $(window).resize(function() {
         //if($(window).width() < 500) {

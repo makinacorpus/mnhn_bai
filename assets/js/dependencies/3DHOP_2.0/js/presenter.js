@@ -56,7 +56,7 @@ Presenter.prototype = {
 			modelInstances : this._parseModelInstances(options.modelInstances),
 			spots          : this._parseSpots(options.spots),
 			trackball      : this._parseTrackball(options.trackball),
-			space          : this._parseSpace(options.space)			
+			space          : this._parseSpace(options.space)
 		};
 		return r;
 	},
@@ -82,7 +82,8 @@ Presenter.prototype = {
 	_parseMesh : function (options) {
 		var r = sglGetDefaultObject({
 			url       : null,
-			transform : null
+			transform : null,
+                        onready: null
 		}, options);
 		r.transform = this._parseTransform(r.transform);
 		return r;
@@ -859,6 +860,10 @@ Presenter.prototype = {
 		TMR.datasetRadius = Math.sqrt( Math.pow((TMR.boundingBox.max[0] - TMR.boundingBox.min[0]),2) + 
 									   Math.pow((TMR.boundingBox.max[1] - TMR.boundingBox.min[1]),2) +
 									   Math.pow((TMR.boundingBox.max[2] - TMR.boundingBox.min[2]),2) ) / 2.0;
+                
+                // call custom calbback
+                if(thatmesh.onready)
+                    thatmesh.onready();
 									   
 		this._onMeshReady();
 	},
