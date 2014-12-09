@@ -198,16 +198,26 @@ function Stereotaxic() {
             var gunzip = new Gunzip(prog);
             gunzip.gunzip(this.response, function(data) {
                 var dv = new DataView(data);
+                var littleindian = true;
                 var sizeof_hdr = dv.getInt32(0,true);
-                var dimensions = dv.getInt16(40,true);
-                stereotaxic.flatObj_dim[0] = dv.getInt16(42,true);
-                stereotaxic.flatObj_dim[1] = dv.getInt16(44,true);
-                stereotaxic.flatObj_dim[2] = dv.getInt16(46,true);
-                stereotaxic.flatObj_datatype = dv.getInt16(72,true);
-                stereotaxic.flatObj_pixdim[0] = dv.getFloat32(80,true);
-                stereotaxic.flatObj_pixdim[1] = dv.getFloat32(84,true);
-                stereotaxic.flatObj_pixdim[2] = dv.getFloat32(88,true);
-                var vox_offset = dv.getFloat32(108,true);
+                if(sizeof_hdr == 348) { 
+                    // nifti_1, little indian
+                    littleindian = true;
+                } else {
+                    var sizeof_hdr = dv.getInt32(0,false);
+                    // nifti_1, big indian
+                    littleindian = false;
+                }
+                
+                var dimensions = dv.getInt16(40,littleindian);
+                stereotaxic.flatObj_dim[0] = dv.getInt16(42,littleindian);
+                stereotaxic.flatObj_dim[1] = dv.getInt16(44,littleindian);
+                stereotaxic.flatObj_dim[2] = dv.getInt16(46,littleindian);
+                stereotaxic.flatObj_datatype = dv.getInt16(72,littleindian);
+                stereotaxic.flatObj_pixdim[0] = dv.getFloat32(80,littleindian);
+                stereotaxic.flatObj_pixdim[1] = dv.getFloat32(84,littleindian);
+                stereotaxic.flatObj_pixdim[2] = dv.getFloat32(88,littleindian);
+                var vox_offset = dv.getFloat32(108,littleindian);
         
                 switch(stereotaxic.flatObj_datatype)
                 {
@@ -220,7 +230,7 @@ function Stereotaxic() {
                     case 32:
                         stereotaxic.flatObj = new Float32Array(data, vox_offset);
                         break;
-                }
+                    }
         
                 var s, ss, std, tmpmin, tmpmax;
                 s = ss = 0;
