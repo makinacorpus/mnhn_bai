@@ -136,25 +136,39 @@ function actionsToolbar(action) {
 }
 
 function sceneLoaded() {
-    if(presenter._scene.meshes.Obj3D.renderable) {
-        max = presenter._scene.meshes.Obj3D.renderable.boundingBox.max;
-        min = presenter._scene.meshes.Obj3D.renderable.boundingBox.min;
-        delta_x = max[0] - min[0];
-        delta_y = max[1] - min[1];
-        delta_z = max[2] - min[2];
-        delta = [delta_x, delta_y, delta_z];
-        var delta_min = Math.min.apply(Math, delta);
-        
-        if(delta_min < distance_view) {
-            nb_zoom = distance_view / delta_min;
-            for(i = 0 ; i <= nb_zoom; i++)
-                presenter.zoomOut();
-        }
-        else {
-            nb_zoom = distance_view / delta_min;
-            for(i = 0 ; i <= nb_zoom; i++)
-                presenter.zoomIn();
-        }
+    <% if(obj.getDimX() && obj.getDimY() && obj.getDimZ()) { %>
+        // Dimensions have been filled
+        adjustZoom(<%= obj.getDimX() %>, <%= obj.getDimY() %>, <%= obj.getDimZ() %>);
+    <% } else { %>
+        // try to get dimensions from the mesh
+        if(!presenter._scene.meshes.Obj3D.isNexus && presenter._scene.meshes.Obj3D.renderable) {
+            max = presenter._scene.meshes.Obj3D.renderable.boundingBox.max;
+            min = presenter._scene.meshes.Obj3D.renderable.boundingBox.min;
+            delta_x = max[0] - min[0];
+            delta_y = max[1] - min[1];
+            delta_z = max[2] - min[2];
+            adjustZoom(delta_x, delta_y, delta_z);
+        } else {
+            // nexus
+            // we can do nothing
+        }    
+    <% } %>
+}
+
+
+function adjustZoom(delta_x, delta_y, delta_z) {
+    delta = [delta_x, delta_y, delta_z];
+    var delta_min = Math.min.apply(Math, delta);
+    
+    if(delta_min < distance_view) {
+        nb_zoom = distance_view / delta_min;
+        for(i = 0 ; i <= nb_zoom; i++)
+            presenter.zoomOut();
+    }
+    else {
+        nb_zoom = distance_view / delta_min;
+        for(i = 0 ; i <= nb_zoom; i++)
+            presenter.zoomIn();
     }
 }
 

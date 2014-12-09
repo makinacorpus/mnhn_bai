@@ -1531,6 +1531,8 @@ Presenter.prototype = {
 				nexus.onSceneReady = function () { that._onMeshReady(); };
 				nexus.onUpdate = this.ui.postDrawEvent;
 				nexus.open(mesh.url);
+                                if(mesh.onready)
+                                    mesh.onready();
 			}
 			else {
 				mesh.renderable = null;

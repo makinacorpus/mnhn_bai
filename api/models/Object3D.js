@@ -18,6 +18,9 @@ module.exports = {
     complete_desc: 'string',
     category: 'string',
     filename_3D: 'string',
+    dim_x: 'integer',
+    dim_y: 'integer',
+    dim_z: 'integer',
     filename_flat: 'string',
     preview: 'string',
     preview_animated: 'string',
@@ -86,6 +89,15 @@ module.exports = {
             return '/uploads/' + this.filename_3D;
         else 
             return null;
+    },
+    getDimX: function() {
+        return this.dim_x;
+    },
+    getDimY: function() {
+        return this.dim_y;
+    },
+    getDimZ: function() {
+        return this.dim_z;
     },
     getFileNameFlat: function() {
         return '/uploads/' + this.filename_flat;

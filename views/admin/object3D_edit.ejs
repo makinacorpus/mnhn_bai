@@ -59,7 +59,21 @@
         <% } %>
 
     </div>
+    <div class="block_form">
+        <label for="dim_x" class="form_label"><%= __('Dimension X') %> : </label>
+        <input name="dim_x" type="text" <% if(obj) {%> value="<%= obj.getDimX() %>"<% } %> />
+    </div>
+    <div class="block_form">
+        <label for="dim_y" class="form_label"><%= __('Dimension Y') %> : </label>
+        <input name="dim_y" type="text" <% if(obj) {%> value="<%= obj.getDimY() %>"<% } %> />
+    </div>
+    <div class="block_form">
+        <label for="dim_z" class="form_label"><%= __('Dimension Z') %> : </label>
+        <input name="dim_z" type="text" <% if(obj) {%> value="<%= obj.getDimZ() %>"<% } %> />
+    </div>
 
+    
+    
     <div class="block_form">
         <label for="filename_flat" class="form_label"><%= __('Flat image path') %> : </label>
         <input type="file" id="filename_flat" name="filename_flat" />

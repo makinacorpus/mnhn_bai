@@ -38,6 +38,9 @@ function save_obj(req, res, obj3D, err, create) {
     //obj3D.filename_flat = req.param('filename_flat');
     //obj3D.preview = req.param('preview');
     obj3D.gallery = req.param('gallery');
+    obj3D.dim_x = req.param('dim_x');
+    obj3D.dim_y = req.param('dim_y');
+    obj3D.dim_z = req.param('dim_z');
     obj3D.copyright = req.param('copyright');
 
     associated_tab = req.param('associated_objects');

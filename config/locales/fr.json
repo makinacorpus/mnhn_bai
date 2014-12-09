@@ -101,5 +101,8 @@
 	"Insert the following code into your website": "Insérez le code suivant sur votre site web",
 	"Object saved successfully": "Objet enregistré",
 	"An error has occured while saving the object": "Une erreur s'est produite pendant l'enregistrement",
-	"Please wait while the object is saved": "Merci de patienter pendant l'enregistrement de l'objet"
+	"Please wait while the object is saved": "Merci de patienter pendant l'enregistrement de l'objet",
+	"Dimension X": "Dimension X",
+	"Dimension Y": "Dimension Y",
+	"Dimension Z": "Dimension Z"
 }
