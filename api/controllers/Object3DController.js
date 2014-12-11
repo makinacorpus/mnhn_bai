@@ -276,24 +276,32 @@ module.exports = {
             .populate('medias').populate('annotations').populate('associated').populate('collection')
             .exec(function(err, obj3D) {
                 if(err) { return err;}
-                medias_pictures = [];
-                if(obj3D.medias !== undefined) {
-                    obj3D.medias.forEach(function(media, index) {
-                        if(media.isImage()) {
-                            medias_pictures.push(media);
-                        }
-                    });
-                }
                 
-                mnhn_form_link = '';
-                if(obj3D.collection) {
-                    mnhn_form_link = obj3D.collection.getShortName() + "/" + obj3D.getCodeMNHN();
-                }
+                if(obj3D) {
+                    if(!obj3D.getPublished() && !isAdmin)
+                        return res.notFound();
                 
-                // Launch detail view
-                res.view(template_view, {obj: obj3D, medias: obj3D.medias, medias_pictures: medias_pictures,
-                         annotations: obj3D.annotations, associated: obj3D.associated,
-                         comments: obj3D.comments, isAdmin: isAdmin, mnhn_form_link: mnhn_form_link});
+                    medias_pictures = [];
+                    if(obj3D.medias !== undefined) {
+                        obj3D.medias.forEach(function(media, index) {
+                            if(media.isImage()) {
+                                medias_pictures.push(media);
+                            }
+                        });
+                    }
+                    
+                    mnhn_form_link = '';
+                    if(obj3D.collection) {
+                        mnhn_form_link = obj3D.collection.getShortName() + "/" + obj3D.getCodeMNHN();
+                    }
+                    
+                    // Launch detail view
+                    res.view(template_view, {obj: obj3D, medias: obj3D.medias, medias_pictures: medias_pictures,
+                            annotations: obj3D.annotations, associated: obj3D.associated,
+                            comments: obj3D.comments, isAdmin: isAdmin, mnhn_form_link: mnhn_form_link});
+                }
+                else
+                    return res.notFound();
             });
     },
 
