@@ -104,6 +104,43 @@ ALTER SEQUENCE annotation_id_seq OWNED BY annotation.id;
 
 
 --
+-- Name: collection; Type: TABLE; Schema: public; Owner: gisuser; Tablespace: 
+--
+
+CREATE TABLE collection (
+    category text,
+    name text,
+    short_name text,
+    id integer NOT NULL,
+    "createdAt" timestamp with time zone,
+    "updatedAt" timestamp with time zone
+);
+
+
+ALTER TABLE public.collection OWNER TO gisuser;
+
+--
+-- Name: collection_id_seq; Type: SEQUENCE; Schema: public; Owner: gisuser
+--
+
+CREATE SEQUENCE collection_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.collection_id_seq OWNER TO gisuser;
+
+--
+-- Name: collection_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: gisuser
+--
+
+ALTER SEQUENCE collection_id_seq OWNED BY collection.id;
+
+
+--
 -- Name: comment; Type: TABLE; Schema: public; Owner: gisuser; Tablespace: 
 --
 
@@ -299,6 +336,7 @@ CREATE TABLE object3d (
     preview text,
     preview_animated text,
     published boolean,
+    copyright text,
     gallery integer,
     id integer NOT NULL,
     "createdAt" timestamp with time zone,
@@ -493,6 +531,13 @@ ALTER TABLE ONLY annotation_annotations_annotation__object3d_annotations ALTER C
 -- Name: id; Type: DEFAULT; Schema: public; Owner: gisuser
 --
 
+ALTER TABLE ONLY collection ALTER COLUMN id SET DEFAULT nextval('collection_id_seq'::regclass);
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: gisuser
+--
+
 ALTER TABLE ONLY comment ALTER COLUMN id SET DEFAULT nextval('comment_id_seq'::regclass);
 
 
@@ -573,6 +618,14 @@ ALTER TABLE ONLY annotation_annotations_annotation__object3d_annotations
 
 ALTER TABLE ONLY annotation
     ADD CONSTRAINT annotation_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: collection_pkey; Type: CONSTRAINT; Schema: public; Owner: gisuser; Tablespace: 
+--
+
+ALTER TABLE ONLY collection
+    ADD CONSTRAINT collection_pkey PRIMARY KEY (id);
 
 
 --

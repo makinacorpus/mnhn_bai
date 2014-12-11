@@ -34,6 +34,10 @@ After getting the sources, run :
     npm install
 
 You need to create postgres database too, called for example 'bai'.
+Load the sql/bai.sql and sql/data.sql on the database:
+
+    psql -d bai -f bai.sql
+    psql -d bai -f data.sql
 
 Configure your setting by editing config/env/production.js:
 
