@@ -271,7 +271,7 @@ module.exports = {
         if(obj_id)
             var id = obj_id;
         else
-            var id = req.param('id')
+            var id = req.param('id');
         Object3D.findOne({id: id})
             .populate('medias').populate('annotations').populate('associated').populate('collection')
             .exec(function(err, obj3D) {
