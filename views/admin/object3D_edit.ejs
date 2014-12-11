@@ -30,8 +30,9 @@
     </div>
     
     <div class="block_form">
-        <label for="category" class="form_label"><%= __('Collection') %> : </label>
-        <input name="category" id="category" type="text" <% if(obj) {%> value="<%= obj.getCategory() %>"<% } %>/>
+        <label for="collection" class="form_label"><%= __('Collection') %> : </label>
+        <select name="collection" id="collection" class="select">
+        </select>
     </div>
 
     <div class="block_form">
@@ -145,17 +146,22 @@
 
 <script type="text/javascript">
     $(document).ready(function(){
-    
+        // Fill collections
         $.ajax({
             type: "GET",
-            url: "/categories",
-            data: { "_csrf": $("#_csrf").val() }
+            url: "/allcollections"
         })
-        .done(function( categories ) {
-            $( "#category" ).autocomplete({
-                source: categories
+        .done(function( objects ) {
+            objects.forEach(function(collection, index) {
+                $("#collection").append($("<option />").val(collection.id).text(collection.name));
+                <% if(obj) {%>
+                    if (collection.id == <%= obj.getCollection() %>) {
+                        $("#collection").val(collection.id);
+                    }
+                <% } %>
             });
         });
+        
     
         $.ajax({
             type: "GET",
@@ -167,6 +173,7 @@
             });
         });
         
+        // Fill galleries
         $.ajax({
             type: "GET",
             url: "/galleries"
@@ -176,12 +183,9 @@
                 $("#gallery").append($("<option />").val(gallery.id).text(gallery.title));
                 <% if(obj) {%>
                     if (gallery.id == <%= obj.getGallery() %>) {
-                        //$("#gallery").append($("<option selected />").val(gallery.id).text(gallery.title));
                         $("#gallery").val(gallery.id);
                     }
                 <% } %>
-                //else
-                //    $("#gallery").append($("<option />").val(gallery.id).text(gallery.title));
             });
         });
         

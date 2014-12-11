@@ -327,7 +327,7 @@ CREATE TABLE object3d (
     title text,
     short_desc text,
     complete_desc text,
-    category text,
+    collection integer,
     "filename_3D" text,
     dim_x integer,
     dim_y integer,

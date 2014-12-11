@@ -6,7 +6,7 @@
 <div class="filter_bar">
     <form action="/gallery/<%= req.session.gallery %>" method="post">
         <input type='hidden' name='_csrf' value='<%= _csrf %>'>
-        <%= __('Search by collection') %><input type="text" name="category" id="category">
+        <%= __('Search by collection') %><select name="collection" id="collection" class="select"><option></option></select>
         <%= __('Free search') %><input type="text" name="freesearch">
         <%= __('Items per page') %><select name="items_per_page">
                                     <option value="20" <% if(items_per_page == 20) {%>selected<% } %>>20</option>
@@ -18,8 +18,8 @@
 </div>
 <div class="filter_list">
     <ul>
-        <% if(listFilters['category']) {%>
-            <li><%= __('Category') %> : <strong><%= listFilters['category'] %></strong><div class="remove_filter" onclick="remove_filter('category')"></div></li>
+        <% if(listFilters['collection']) {%>
+            <li><%= __('Collection') %> : <strong><%= listFilters['collection'] %></strong><div class="remove_filter" onclick="remove_filter('collection')"></div></li>
         <% } %>
         <% if(listFilters['freesearch']) {%>
             <li><%= __('Free search') %> : <strong><%= listFilters['freesearch'] %></strong><div class="remove_filter" onclick="remove_filter('freesearch')"></div></li>
@@ -72,16 +72,29 @@
 
 <script type="text/javascript">
     $(function() {
+        /*
         $.ajax({
             type: "GET",
-            url: "/categories",
+            url: "/collections",
             data: { "_csrf": $("#_csrf").val() }
         })
-        .done(function( categories ) {
-            $( "#category" ).autocomplete({
-                source: categories
+        .done(function( collections ) {
+            console.log(collections);
+            $( "#collection" ).autocomplete({
+                source: collections
             });
         });
+        */
+        $.ajax({
+            type: "GET",
+            url: "/collections"
+        })
+        .done(function( collections ) {
+            collections.forEach(function(collection, index) {
+                $("#collection").append($("<option />").val(collection.id).text(collection.name));
+            });
+        });
+        
     });
 
     function remove_filter(filter) {

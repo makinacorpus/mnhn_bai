@@ -33,10 +33,7 @@ function save_obj(req, res, obj3D, err, create) {
     obj3D.title = req.param('title');
     obj3D.short_desc = req.param('short_desc');
     obj3D.complete_desc = req.param('complete_desc');
-    obj3D.category = req.param('category');
-    //obj3D.filename_3D = req.param('filename_3D');
-    //obj3D.filename_flat = req.param('filename_flat');
-    //obj3D.preview = req.param('preview');
+    obj3D.collection = req.param('collection');
     obj3D.gallery = req.param('gallery');
     if(req.param('dim_x'))
         obj3D.dim_x = req.param('dim_x');
@@ -352,24 +349,46 @@ module.exports = {
 
 
     /**
-    * `3DObjectController.get_categories()`
+    * `3DObjectController.get_all_collections()`
     */
-    get_categories: function (req, res) {
-        // Get object's categories
-        var tab_categories = [];
+    get_all_collections: function (req, res) {
+        // Get collections
+        var tab_collections = [];
 
-        Object3D.find({}).exec(function(err, objects) {
-            objects.forEach(function(object, index) {
-                var found = tab_categories.indexOf(object.category);
-                if(object.category && found == -1) {
-                    tab_categories.push(object.category)
-                }
+        Collection.find({}).exec(function(err, collections) {
+            collections.forEach(function(collection, index) {
+                tab_collections.push({'id': collection.getId(), 'name': collection.getName() })
             });
-            return res.json(tab_categories);
+            return res.json(tab_collections);
         });
     },
 
 
+    /**
+    * `3DObjectController.get_obj_collections()`
+    */
+    get_obj_collections: function (req, res) {
+        // Get collections
+        var tab_collections = [];
+        var tab_objects_coll = [];
+        
+        Object3D.find({}).exec(function(err, objects) {
+            objects.forEach(function(object, index) {
+                tab_objects_coll.push(object.getCollection())
+            });
+            
+            Collection.find({}).exec(function(err, collections) {
+                collections.forEach(function(collection, index) {
+                    var res = tab_objects_coll.indexOf(collection.getId()); 
+                    if(res != -1)
+                        tab_collections.push({'id': collection.getId(), 'name': collection.getName() })
+                });
+                return res.json(tab_collections);
+            });
+        });
+    },
+
+    
     /**
     * `3DObjectController.detail()`
     */

@@ -12,6 +12,9 @@ module.exports = {
     name: 'string',
     short_name: 'string',
 
+    getId: function() {
+        return this.id;
+    },
     getCategory: function() {
         return this.category;
     },

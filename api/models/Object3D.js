@@ -16,7 +16,9 @@ module.exports = {
     },
     short_desc: 'string',
     complete_desc: 'string',
-    category: 'string',
+    collection: {
+        model: 'Collection'
+    },
     filename_3D: 'string',
     dim_x: 'integer',
     dim_y: 'integer',
@@ -78,8 +80,8 @@ module.exports = {
     getCompleteDesc: function() {
         return this.complete_desc;
     },
-    getCategory: function() {
-        return this.category;
+    getCollection: function() {
+        return this.collection;
     },
     getCopyright: function() {
         return this.copyright;

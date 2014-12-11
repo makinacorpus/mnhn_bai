@@ -46,17 +46,18 @@ module.exports = {
             delete filters['published'];
         }
         
-        // category
-        var cat = req.param('category');
-        if(cat && cat != '') {
-            filters['category'] =  cat;
-            filter_criteria['category'] =  cat;
+        // collection
+        var coll = req.param('collection');
+        console.log(coll);
+        if(coll && coll != '') {
+            filters['collection'] =  coll;
+            filter_criteria['collection'] =  coll;
         } else {
             if(req.session.filters) {
-                cat = req.session.filters['category']
-                if(cat && cat != '') {
-                    filters['category'] =  cat;
-                    filter_criteria['category'] =  cat;
+                coll = req.session.filters['collection']
+                if(coll && coll != '') {
+                    filters['collection'] =  coll;
+                    filter_criteria['collection'] =  coll;
                 }
             }
         }
