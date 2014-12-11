@@ -14,7 +14,7 @@ module.exports = {
         type: 'string',
         required: true
     },
-    code_mnhn: 'integer',
+    code_mnhn: 'string',
     short_desc: 'string',
     complete_desc: 'string',
     collection: {

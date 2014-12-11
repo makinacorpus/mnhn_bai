@@ -325,7 +325,7 @@ ALTER SEQUENCE media_medias_media__object3d_medias_id_seq OWNED BY media_medias_
 
 CREATE TABLE object3d (
     title text,
-    code_mnhn integer,
+    code_mnhn text,
     short_desc text,
     complete_desc text,
     collection integer,
