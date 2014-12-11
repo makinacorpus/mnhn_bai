@@ -31,6 +31,9 @@ module.exports.routes = {
     'get /detail/:id': 'Object3DController.detail',
     'get /detail/:id/embed': 'Object3DController.embed',
 
+    // Different URL for same result for external calls
+    'get /specimen/mnhn/:col/:code': 'Object3DController.detail_external',
+    
     'get /comments/:id': 'Object3DController.get_comments',
     'get /objects/:id': 'Object3DController.get_objects',
     'get /objects': 'Object3DController.get_objects',

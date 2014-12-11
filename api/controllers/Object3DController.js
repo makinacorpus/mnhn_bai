@@ -260,7 +260,7 @@ module.exports = {
     /**
     * `3DObjectController.getDetail()`
     */
-    getDetail: function (req, res, template_view) {
+    getDetail: function (req, res, template_view, obj_id) {
 
         // Check if user is admin
         var isAdmin = false;
@@ -268,7 +268,10 @@ module.exports = {
         if(req.user && req.session.isadmin)
             isAdmin = true;
         // Get object infos
-        var id = req.param('id')
+        if(obj_id)
+            var id = obj_id;
+        else
+            var id = req.param('id')
         Object3D.findOne({id: id})
             .populate('medias').populate('annotations').populate('associated').populate('collection')
             .exec(function(err, obj3D) {
@@ -400,15 +403,48 @@ module.exports = {
     * `3DObjectController.detail()`
     */
     detail: function (req, res) {
-        sails.controllers.object3d.getDetail(req, res, 'detail');
+        sails.controllers.object3d.getDetail(req, res, 'detail', null);
     },
 
 
     /**
+    * `3DObjectController.detail_external()`
+    */
+    detail_external: function (req, res) {
+        var collection = req.param('col').toUpperCase();
+        var code = req.param('code');
+        
+        Collection.findOne({short_name: collection}).exec(function(err, collection) {
+            if(err)
+                return res.error();
+
+            if(collection) {
+                // we found the collection
+                // Search for an object with this code and collection
+                Object3D.findOne({collection: collection.getId(), code_mnhn: code}).exec(function(err, object) {
+                    if(err)
+                        return res.error();
+                    
+                    if(object) {
+                        sails.controllers.object3d.getDetail(req, res, 'detail', object.getId());
+                    } else {
+                        return res.notFound();
+                    }
+                });
+            } else {
+                return res.notFound();
+            }
+        });
+        
+        // if not valid, return 404
+    },
+
+    
+    /**
     * `3DObjectController.embed()`
     */
     embed: function (req, res) {
-        sails.controllers.object3d.getDetail(req, res, 'embed');
+        sails.controllers.object3d.getDetail(req, res, 'embed', null);
     },
 
 
