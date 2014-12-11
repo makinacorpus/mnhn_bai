@@ -91,13 +91,22 @@ module.exports = {
             return null;
     },
     getDimX: function() {
-        return this.dim_x;
+        if(this.dim_x)
+            return this.dim_x;
+        else
+            return 0;
     },
     getDimY: function() {
-        return this.dim_y;
+        if(this.dim_y)
+            return this.dim_y;
+        else
+            return 0;
     },
     getDimZ: function() {
-        return this.dim_z;
+        if(this.dim_z)
+            return this.dim_z;
+        else
+            return 0;
     },
     getFileNameFlat: function() {
         return '/uploads/' + this.filename_flat;
