@@ -56,3 +56,6 @@ module.exports.data = {
     __uploadData: '{{data.upload}}'
 };
 
+module.exports.urls = {
+    __mnhn: 'http://coldb.mnhn.fr/catalognumber/mnhn/'
+};
