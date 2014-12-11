@@ -31,6 +31,7 @@ function save_obj(req, res, obj3D, err, create) {
     }
     // Maj object's attributes
     obj3D.title = req.param('title');
+    obj3D.code_mnhn = req.param('code_mnhn');
     obj3D.short_desc = req.param('short_desc');
     obj3D.complete_desc = req.param('complete_desc');
     obj3D.collection = req.param('collection');

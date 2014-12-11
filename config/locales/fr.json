@@ -106,5 +106,7 @@
 	"Dimension Y": "Dimension Y",
 	"Dimension Z": "Dimension Z",
 	"Search by collection": "Chercher par collection",
-	"Search objects": "Search objects"
+	"Search objects": "Rechercher",
+	"Collection": "Collection",
+	"MNHN unique code": "Code unique MNHN"
 }

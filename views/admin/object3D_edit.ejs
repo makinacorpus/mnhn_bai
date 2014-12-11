@@ -14,6 +14,11 @@
     </div>
 
     <div class="block_form">
+        <label for="code_mnhn" class="form_label"><%= __('MNHN unique code') %> : </label>
+        <input name="code_mnhn" type="text" <% if(obj) {%> value="<%= obj.getCodeMNHN() %>"<% } %> />
+    </div>
+
+    <div class="block_form">
         <label for="short_desc" class="form_label"><%= __('Short description') %> : </label>
         <textarea name="short_desc" rows="5" cols="40"><% if(obj) {%><%= obj.getShortDesc() %><% } %></textarea>
     </div>

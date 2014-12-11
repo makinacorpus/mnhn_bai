@@ -14,6 +14,7 @@ module.exports = {
         type: 'string',
         required: true
     },
+    code_mnhn: 'integer',
     short_desc: 'string',
     complete_desc: 'string',
     collection: {
@@ -73,6 +74,9 @@ module.exports = {
     },
     getTitle: function() {
         return this.title;
+    },
+    getCodeMNHN: function() {
+        return this.code_mnhn;
     },
     getShortDesc: function() {
         return this.short_desc;
