@@ -270,7 +270,7 @@ module.exports = {
         // Get object infos
         var id = req.param('id')
         Object3D.findOne({id: id})
-            .populate('medias').populate('annotations').populate('associated')
+            .populate('medias').populate('annotations').populate('associated').populate('collection')
             .exec(function(err, obj3D) {
                 if(err) { return err;}
                 medias_pictures = [];
@@ -281,10 +281,16 @@ module.exports = {
                         }
                     });
                 }
+                
+                mnhn_form_link = '';
+                if(obj3D.collection) {
+                    mnhn_form_link = obj3D.collection.getShortName() + "/" + obj3D.getCodeMNHN();
+                }
+                
                 // Launch detail view
                 res.view(template_view, {obj: obj3D, medias: obj3D.medias, medias_pictures: medias_pictures,
                          annotations: obj3D.annotations, associated: obj3D.associated,
-                         comments: obj3D.comments, isAdmin: isAdmin});
+                         comments: obj3D.comments, isAdmin: isAdmin, mnhn_form_link: mnhn_form_link});
             });
     },
 

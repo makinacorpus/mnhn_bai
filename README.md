@@ -39,7 +39,8 @@ Load the sql/bai.sql and sql/data.sql on the database:
     psql -d bai -f bai.sql
     psql -d bai -f data.sql
 
-Configure your setting by editing config/env/production.js:
+Configure your setting by copying config/env/production.js.in => config/env/production.js
+And edit config/env/production.js:
 
     module.exports.data {...}
     module.exports.connections {...}

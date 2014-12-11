@@ -54,3 +54,7 @@ module.exports.data = {
     __uploadData: '/absolute/path/to/r/'
 };
 
+module.exports.urls = {
+    __mnhn: 'http://coldb.mnhn.fr/catalognumber/mnhn/'
+};
+

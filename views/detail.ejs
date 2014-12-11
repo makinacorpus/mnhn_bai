@@ -103,6 +103,14 @@
 </div>
 <% } %>
 
+<% if(mnhn_form_link.length > 0) { %>
+<div class="col-lg-12 col-lg-12-desc">
+    <div class="bloc_desc">
+        <div class="header_block"><h4><%= __('Collection form') %></h4></div>
+        <a target="_blank" href="<%= sails.config.urls.__mnhn %><%= mnhn_form_link %>"><%= __('See the MNHN collection form') %></a>
+    </div>
+</div>
+<% } %>
 
 <div class="col-lg-12 col-lg-12-desc">
     <div class="bloc_desc">
