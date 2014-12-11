@@ -6,14 +6,14 @@
 <div class="filter_bar">
     <form action="/gallery/<%= req.session.gallery %>" method="post">
         <input type='hidden' name='_csrf' value='<%= _csrf %>'>
-        <%= __('Search by category') %><input type="text" name="category" id="category">
+        <%= __('Search by collection') %><input type="text" name="category" id="category">
         <%= __('Free search') %><input type="text" name="freesearch">
         <%= __('Items per page') %><select name="items_per_page">
                                     <option value="20" <% if(items_per_page == 20) {%>selected<% } %>>20</option>
                                     <option value="50" <% if(items_per_page == 50) {%>selected<% } %>>50</option>
                                     <option value="100" <% if(items_per_page == 100) {%>selected<% } %>>100</option>
                                    </select>
-        <input type="submit" name="<%= __('Search') %>">
+        <input type="submit" name="<%= __('Search') %>" value="<%= __('Search') %>">
     </form>
 </div>
 <div class="filter_list">

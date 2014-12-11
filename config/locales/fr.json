@@ -104,5 +104,7 @@
 	"Please wait while the object is saved": "Merci de patienter pendant l'enregistrement de l'objet",
 	"Dimension X": "Dimension X",
 	"Dimension Y": "Dimension Y",
-	"Dimension Z": "Dimension Z"
+	"Dimension Z": "Dimension Z",
+	"Search by collection": "Chercher par collection",
+	"Search objects": "Search objects"
 }
