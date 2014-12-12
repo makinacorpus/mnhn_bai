@@ -468,7 +468,7 @@ module.exports = {
                     
                     if(object) {
                         // return animated image
-                        img_url = sails.getBaseurl() + object.getPreviewAnimated();
+                        img_url = object.getPreviewAnimated();
                         res.redirect(img_url);
                     } else {
                         return res.notFound();
