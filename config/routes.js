@@ -34,6 +34,9 @@ module.exports.routes = {
     // Different URL for same result for external calls
     'get /specimen/mnhn/:col/:code': 'Object3DController.detail_external',
     
+    // URL for getting animated image
+    'get /thumb3d/mnhn/:col/:code': 'Object3DController.animated_image',
+    
     'get /comments/:id': 'Object3DController.get_comments',
     'get /objects/:id': 'Object3DController.get_objects',
     'get /objects': 'Object3DController.get_objects',

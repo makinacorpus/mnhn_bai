@@ -449,6 +449,39 @@ module.exports = {
 
     
     /**
+    * `3DObjectController.animated_image()`
+    */
+    animated_image: function (req, res) {
+        var collection = req.param('col').toUpperCase();
+        var code = req.param('code');
+        
+        Collection.findOne({short_name: collection}).exec(function(err, collection) {
+            if(err)
+                return res.error();
+
+            if(collection) {
+                // we found the collection
+                // Search for an object with this code and collection
+                Object3D.findOne({collection: collection.getId(), code_mnhn: code}).exec(function(err, object) {
+                    if(err)
+                        return res.error();
+                    
+                    if(object) {
+                        // return animated image
+                        img_url = sails.getBaseurl() + object.getPreviewAnimated();
+                        res.redirect(img_url);
+                    } else {
+                        return res.notFound();
+                    }
+                });
+            } else {
+                return res.notFound();
+            }
+        });
+    },
+
+    
+    /**
     * `3DObjectController.embed()`
     */
     embed: function (req, res) {
