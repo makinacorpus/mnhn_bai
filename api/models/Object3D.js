@@ -14,9 +14,12 @@ module.exports = {
         type: 'string',
         required: true
     },
+    title_en: 'string',
     code_mnhn: 'string',
     short_desc: 'string',
+    short_desc_en: 'string',
     complete_desc: 'string',
+    complete_desc_en: 'string',
     collection: {
         model: 'Collection'
     },
@@ -75,14 +78,23 @@ module.exports = {
     getTitle: function() {
         return this.title;
     },
+    getTitleEn: function() {
+        return this.title_en;
+    },
     getCodeMNHN: function() {
         return this.code_mnhn;
     },
     getShortDesc: function() {
         return this.short_desc;
     },
+    getShortDescEn: function() {
+        return this.short_desc_en;
+    },
     getCompleteDesc: function() {
         return this.complete_desc;
+    },
+    getCompleteDescEn: function() {
+        return this.complete_desc_en;
     },
     getCollection: function() {
         return this.collection;

@@ -14,6 +14,11 @@
     </div>
 
     <div class="block_form">
+        <label for="title_en" class="form_label"><%= __('Choose a title (en)') %> : </label>
+        <input name="title_en" type="text" <% if(obj) {%> value="<%= obj.getTitleEn() %>"<% } %> />
+    </div>
+
+    <div class="block_form">
         <label for="code_mnhn" class="form_label"><%= __('MNHN unique code') %> : </label>
         <input name="code_mnhn" type="text" <% if(obj) {%> value="<%= obj.getCodeMNHN() %>"<% } %> />
     </div>
@@ -24,10 +29,21 @@
     </div>
 
     <div class="block_form">
+        <label for="short_desc_en" class="form_label"><%= __('Short description (en)') %> : </label>
+        <textarea name="short_desc_en" rows="5" cols="40"><% if(obj) {%><%= obj.getShortDescEn() %><% } %></textarea>
+    </div>
+    
+    <div class="block_form">
         <label for="complete_desc" class="form_label"><%= __('Complete description') %> : </label>
         <textarea name="complete_desc" rows="5" cols="40"><% if(obj) {%><%= obj.getCompleteDesc() %><% } %></textarea>
     </div>
 
+    <div class="block_form">
+        <label for="complete_desc_en" class="form_label"><%= __('Complete description (en)') %> : </label>
+        <textarea name="complete_desc_en" rows="5" cols="40"><% if(obj) {%><%= obj.getCompleteDescEn() %><% } %></textarea>
+    </div>
+    
+    
     <div class="block_form">
         <label for="gallery" class="form_label"><%= __('Gallery') %> : </label>
         <select name="gallery" id="gallery" class="select">

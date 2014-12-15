@@ -31,9 +31,12 @@ function save_obj(req, res, obj3D, err, create) {
     }
     // Maj object's attributes
     obj3D.title = req.param('title');
+    obj3D.title_en = req.param('title_en');
     obj3D.code_mnhn = req.param('code_mnhn');
     obj3D.short_desc = req.param('short_desc');
+    obj3D.short_desc_en = req.param('short_desc_en');
     obj3D.complete_desc = req.param('complete_desc');
+    obj3D.complete_desc_en = req.param('complete_desc_en');
     obj3D.collection = req.param('collection');
     obj3D.gallery = req.param('gallery');
     if(req.param('dim_x'))
