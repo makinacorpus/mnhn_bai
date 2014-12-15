@@ -25,7 +25,8 @@ function save_obj(req, res, obj3D, err, create) {
                     destroy_obj(obj3D);
                 } catch(err) {console.log(err);}
             }
-            return res.json({"err": err, "status": false});}
+            return res.json({"err": err, "status": false});
+        }
     if (create) {
         obj3D.save();
     }

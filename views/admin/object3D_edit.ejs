@@ -83,15 +83,15 @@
     </div>
     <div class="block_form">
         <label for="dim_x" class="form_label"><%= __('Dimension X') %> : </label>
-        <input name="dim_x" type="text" <% if(obj) {%> value="<%= obj.getDimX() %>"<% } %> />
+        <input name="dim_x" type="text" <% if(obj) {%> value="<%= obj.getDimX() %>"<% } else { %> value="1" <% } %> />
     </div>
     <div class="block_form">
         <label for="dim_y" class="form_label"><%= __('Dimension Y') %> : </label>
-        <input name="dim_y" type="text" <% if(obj) {%> value="<%= obj.getDimY() %>"<% } %> />
+        <input name="dim_y" type="text" <% if(obj) {%> value="<%= obj.getDimY() %>"<% } else { %> value="1" <% } %> />
     </div>
     <div class="block_form">
         <label for="dim_z" class="form_label"><%= __('Dimension Z') %> : </label>
-        <input name="dim_z" type="text" <% if(obj) {%> value="<%= obj.getDimZ() %>"<% } %> />
+        <input name="dim_z" type="text" <% if(obj) {%> value="<%= obj.getDimZ() %>"<% } else { %> value="1" <% } %> />
     </div>
 
     <div class="block_form">
