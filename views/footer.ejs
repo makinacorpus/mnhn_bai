@@ -7,16 +7,16 @@
 
 <div class="col-lg-4">
     <ul class="menu">
-        <li><a href="/about"><%= __('About') %></a></li>
-        <li><a href="/contact"><%= __('Contact us') %></a></li>
+        <li><a href="<% if(req.session.lang == "en") { %>/about/en<% } else { %>/about<% } %>"><%= __('About') %></a></li>
+        <li><a href="<% if(req.session.lang == "en") { %>/contact/en<% } else { %>/contact<% } %>"><%= __('Contact us') %></a></li>
     </ul>
 </div>
 
 <div class="col-lg-4">
     <ul class="menu">
-        <li><a href="/charter"><%= __('Charter use') %></a></li>
-        <li><a href="/credits"><%= __('Credits') %></a></li>
-        <li><a href="/legals"><%= __('Legals') %></a></li>
+        <li><a href="<% if(req.session.lang == "en") { %>/charter/en<% } else { %>charter<% } %>"><%= __('Charter use') %></a></li>
+        <li><a href="<% if(req.session.lang == "en") { %>/credits/en<% } else { %>credits<% } %>"><%= __('Credits') %></a></li>
+        <li><a href="<% if(req.session.lang == "en") { %>/legals/en<% } else { %>legals<% } %>"><%= __('Legals') %></a></li>
     </ul>
 </div>
 

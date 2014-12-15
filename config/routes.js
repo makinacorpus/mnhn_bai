@@ -7,18 +7,17 @@ module.exports.routes = {
          return next();
      },
     
-//     '/admin/*': function(req, res, next) {
-//         res.setLocale(req.param('lang') || req.session.lang);
-//         return next();
-//     },
-//     
     '/:lang/': function(req, res, next) {
         req.session.lang = req.param('lang');
-        return res.redirect('/');
+        if(req.session.lang == "en")
+            return res.redirect('/en');
+        else
+            res.redirect('/');
      },
-    //'/:lang/': 'I18nController.index',
 
     '/': { view: 'home' },
+    '/en': { view: 'home_en' },
+     
     'get /login': { view: 'user/login' },
     'get /signup': { view: 'user/signup' },
     '/welcome': { view: 'user/welcome' },
@@ -82,4 +81,10 @@ module.exports.routes = {
     'get /charter': { view: 'statics/charter' },
     'get /credits': { view: 'statics/credits' },
     'get /legals': { view: 'statics/legals' },
+    
+    'get /about/en': { view: 'statics/about_en' },
+    'get /contact/en': { view: 'statics/contact_en' },
+    'get /charter/en': { view: 'statics/charter_en' },
+    'get /credits/en': { view: 'statics/credits_en' },
+    'get /legals/en': { view: 'statics/legals_en' },
 };
