@@ -325,14 +325,18 @@ ALTER SEQUENCE media_medias_media__object3d_medias_id_seq OWNED BY media_medias_
 
 CREATE TABLE object3d (
     title text,
+    title_en text,
     code_mnhn text,
     short_desc text,
+    short_desc_en text,
     complete_desc text,
+    complete_desc_en text,
     collection integer,
     "filename_3D" text,
     dim_x integer,
     dim_y integer,
     dim_z integer,
+    acquisition_params text,
     filename_flat text,
     preview text,
     preview_animated text,
