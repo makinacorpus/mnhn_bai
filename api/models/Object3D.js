@@ -27,6 +27,7 @@ module.exports = {
     dim_x: 'integer',
     dim_y: 'integer',
     dim_z: 'integer',
+    acquisition_params: 'string',
     filename_flat: 'string',
     preview: 'string',
     preview_animated: 'string',
@@ -134,6 +135,9 @@ module.exports = {
             return this.dim_z;
         else
             return 0;
+    },
+    getAcquisitionParams: function() {
+        return this.acquisition_params;
     },
     getFileNameFlat: function() {
         return '/uploads/' + this.filename_flat;

@@ -78,6 +78,9 @@
         <div class="bloc_desc">
             <div class="header_block"><h4><%= __('Flat view') %></h4></div>
             <% include flat.ejs %>
+            
+            <p class="center"><%= __('Acquisition params') %> : <%= obj.getAcquisitionParams() %></p>
+            
         </div>
     </div>
 <% } %>

@@ -45,6 +45,7 @@ function save_obj(req, res, obj3D, err, create) {
         obj3D.dim_y = req.param('dim_y');
     if(req.param('dim_z'))
         obj3D.dim_z = req.param('dim_z');
+    obj3D.acquisition_params = req.param('acquisition_params');
     obj3D.copyright = req.param('copyright');
 
     associated_tab = req.param('associated_objects');

@@ -94,8 +94,6 @@
         <input name="dim_z" type="text" <% if(obj) {%> value="<%= obj.getDimZ() %>"<% } %> />
     </div>
 
-    
-    
     <div class="block_form">
         <label for="filename_flat" class="form_label"><%= __('Flat image path') %> : </label>
         <input type="file" id="filename_flat" name="filename_flat" />
@@ -104,6 +102,12 @@
         <% } %>
 
     </div>
+    <div class="block_form">
+        <label for="acquisition_params" class="form_label"><%= __('Acquisition params') %> : </label>
+        <input name="acquisition_params" type="text" <% if(obj) {%> value="<%= obj.getAcquisitionParams() %>"<% } %> />
+    </div>
+    
+    
 
     <div class="block_form">
         <label for="preview" class="form_label"><%= __('Object preview') %> : </label>
