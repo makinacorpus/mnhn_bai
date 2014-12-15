@@ -48,7 +48,6 @@ module.exports = {
         
         // collection
         var coll = req.param('collection');
-        console.log(coll);
         if(coll && coll != '') {
             filters['collection'] =  coll;
             filter_criteria['collection'] =  coll;
