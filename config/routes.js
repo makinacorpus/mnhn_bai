@@ -1,6 +1,8 @@
 module.exports.routes = {
 
      '/*': function(req, res, next) {
+         if(!req.session.lang)
+            req.session.lang = "fr";
          res.setLocale(req.session.lang);
          return next();
      },
