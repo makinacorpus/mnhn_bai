@@ -31,7 +31,7 @@
         
         </div><!-- /.carousel -->
     <% } else { %>
-        <img src="<%= obj.getMainImg() %>" alt="<%= obj.getTitle() %>" />
+        <img src="<%= obj.getMainImg() %>" alt="<%= obj.getTitle(req.session.lang) %>" />
     <% } %>
 </div>
 <% } %>
@@ -44,16 +44,16 @@
 <% }%>
   
     <div class="bloc_desc">
-        <h1><%= obj.getTitle() %></h1>
+        <h1><%= obj.getTitle(req.session.lang) %></h1>
         <% if(obj.hasShortDesc()) { %>
             <div class="short-description">
-                <%= obj.getShortDesc() %>
+                <%= obj.getShortDesc(req.session.lang) %>
             </div>
         <% } %>
         
         <% if(obj.hasCompleteDesc()) { %>
             <div class="complete-description">
-                <p><%= obj.getCompleteDesc() %></p>
+                <p><%= obj.getCompleteDesc(req.session.lang) %></p>
             </div>
         <% } %>          
     

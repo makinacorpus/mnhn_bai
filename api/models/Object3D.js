@@ -75,8 +75,11 @@ module.exports = {
     getId: function() {
         return this.id;
     },
-    getTitle: function() {
-        return this.title;
+    getTitle: function(lang) {
+        if(lang && lang == "en")
+            return this.getTitleEn()
+        else
+            return this.title;
     },
     getTitleEn: function() {
         return this.title_en;
@@ -84,14 +87,20 @@ module.exports = {
     getCodeMNHN: function() {
         return this.code_mnhn;
     },
-    getShortDesc: function() {
-        return this.short_desc;
+    getShortDesc: function(lang) {
+        if(lang && lang == "en")
+            return this.getShortDescEn()
+        else
+            return this.short_desc;
     },
     getShortDescEn: function() {
         return this.short_desc_en;
     },
-    getCompleteDesc: function() {
-        return this.complete_desc;
+    getCompleteDesc: function(lang) {
+        if(lang && lang == "en")
+            return this.getCompleteDescEn()
+        else
+            return this.complete_desc;
     },
     getCompleteDescEn: function() {
         return this.complete_desc_en;

@@ -30,24 +30,23 @@
 <div class="detail_list">
 <% listObj.forEach(function(obj, index) {%>
 
-    
     <div class="detail flip">
         <div class="card"> 
             <a href="/detail/<%= obj.getId() %>">
             <span class="face front">
-                <img src="<%= obj.getPreview() %>" alt="<%= obj.getTitle() %>" />
+                <img src="<%= obj.getPreview() %>" alt="<%= obj.getTitle(req.session.lang) %>" />
                 <% if(!obj.getPublished()) { %>
                     <span class="not_publish"></span>
                 <% } %>
             </span>
             <span class="face back">
-                <img class="animated" src="<%= obj.getPreviewAnimated() %>" alt="<%= obj.getTitle() %>" />
+                <img class="animated" src="<%= obj.getPreviewAnimated() %>" alt="<%= obj.getTitle(req.session.lang) %>" />
             </span> 
             </a>
         </div>
         <div class="gallery_desc">
-            <%= obj.getTitle() %><br/>
-            <span class="text_desc"><%= obj.getShortDesc() %></span>
+            <%= obj.getTitle(req.session.lang) %><br/>
+            <span class="text_desc"><%= obj.getShortDesc(req.session.lang) %></span>
             <% if (isAdmin) {%>
                 <span class="actions">
                     <span class="edit_link"><a href="/admin/edit_object/<%= obj.getId() %>"><img src="/img/icon_edit.png" alt="<%= __('Edit') %>" /></a></span>
