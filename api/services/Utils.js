@@ -28,7 +28,9 @@ function remove_path(path) {
 }
 
 function upload_path(path){
-    return _path.join(sails.config.data.__pathData, path);
+    if(path)
+        return _path.join(sails.config.data.__pathData, path);
+    else return null;
 }
 
 module.exports = {
