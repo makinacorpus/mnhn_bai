@@ -145,6 +145,7 @@ module.exports = {
                 params[param] = req.body[param];
             }
         }
+        console.log(params);
         Object3D.create(params).exec(function (err, obj3D) {
             return save_obj(req, res, obj3D, err, true);
         });
