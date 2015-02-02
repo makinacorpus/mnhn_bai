@@ -25,8 +25,15 @@ function save_obj(req, res, obj3D, err, create) {
                     destroy_obj(obj3D);
                 } catch(err) {console.log(err);}
             }
+            console.log("Object NOT created (init)");
             return res.json({"err": err, "status": false});
         }
+        
+    if (create)
+        console.log("Object created (init)");
+    else
+        console.log("Object edited");        
+
     if (create) {
         obj3D.save();
     }
@@ -93,9 +100,17 @@ function save_obj(req, res, obj3D, err, create) {
         if(obj3D !== undefined && create && err) {
             try {
                 destroy_obj(obj3D);
-            } catch(derr) {console.log(derr);}
+            } catch(derr) {
+                console.log("Error while creating object");
+                console.log(derr);
+            }
         }
-        if(err){console.log(err);rerr=err;ret=false;}
+        if(err) { 
+            console.log("Error while saving object");
+            console.log(err);
+            rerr = err;
+            ret = false;
+        }
     });
 
     //Redirect to detail view
