@@ -14,7 +14,7 @@ module.exports = {
     //if (req.user && req.user.profile == "admin") {
     //if (req.user && req.user.isAdmin()) {
     if (req.user && req.session.isadmin) {
-        console.log("User allowed : " + req.user.username + " ( " + req.user.profile + " )");
+        //console.log("User allowed : " + req.user.username + " ( " + req.user.profile + " )");
         next();
     } else {
         console.log("You are not allowed to view this page");
@@ -42,6 +42,35 @@ module.exports = {
         });
   },
   
+
+  /**
+   * `AdminControllerController.manage_galleries()`
+   */
+  manage_galleries: function (req, res) {
+        
+        // Get galleries
+        Gallery.find().exec(function(err, galleries) {
+            // Launch manage view
+            res.view('admin/gallery_manage', {galleries: galleries, gallery_list: galleries});
+        });
+  },
+
+  
+  /**
+   * `AdminControllerController.update_gallery()`
+   */
+  update_gallery: function (req, res) {
+        var id = req.param('id');
+        var parent = req.param('parent')
+        
+        // Get galleries
+        Gallery.findOne({id: id}).exec(function(err, gallery) {
+            gallery.parent = parent;
+            gallery.save();
+            return  res.json({status: true});
+        });
+  },
+
   
   /**
    * `AdminControllerController.manage_comments()`
@@ -61,6 +90,24 @@ module.exports = {
   },
 
 
+  /**
+   * `AdminControllerController.manage_objects()`
+   */
+  manage_objects: function (req, res) {
+        
+        // Get all objects
+        Object3D.find().exec(function(err, objects) {
+            if(err) {
+                //return res.error();
+                return err;
+            }
+            
+            // Launch manage view
+            res.view('admin/object_manage', {objects: objects});
+        });
+  },
+
+  
   /**
    * `AdminControllerController.update_profile()`
    */

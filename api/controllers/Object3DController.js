@@ -39,7 +39,6 @@ function save_obj(req, res, obj3D, err, create) {
     obj3D.complete_desc = req.param('complete_desc');
     obj3D.complete_desc_en = req.param('complete_desc_en');
     obj3D.collection = req.param('collection');
-    obj3D.gallery = req.param('gallery');
     if(req.param('dim_x'))
         obj3D.dim_x = req.param('dim_x');
     if(req.param('dim_y'))
@@ -55,6 +54,21 @@ function save_obj(req, res, obj3D, err, create) {
             obj3D.associated.add(associated);
         });
     }
+    
+    galleries = req.param('galleries');
+    if(galleries) {
+        gallery_tab = galleries.split(",");
+        gallery_tab.forEach(function(gallery, index) {
+            // Find the gallery
+            Gallery.findOne().where({id: gallery}).exec(function (err, galleryObj) {
+                obj3D.gallery.add(galleryObj);
+                //obj3D.gallery.add(gallery);
+            });
+        });
+    }
+    obj3D.galleries = "," + galleries + ",";
+    
+    
     published = req.param('published');
     obj3D.published = false;
     if(published == 'published') {
@@ -363,7 +377,8 @@ module.exports = {
         Gallery.find({}).exec(function(err, galleries) {
             if(galleries) {
                 galleries.forEach(function(gallery, index) {
-                    tab_galleries.push({'id': gallery.getId(), 'title': gallery.getTitle() })
+                    tab_galleries.push({value: gallery.getId(), label: gallery.getTitle() })
+                    //tab_galleries.push(gallery.getTitle())
                 });
             }
             return res.json(tab_galleries);
@@ -380,7 +395,7 @@ module.exports = {
 
         Collection.find({}).exec(function(err, collections) {
             collections.forEach(function(collection, index) {
-                tab_collections.push({'id': collection.getId(), 'name': collection.getName() })
+                tab_collections.push({'id': collection.getId(), 'name': collection.getCategory() + " - " + collection.getName() })
             });
             return res.json(tab_collections);
         });

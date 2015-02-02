@@ -26,9 +26,25 @@
     </ul>
 </div>
 
-<div class="detail_list">
-<% listObj.forEach(function(obj, index) {%>
 
+<div class="detail_list">
+
+<% listGalleries.forEach(function(gallery, index) {%>
+    <div class="detail flip">
+        <div class="card"> 
+            <a href="/gallery/<%= gallery.getId() %>">
+            <span class="face front">
+                <img class="img_gallery" src="/img/icon_gallery.png" alt="<%= gallery.getTitle(req.session.lang) %>" />
+            </span>
+            </a>
+        </div>
+        <div class="gallery_desc">
+            <%= gallery.getTitle(req.session.lang) %>
+        </div>
+    </div>
+<% }); %>
+
+<% listObj.forEach(function(obj, index) {%>
     <div class="detail flip">
         <div class="card"> 
             <a href="/detail/<%= obj.getId() %>">
@@ -54,8 +70,6 @@
             <% }%>
         </div>
     </div>
-
-    
 <% }); %>
 </div>
 

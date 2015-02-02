@@ -45,9 +45,10 @@
     
     
     <div class="block_form">
-        <label for="gallery" class="form_label"><%= __('Gallery') %> : </label>
-        <select name="gallery" id="gallery" class="select">
-        </select>
+        <label for="galleries" class="form_label"><%= __('Gallery') %> : </label>
+<!--         <select name="gallery" id="gallery" class="select" multiple size=10> -->
+<!--         </select> -->
+        <input name="galleries" id="galleries" type="text" class="tags" <% if(obj) {%> value="<%= obj.getGalleries() %>"<% } %> />
     </div>
     
     <div class="block_form">
@@ -199,20 +200,33 @@
         });
         
         // Fill galleries
+        /*
         $.ajax({
             type: "GET",
             url: "/galleries"
         })
         .done(function( objects ) {
             objects.forEach(function(gallery, index) {
+                console.log(gallery.id);
                 $("#gallery").append($("<option />").val(gallery.id).text(gallery.title));
                 <% if(obj) {%>
-                    if (gallery.id == <%= obj.getGallery() %>) {
-                        $("#gallery").val(gallery.id);
-                    }
+                    <% if(obj.getGalleries()) { %>
+                        var res = <%= obj.getGalleries() %>.indexOf(gallery.id); 
+                        if (res != -1) {
+                            $("#gallery").val(gallery.id);
+                        }
+                    <% } %>        
                 <% } %>
             });
         });
+        */
+        $('#galleries').tagsInput({
+                width: 'auto',
+                autocomplete_url: '/galleries',
+                defaultText: '...',
+        });
+
+        
         
         
         var options = { 

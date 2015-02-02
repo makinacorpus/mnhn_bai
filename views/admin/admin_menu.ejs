@@ -1,6 +1,7 @@
 <ul class="nav_admin">
 <% if (req.isAuthenticated()) { %>
     <li><a class="admin" href="/admin/add_object"><%= __('Add object') %></a><li>
+    <li><a class="admin" href="/admin/manage_objects"><%= __('Manage objects') %></a><li>
     <li><a class="admin" href="/admin/manage_users"><%= __('Manage users') %></a><li>
     <li><a class="admin" href="/admin/manage_comments"><%= __('Manage comments') %></a><li>
 <% } %>

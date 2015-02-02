@@ -67,11 +67,15 @@ module.exports.routes = {
 
     'get /admin/board': { view: 'admin/board' }, // manage users
     'get /admin/manage_users': 'AdminController.manage_users', // manage users
+    'get /admin/manage_galleries': 'AdminController.manage_galleries', // manage galleries
     'get /admin/manage_comments': 'AdminController.manage_comments', // manage comments
+    'get /admin/manage_objects': 'AdminController.manage_objects', // manage objects
     
    
     'post /admin/update_profile/:id': 'AdminController.update_profile', // update user's profile
     'post /admin/delete_comment/:id': 'AdminController.delete_comment', // delete comments
+    
+    'post /admin/update_gallery/:id': 'AdminController.update_gallery', // update gallery
     
     'post /add_comment': 'Object3DController.add_comment', // add comment on object
     

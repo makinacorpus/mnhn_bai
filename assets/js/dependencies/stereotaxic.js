@@ -232,6 +232,8 @@ function Stereotaxic() {
                         break;
                     }
         
+                /*
+                // We don't need this
                 var s, ss, std, tmpmin, tmpmax;
                 s = ss = 0;
                 stereotaxic.flatObj_min = stereotaxic.flatObj_max = stereotaxic.flatObj[0];
@@ -250,7 +252,10 @@ function Stereotaxic() {
                 tmpmax = s+2*std;
                 stereotaxic.flatObj_min = (tmpmin<stereotaxic.flatObj_min)?stereotaxic.flatObj_min:tmpmin;
                 stereotaxic.flatObj_max = (tmpmax>stereotaxic.flatObj_max)?stereotaxic.flatObj_max:tmpmax;
-        
+                */
+                stereotaxic.flatObj_min = 0;
+                stereotaxic.flatObj_max = 255;
+                
                 console.log("dim", stereotaxic.flatObj_dim[0], stereotaxic.flatObj_dim[1], stereotaxic.flatObj_dim[2]);
                 console.log("datatype", stereotaxic.flatObj_datatype);
                 console.log("pixdim", stereotaxic.flatObj_pixdim[0], stereotaxic.flatObj_pixdim[1], stereotaxic.flatObj_pixdim[2]);

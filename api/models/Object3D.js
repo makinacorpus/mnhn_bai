@@ -33,9 +33,12 @@ module.exports = {
     preview_animated: 'string',
     published: 'boolean',
     copyright: 'string',
+    galleries: 'string', // this will stock the list of galleries, while sails cannot resolve collection querying
     gallery: {
-        model: 'Gallery'
+        collection: 'gallery',
+        via: 'obj3d'
     },
+    
     medias: {
         collection: 'media'
     },
@@ -152,8 +155,8 @@ module.exports = {
             return '/img/default_preview.png';
         return '/uploads/' + this.preview_animated;
     },
-    getGallery: function() {
-        return this.gallery;
+    getGalleries: function() {
+        return this.galleries;
     },
     getPublished: function() {
         return this.published;
@@ -180,6 +183,11 @@ module.exports = {
     hasMedias: function() {
 
     },
+    
+    getUpdated: function() {
+        return this.updatedAt;
+    },
+    
     isEmpty: function(pstring) {
         if(pstring == '' || pstring == null)
             return true;

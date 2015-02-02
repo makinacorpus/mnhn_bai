@@ -1,0 +1,53 @@
+<% layout('../base') -%>
+
+<% include admin_menu.ejs %>
+
+<h1><%= __('Gallery manage') %></h1>
+
+
+<input type='hidden' name='_csrf' id='_csrf' value='<%= _csrf %>'>
+<table class="admin_table">
+<tr>
+    <th><%= __('Title') %></th>
+    <th><%= __('Parent') %></th>
+</tr>
+
+<% galleries.forEach(function(gallery, index) { %>
+<tr>
+    <td>
+        <%= gallery.getTitle() %>
+    </td>
+    <td class="last">
+        <select id="<%= gallery.getId() %>" class="select">
+            <option value="" selected>---</option>
+            <% gallery_list.forEach(function(gallery_choice, index) {%>
+                <% if (gallery.getParent() == gallery_choice.getId()) { %>
+                    <option value="<%= gallery_choice.getId() %>" selected><%= gallery_choice.getTitle() %></option>
+                <% } else { %>
+                    <option value="<%= gallery_choice.getId() %>" ><%= gallery_choice.getTitle() %></option>
+                <% } %>
+            <% }); %>
+        </select>
+    </td>
+</tr>    
+<% }); %>
+
+</table>
+
+
+<script type="text/javascript">
+    $( ".select" ).change(function () {
+        id = $(this).attr('id');
+        parent = $(this).find(":selected").val();
+        
+        $.ajax({
+            type: "POST",
+            url: "/admin/update_gallery/" + id,
+            data: { parent: parent, id: id, "_csrf": $("#_csrf").val()}
+        })
+        .done(function( msg ) {
+            //alert( "Data Saved: " + msg );
+        });        
+    });
+
+</script>

@@ -42,13 +42,18 @@ module.exports.connections = {
   baiPostgresqlServer: {
     adapter: 'sails-postgresql',
     host: '127.0.0.1',
-    user: 'bai',
-    password: 'bai',
+    user: 'gisuser',
+    password: 'Rivirwaktim9',
     database: 'bai'
   }
 };
 
 
 module.exports.data = {
+    __pathData: '/home/sbe/projects/mnhn_bai/.tmp/uploads/',
+    __uploadData: '/home/sbe/projects/mnhn_bai/.tmp/uploads/'
 };
 
+module.exports.urls = {
+    __mnhn: 'http://coldb.mnhn.fr/catalognumber/mnhn/'
+};

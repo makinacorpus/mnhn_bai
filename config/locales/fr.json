@@ -115,5 +115,12 @@
 	"Choose a title (en)": "Choisissez un titre (uk)",
 	"Short description (en)": "Description succinte (uk)",
 	"Complete description (en)": "Description complète (uk)",
-	"Acquisition params": "Paramètres d'acquisition"
+	"Acquisition params": "Paramètres d'acquisition",
+	"Manage galleries": "Gérer les galleries",
+	"Gallery manage": "Gestion des galeries",
+	"Parent": "Parent",
+	"Manage objects": "Gérer les objets",
+	"Objects manage": "Gestion des objets",
+	"Type a gallery name": "Type a gallery name",
+	"Gallery name": "Gallery name"
 }

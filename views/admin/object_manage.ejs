@@ -1,0 +1,35 @@
+<% layout('../base') -%>
+
+<% include admin_menu.ejs %>
+
+<h1><%= __('Objects manage') %></h1>
+
+
+<input type='hidden' name='_csrf' id='_csrf' value='<%= _csrf %>'>
+<table class="admin_table">
+<tr>
+    <th><%= __('Object') %></th>
+    <th><%= __('Gallery') %></th>
+    <th><%= __('Date') %></th>
+    <th><%= __('Action') %></th>
+</tr>
+
+<% objects.forEach(function(object, index) { %>
+<tr id="<%= object.getId() %>">
+    <td>
+        <%= object.getTitle() %>
+    </td>
+    <td>
+        <%= object.getGalleries() %>
+    </td>
+    <td>
+        <%= object.getUpdated() %>
+    </td>
+    <td>
+        <a href="/admin/edit_object/<%= object.getId() %>"><%= __('Edit') %></a>
+    </td>
+</tr>    
+<% }); %>
+
+</table>
+
