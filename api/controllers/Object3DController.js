@@ -23,8 +23,11 @@ function save_obj(req, res, obj3D, err, create) {
             if(obj3D !== undefined && create) {
                 try {
                     destroy_obj(obj3D);
-                } catch(err) {console.log(err);}
+                } catch(err) {
+                    console.log(err);
+                }
             }
+            console.log(err);
             console.log("Object NOT created (init)");
             return res.json({"err": err, "status": false});
         }
