@@ -142,7 +142,8 @@ module.exports = {
     */
     create: function (req, res) {
         var params = {};
-        var filtered = ['media_files', 'filename_flat', 'filename_3d', 'preview', 'preview_animated'];
+        //var filtered = ['media_files', 'filename_flat', 'filename_3d', 'preview', 'preview_animated'];
+        var filtered = ['media_files', 'filename_flat', 'filename_3D', 'preview', 'preview_animated'];
         for(param in req.body) {
             if (!_.contains(filtered, param)) {
                 params[param] = req.body[param];
