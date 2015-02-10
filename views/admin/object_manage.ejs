@@ -17,7 +17,8 @@
 <% objects.forEach(function(object, index) { %>
 <tr id="<%= object.getId() %>">
     <td>
-        <%= object.getTitle() %>
+        
+        <a href="/detail/<%= object.getId() %>"><%= object.getTitle() %></a>
     </td>
     <td>
         <%= object.getGalleries() %>
