@@ -14,10 +14,12 @@
             </div>
             <div id="opacity_slider" class="opacity_slider"></div>
             <div class="copyright"><%= __('Copyright') %> : <%= obj.getCopyright() %></div>
-            <canvas id="draw-canvas" class="tdhop_canvas"/>    
+            <canvas id="draw-canvas" class="tdhop_canvas"></canvas>    
+            
+            <div id="dialog_annotations" title="<%= __('Annotations') %>" class="dialog_annotations"><div class="annotation_content"></div><span class="dialog_close"><%= __('Close') %></span></div>
         </div>
 
-        <div id="dialog_annotations" title="<%= __('Annotations') %>" class="dialog_annotations"><div class="annotation_content"></div><span class="dialog_close"><%= __('Close') %></span></div>
+        
         
 <script type="text/javascript">
 var presenter = null;
@@ -108,7 +110,8 @@ function onPickedSpot(id) {
             <% annotations.forEach(function(annotation, index) {%>
                 case 'POI<%= index %>' : 
                     $('.annotation_content').html('<h4><%= annotation.getTitle() %></h4><p><%= annotation.getDescription() %></p>');
-                    $('#dialog_annotations').dialog('open');
+                    //$('#dialog_annotations').dialog('open');
+                    $('#dialog_annotations').show();
                     break;
             <% }); %>
         <% } %>
@@ -191,9 +194,22 @@ $(document).ready(function(){
     });    
     
     // Popup for displaying users annotations
-    $('#dialog_annotations').dialog({ dialogClass: 'noTitle' });
-    $('#dialog_annotations').dialog('close');
-    $('.dialog_close').on('click', function(){ $('#dialog_annotations').dialog('close'); });
+    $('#dialog_annotations').hide();
+//     $('#dialog_annotations').dialog({ dialogClass: 'noTitle' });
+//     $('#dialog_annotations').dialog('close');
+    $('.dialog_close').on('click', function(){ $('#dialog_annotations').hide(); });
     
+    
+    // hide all div containers  
+   // $('#dialog_annotations').hide();  
+    // append click event to the a element  
+    /*$('#dialog_annotations').click(function(e) {  
+        // slide down the corresponding div if hidden, or slide up if shown  
+        $(this).parent().next('#dialog_annotations').slideToggle('slow');  
+        // set the current item as active  
+        $(this).parent().toggleClass('active');  
+        e.preventDefault();  
+    });    
+    */
 });
 </script>

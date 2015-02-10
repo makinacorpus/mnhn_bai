@@ -559,7 +559,7 @@ ul.associated_docs li.doc_doc {
 
 .copyright {
     position: absolute;
-    right: 20px;
+    left: 70px;
     color: @mainTextColorLight;
 }
 
@@ -577,6 +577,19 @@ ul.associated_docs li.doc_doc {
 
 .dialog_annotations {
     padding: 2px;
+    
+    right: 0px;
+    border: 1px solid @mainTextColorLight;
+    position: absolute;
+    top: 0px;
+    height: 100%;
+    width: 200px;
+    background: rgba(0, 0, 0, 0.1);
+}
+
+.dialog_annotations h4 {
+    color: @mainTextColor;
+    border-bottom: 1px solid @mainTextColorLight;
 }
 
 .ui-dialog { 
@@ -589,6 +602,9 @@ ul.associated_docs li.doc_doc {
     color: #aaa;
     float: right;
     cursor: pointer;
+    bottom: 5px;
+    right: 5px;
+    position: absolute;
 }
 
 .opacity_slider {
