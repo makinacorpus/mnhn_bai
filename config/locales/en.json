@@ -71,5 +71,19 @@
 	"Axial": "Axial",
 	"Collection form": "Collection form",
 	"See the MNHN collection form": "See the MNHN collection form",
-	"Contact": "Contact"
+	"Contact": "Contact",
+	"Acquisition params": "Acquisition params",
+	"Contact us about this object": "Contact us about this object",
+	"Write your message here": "Write your message here",
+	"Your email": "Your email",
+	"Send message": "Send message",
+	"Thank you. We will answer you soon.": "Thank you. We will answer you soon.",
+	"Choose a title (en)": "Choose a title (en)",
+	"MNHN unique code": "MNHN unique code",
+	"Short description (en)": "Short description (en)",
+	"Complete description (en)": "Complete description (en)",
+	"Collection": "Collection",
+	"Dimension X": "Dimension X",
+	"Dimension Y": "Dimension Y",
+	"Dimension Z": "Dimension Z"
 }

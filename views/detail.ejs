@@ -47,7 +47,7 @@
         <h1><%= obj.getTitle(req.session.lang) %></h1>
         <% if(obj.hasShortDesc()) { %>
             <div class="short-description">
-                <%= obj.getShortDesc(req.session.lang) %>
+                <%- obj.getShortDesc(req.session.lang) %>
             </div>
         <% } %>
         

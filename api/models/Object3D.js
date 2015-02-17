@@ -90,7 +90,7 @@ module.exports = {
     },
     getShortDesc: function(lang) {
         if(lang && lang == "en")
-            return this.getShortDescEn()
+            return this.getShortDescEn();
         else
             return this.short_desc;
     },
@@ -99,9 +99,9 @@ module.exports = {
     },
     getCompleteDesc: function(lang) {
         if(lang && lang == "en")
-            return this.getCompleteDescEn()
+            return this.getCompleteDescEn().replace(/\n/g,"<br/>");
         else
-            return this.complete_desc;
+            return this.complete_desc.replace(/\n/g,"<br/>");
     },
     getCompleteDescEn: function() {
         return this.complete_desc_en;
