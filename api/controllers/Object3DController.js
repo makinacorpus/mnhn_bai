@@ -557,15 +557,24 @@ module.exports = {
             // TODO
             // sails.config.mails.__mnhn
             var nodemailer = require('nodemailer');
+            var smtpTransport = require('nodemailer-smtp-transport');
 
             // create reusable transporter object using SMTP transport
-            var transporter = nodemailer.createTransport({
+            /*var transporter = nodemailer.createTransport({
                 service: sails.config.mail.__service,
                 auth: {
                     user: sails.config.mail.__user,
                     pass: sails.config.mail.__pass
                 }
-            });
+            });*/
+            var transporter = nodemailer.createTransport(smtpTransport({
+                host: sails.config.mail.__host,
+                port: sails.config.mail.__port,
+                auth: {
+                    user: sails.config.mail.__user,
+                    pass: sails.config.mail.__pass
+                }
+            }));            
 
             subject = 'Contact (' + obj3D.getTitle() + ')';
 

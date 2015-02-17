@@ -60,8 +60,9 @@ module.exports.urls = {
 
 module.exports.mail = {
     __mnhn: 'contact@mnhn.fr',
-    __service: 'Gmail',
-    __user: 'user@gmail.com',
-    __pass: 'xxxxx'    
+    __host: 'mail.makina-corpus.net',
+    __port: '465',
+    __user: 'user@user.com',
+    __pass: 'xxxxxx'
 };
 
