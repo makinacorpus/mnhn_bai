@@ -31,7 +31,7 @@
                 
                 <% if(obj.hasCompleteDesc()) { %>
                     <div class="complete-description">
-                        <p><%= obj.getCompleteDesc(req.session.lang) %></p>
+                        <p><%= obj.getCompleteDesc(true, req.session.lang) %></p>
                     </div>
                 <% } %>          
             

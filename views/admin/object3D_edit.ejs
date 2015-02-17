@@ -35,12 +35,12 @@
     
     <div class="block_form">
         <label for="complete_desc" class="form_label"><%= __('Complete description') %> : </label>
-        <textarea name="complete_desc" rows="5" cols="40"><% if(obj) {%><%= obj.getCompleteDesc() %><% } %></textarea>
+        <textarea name="complete_desc" rows="5" cols="40"><% if(obj) {%><%= obj.getCompleteDesc(false) %><% } %></textarea>
     </div>
 
     <div class="block_form">
         <label for="complete_desc_en" class="form_label"><%= __('Complete description (en)') %> : </label>
-        <textarea name="complete_desc_en" rows="5" cols="40"><% if(obj) {%><%= obj.getCompleteDescEn() %><% } %></textarea>
+        <textarea name="complete_desc_en" rows="5" cols="40"><% if(obj) {%><%= obj.getCompleteDescEn(false) %><% } %></textarea>
     </div>
     
     

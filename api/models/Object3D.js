@@ -97,11 +97,17 @@ module.exports = {
     getShortDescEn: function() {
         return this.short_desc_en;
     },
-    getCompleteDesc: function(lang) {
+    getCompleteDesc: function(cr, lang) {
+        ret_val = "";
         if(lang && lang == "en")
-            return this.getCompleteDescEn().replace(/\n/g,"<br/>");
+            ret_val = this.getCompleteDescEn();
         else
-            return this.complete_desc.replace(/\n/g,"<br/>");
+            ret_val = this.complete_desc;
+        
+        if(cr == true)
+            ret_val = ret_val.replace(/\n/g,"<br/>");
+        
+        return ret_val;
     },
     getCompleteDescEn: function() {
         return this.complete_desc_en;
