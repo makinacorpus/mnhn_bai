@@ -58,3 +58,10 @@ module.exports.urls = {
     __mnhn: 'http://coldb.mnhn.fr/catalognumber/mnhn/'
 };
 
+module.exports.mail = {
+    __mnhn: 'contact@mnhn.fr',
+    __service: 'Gmail',
+    __user: 'user@gmail.com',
+    __pass: 'xxxxx'    
+};
+

@@ -74,6 +74,7 @@ module.exports.routes = {
     'post /admin/delete_comment/:id': 'AdminController.delete_comment', // delete comments
     
     'post /add_comment': 'Object3DController.add_comment', // add comment on object
+    'post /contact_us': 'Object3DController.contact_us', // contact us on object
     
     // footer menu
     'get /about': { view: 'statics/about' },

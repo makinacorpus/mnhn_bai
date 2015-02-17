@@ -115,5 +115,10 @@
 	"Choose a title (en)": "Choisissez un titre (uk)",
 	"Short description (en)": "Description succinte (uk)",
 	"Complete description (en)": "Description complète (uk)",
-	"Acquisition params": "Paramètres d'acquisition"
+	"Acquisition params": "Paramètres d'acquisition",
+	"Contact us about this object": "Contactez nous à propos de cet objet",
+	"Write your message here": "Ecrivez votre message ici",
+	"Send message": "Envoyer",
+	"Thank you. We will answer you soon.": "Merci. Nous vous répondrons bientôt.",
+	"Your email": "Votre email"
 }

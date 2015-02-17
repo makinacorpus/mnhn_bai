@@ -545,6 +545,53 @@ module.exports = {
 
 
     /**
+    * `3DObjectController.contact_us()`
+    */
+    contact_us: function (req, res) {
+        var id = req.param('id');
+        var msg = req.param('msg');
+        var sender = req.param('sender');
+
+        Object3D.findOne({ id: id }).exec(function(err, obj3D) {
+            // send message to admin
+            // TODO
+            // sails.config.mails.__mnhn
+            var nodemailer = require('nodemailer');
+
+            // create reusable transporter object using SMTP transport
+            var transporter = nodemailer.createTransport({
+                service: sails.config.mail.__service,
+                auth: {
+                    user: sails.config.mail.__user,
+                    pass: sails.config.mail.__pass
+                }
+            });
+
+            subject = 'Contact (' + obj3D.getTitle() + ')';
+
+            // setup e-mail data with unicode symbols
+            var mailOptions = {
+                from: sender,
+                to: sails.config.mail.__user,
+                subject: 'Contact',
+                text: msg,
+                html: msg
+            };
+
+            // send mail with defined transport object
+            transporter.sendMail(mailOptions, function(error, info){
+                if(error){
+                    console.log(error);
+                }else{
+                    console.log('Message sent: ' + info.response);
+                }
+            });            
+            
+            return  res.json({status: true});
+        });
+    },
+    
+    /**
     * `3DObjectController.edit_annotations()`
     */
     edit_annotations: function (req, res) {
