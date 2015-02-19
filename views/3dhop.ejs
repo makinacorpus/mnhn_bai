@@ -146,8 +146,8 @@ function changeOpacity( event, ui) {
 
 function actionsToolbar(action) {
     if(action=='home') presenter.resetTrackball(); 
-    else if(action=='zoomin') presenter.zoomIn();
-    else if(action=='zoomout') presenter.zoomOut(); 
+    else if(action=='zoomin') presenter.zoomOut();
+    else if(action=='zoomout') presenter.zoomIn(); 
     else if(action=='light' || action=='light_on') { presenter.enableLightTrackball(!presenter.isLightTrackballEnabled()); lightSwitch(); }
     else if(action=='hotspot'|| action=='hotspot_on') {
             presenter.toggleSpotVisibility(HOP_ALL, true); 
