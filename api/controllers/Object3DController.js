@@ -677,16 +677,19 @@ module.exports = {
                     params['x'] = x;
                     params['y'] = y;
                     params['z'] = z;
-                    Annotation.create(params).exec(function (err, annotation) {
-                        if (err)
-                            return res.negotiate(err);
-                        obj3D.annotations.add(annotation.id);
-                        obj3D.save(function(err){
-                            if(err){
-                                console.log(err);return err;
-                            }
+                    
+                    if(title != '') {
+                        Annotation.create(params).exec(function (err, annotation) {
+                            if (err)
+                                return res.negotiate(err);
+                            obj3D.annotations.add(annotation.id);
+                            obj3D.save(function(err){
+                                if(err){
+                                    console.log(err);return err;
+                                }
+                            });
                         });
-                    });
+                    }
                 }
 
                 //Redirect to detail view
