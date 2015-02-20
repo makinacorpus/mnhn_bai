@@ -76,8 +76,10 @@
 <% if(obj.hasFlat()) { %>
     <div class="col-lg-6 col-lg-6-desc view-flat">
         <div class="bloc_desc">
-            <div class="header_block"><h4><%= __('Flat view') %></h4></div>
-            <% include flat.ejs %>
+            <div class="header_block"><h4><%= __('Flat view') %> - <%= __('Click the image to get more details') %></h4></div>
+            <a href="javascript:void();" onclick="exploreFlat()">
+                <% include flat.ejs %>
+            </a>
             
             <p class="center"><%= __('Acquisition params') %> : <%= obj.getAcquisitionParams() %></p>
             
@@ -141,6 +143,10 @@
     <span class="dialog_close"><%= __('Close') %></span>
 </div>
 
+<div id="openseadragonviewer" style="width: 600px; height: 600px;"></div>
+<script src="/openseadragon/openseadragon.min.js"></script>
+
+
 <script type="text/javascript">
 
     <% if(medias_pictures.length == 0) { %>
@@ -166,6 +172,17 @@
         $('#dialog_embed').dialog({ dialogClass: 'noTitle' });
         $('#dialog_embed').dialog('close');
         $('.dialog_close').on('click', function(){ $('#dialog_embed').dialog('close'); });        
+        
+        $('#openseadragonviewer').dialog({width: 500, height: 500, modal: true, draggable: false});
+        $('#openseadragonviewer').dialog('close');
+
+        var viewer = OpenSeadragon({
+            id: "openseadragonviewer",
+            prefixUrl: "/js/dependencies/openseadragon-bin-1.2.1/images/",
+            tileSources: "/uploads/citron.dzi"
+        });
+        
+        
     });
     
     /*function addComment() {
@@ -208,5 +225,11 @@
     function showEmbedCode() {
         $('#dialog_embed').dialog('open');
     }
+    
+    
+    function exploreFlat() {
+        $('#openseadragonviewer').dialog('open');
+    }
+    
     
 </script>
