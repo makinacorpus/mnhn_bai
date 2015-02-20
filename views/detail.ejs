@@ -81,7 +81,7 @@
                 <% include flat.ejs %>
             </a>
             
-            <p class="center"><%= __('Acquisition params') %> : <%= obj.getAcquisitionParams() %></p>
+            <p class="center"><%= __('Acquisition params') %> : <%= obj.getAcquisitionParams(req.session.lang) %></p>
             
         </div>
     </div>

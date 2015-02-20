@@ -28,6 +28,7 @@ module.exports = {
     dim_y: 'integer',
     dim_z: 'integer',
     acquisition_params: 'string',
+    acquisition_params_en: 'string',
     filename_flat: 'string',
     preview: 'string',
     preview_animated: 'string',
@@ -142,8 +143,16 @@ module.exports = {
         else
             return 0;
     },
-    getAcquisitionParams: function() {
-        return this.acquisition_params;
+    getAcquisitionParams: function(lang) {
+        if(lang && lang == "en")
+            ret_val = this.getAcquisitionParamsEn();
+        else
+            ret_val = this.acquisition_params;
+        
+        return ret_val;
+    },
+    getAcquisitionParamsEn: function() {
+        return this.acquisition_params_en;
     },
     getFileNameFlat: function() {
         return '/uploads/' + this.filename_flat;

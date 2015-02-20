@@ -68,7 +68,7 @@
             <div class="view-flat">
                 <div class="bloc_desc">
                     <% include flat.ejs %>
-                    <p class="center"><%= __('Acquisition params') %> : <%= obj.getAcquisitionParams() %></p>
+                    <p class="center"><%= __('Acquisition params') %> : <%= obj.getAcquisitionParams(req.session.lang) %></p>
                 </div>
             </div>
         <% } %>        
