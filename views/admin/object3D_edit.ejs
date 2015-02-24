@@ -102,6 +102,34 @@
         <% } %>
 
     </div>
+    
+    <div class="block_form">
+        <label for="filename_sagittal" class="form_label"><%= __('Flat image sagittal') %> : </label>
+        <input type="file" id="filename_sagittal" name="filename_sagittal" />
+        <% if(obj) {%>
+            <div class="current_file"><%= __('Current file') %> : <%= obj.getFileNameSagittal() %></div>
+        <% } %>
+
+    </div>
+
+    <div class="block_form">
+        <label for="filename_coronal" class="form_label"><%= __('Flat image coronal') %> : </label>
+        <input type="file" id="filename_coronal" name="filename_coronal" />
+        <% if(obj) {%>
+            <div class="current_file"><%= __('Current file') %> : <%= obj.getFileNameCoronal() %></div>
+        <% } %>
+
+    </div>
+
+    <div class="block_form">
+        <label for="filename_axial" class="form_label"><%= __('Flat image axial') %> : </label>
+        <input type="file" id="filename_axial" name="filename_axial" />
+        <% if(obj) {%>
+            <div class="current_file"><%= __('Current file') %> : <%= obj.getFileNameAxial() %></div>
+        <% } %>
+
+    </div>
+    
     <div class="block_form">
         <label for="acquisition_params" class="form_label"><%= __('Acquisition params') %> : </label>
         <input name="acquisition_params" type="text" <% if(obj) {%> value="<%= obj.getAcquisitionParams() %>"<% } %> />

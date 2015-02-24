@@ -10,3 +10,6 @@ alter table gallery add parent integer;
 
 
 ALTER table object3d ADD acquisition_params_en text;
+ALTER table object3d ADD filename_sagittal text;
+ALTER table object3d ADD filename_coronal text;
+ALTER table object3d ADD filename_axial text;

@@ -30,6 +30,9 @@ module.exports = {
     acquisition_params: 'string',
     acquisition_params_en: 'string',
     filename_flat: 'string',
+    filename_sagittal: 'string',
+    filename_coronal: 'string',
+    filename_axial: 'string',
     preview: 'string',
     preview_animated: 'string',
     published: 'boolean',
@@ -156,6 +159,16 @@ module.exports = {
     },
     getFileNameFlat: function() {
         return '/uploads/' + this.filename_flat;
+    },
+    
+    getFileNameSagittal: function() {
+        return '/uploads/' + this.filename_sagittal;
+    },
+    getFileNameCoronal: function() {
+        return '/uploads/' + this.filename_coronal;
+    },
+    getFileNameAxial: function() {
+        return '/uploads/' + this.filename_axial;
     },
     getPreview: function() {
         if(!this.preview || this.preview == '')

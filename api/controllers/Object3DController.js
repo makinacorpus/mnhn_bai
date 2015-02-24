@@ -9,7 +9,8 @@ var _ = require('lodash');
 var multiparty = require('multiparty');
 var http = require('http');
 var util = require('util');
-
+var fs = require('fs');
+var unzip = require('unzip');
 
 
 function destroy_obj(obj3D) {
@@ -81,6 +82,15 @@ function save_obj(req, res, obj3D, err, create) {
     // Download flat file
     sails.controllers.file.upload(req, res, obj3D, sails.controllers.object3d.saveFlatmodel, 'filename_flat');
 
+    // Download sagittal file
+    sails.controllers.file.upload(req, res, obj3D, sails.controllers.object3d.saveSagittalmodel, 'filename_sagittal');
+
+    // Download coronal
+    sails.controllers.file.upload(req, res, obj3D, sails.controllers.object3d.saveCoronalmodel, 'filename_coronal');
+        
+    // Download axial
+    sails.controllers.file.upload(req, res, obj3D, sails.controllers.object3d.saveAxialmodel, 'filename_axial');
+    
     // Download preview file
     sails.controllers.file.upload(req, res, obj3D, sails.controllers.object3d.savePreview, 'preview');
 
@@ -242,6 +252,59 @@ module.exports = {
     },
 
 
+    /**
+    * `3DObjectController.saveSagittalmodel()`
+    */
+    saveSagittalmodel: function (files, obj3D) {
+        // Files will always contain one only file
+        if(files.length > 0) {
+            obj3D.filename_sagittal = files[0].name.replace('zip','dzi');
+            obj3D.save(function(err){
+                if(err){console.log(err);return err;}
+                sails.controllers.object3d.unzipFiles(files[0].path);
+            });
+        }
+    },
+
+    
+    /**
+    * `3DObjectController.saveCoronalmodel()`
+    */
+    saveCoronalmodel: function (files, obj3D) {
+        // Files will always contain one only file
+        if(files.length > 0) {
+            obj3D.filename_coronal = files[0].name.replace('zip','dzi');
+            obj3D.save(function(err){
+                if(err){console.log(err);return err;}
+                sails.controllers.object3d.unzipFiles(files[0].path);
+            });
+        }
+    },
+
+    
+    /**
+    * `3DObjectController.saveAxialmodel()`
+    */
+    saveAxialmodel: function (files, obj3D) {
+        // Files will always contain one only file
+        if(files.length > 0) {
+            obj3D.filename_axial = files[0].name.replace('zip','dzi');
+            obj3D.save(function(err){
+                if(err){console.log(err);return err;}
+                sails.controllers.object3d.unzipFiles(files[0].path);
+            });
+        }
+    },
+
+    
+    /**
+    * `3DObjectController.unzipFiles()`
+    */
+    unzipFiles: function(path) {
+        fs.createReadStream(path).pipe(unzip.Extract({ path: sails.config.data.__uploadData }));        
+    },
+
+    
     /**
     * `3DObjectController.savePreview()`
     */

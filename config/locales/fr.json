@@ -122,5 +122,8 @@
 	"Thank you. We will answer you soon.": "Merci. Nous vous répondrons bientôt.",
 	"Your email": "Votre email",
 	"Click the image to get more details": "Click sur l'image pour la vue détaillée",
-	"Acquisition params (en)": "Paramètres d'acquisition (uk)"
+	"Acquisition params (en)": "Paramètres d'acquisition (uk)",
+	"Flat image sagittal": "Flat image sagittal",
+	"Flat image coronal": "Flat image coronal",
+	"Flat image axial": "Flat image axial"
 }
