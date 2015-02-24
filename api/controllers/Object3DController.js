@@ -301,7 +301,7 @@ module.exports = {
     * `3DObjectController.unzipFiles()`
     */
     unzipFiles: function(path) {
-        fs.createReadStream(path).pipe(unzip.Extract({ path: sails.config.data.__uploadData }));        
+        fs.createReadStream(path).pipe(unzip.Extract({ path: sails.config.data.__pathData }));        
     },
 
     
