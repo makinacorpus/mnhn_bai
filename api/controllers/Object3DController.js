@@ -637,7 +637,8 @@ module.exports = {
                 auth: {
                     user: sails.config.mail.__user,
                     pass: sails.config.mail.__pass
-                }
+                },
+                tls: {rejectUnauthorized: false}
             }));            
 
             subject = 'Contact (' + obj3D.getTitle() + ')';
