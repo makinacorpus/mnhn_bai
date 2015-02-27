@@ -63,6 +63,7 @@ module.exports.mail = {
     __host: 'mail.makina-corpus.net',
     __port: '465',
     __user: 'user@user.com',
-    __pass: 'xxxxxx'
+    __pass: 'xxxxxx',
+    __useAuthent: false
 };
 

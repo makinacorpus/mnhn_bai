@@ -631,22 +631,36 @@ module.exports = {
                     pass: sails.config.mail.__pass
                 }
             });*/
-            var transporter = nodemailer.createTransport(smtpTransport({
-                host: sails.config.mail.__host,
-                port: sails.config.mail.__port,
-                auth: {
-                    user: sails.config.mail.__user,
-                    pass: sails.config.mail.__pass
-                },
-                tls: {rejectUnauthorized: false}
-            }));            
+            
+            if(sails.config.mail.__useAuthent) {
+                console.log("Send mail with authent");
+                var transporter = nodemailer.createTransport(smtpTransport({
+                    host: sails.config.mail.__host,
+                    port: sails.config.mail.__port,
+                    auth: {
+                        user: sails.config.mail.__user,
+                        pass: sails.config.mail.__pass
+                    },
+                    tls: {rejectUnauthorized: false}
+                }));
+            }
+            else {
+                console.log("Send mail without authent");
+                var transporter = nodemailer.createTransport(smtpTransport({
+                    host: sails.config.mail.__host,
+                    port: sails.config.mail.__port,
+                    auth: {
+                    },
+                    tls: {rejectUnauthorized: false}
+                }));
+            }
 
             subject = 'Contact (' + obj3D.getTitle() + ')';
 
             // setup e-mail data with unicode symbols
             var mailOptions = {
                 from: sender,
-                to: sails.config.mail.__user,
+                to: sails.config.mail.__mnhn,
                 subject: 'Contact',
                 text: msg,
                 html: msg
