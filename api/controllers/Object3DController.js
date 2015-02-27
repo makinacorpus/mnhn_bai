@@ -649,8 +649,6 @@ module.exports = {
                 var transporter = nodemailer.createTransport(smtpTransport({
                     host: sails.config.mail.__host,
                     port: sails.config.mail.__port,
-                    auth: {
-                    },
                     tls: {rejectUnauthorized: false}
                 }));
             }
